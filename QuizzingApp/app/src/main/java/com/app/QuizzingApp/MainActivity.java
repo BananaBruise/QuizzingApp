@@ -46,11 +46,15 @@ public class MainActivity extends AppCompatActivity {
         questions.add("bye");
 
         User user = new User("Abhi", 34, questions);
+        User user1 = new User("Han", 30, questions); // new user
 
         Question q = new Question("blob", "hard");
 
         db.collection("Users").document(user.getName()).collection("Questions").document("Question1").set(q);
         db.collection("Users").document(user.getName()).collection("Questions").document("Question1").update("diff", "medium");
+
+        db.collection("Users").document(user1.getName()).collection("Questions").document("Question1").set(q);
+        db.collection("Users").document(user1.getName()).collection("Questions").document("Question1").update("name", "Han's question");
 
     }
 }
