@@ -2,6 +2,7 @@ package com.app.QuizzingApp;
 
 import java.util.ArrayList;
 
+// comment
 public class User {
 
     private String name;
