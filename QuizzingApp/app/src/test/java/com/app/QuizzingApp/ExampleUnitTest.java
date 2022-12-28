@@ -18,12 +18,16 @@ public class ExampleUnitTest {
     }
 
     @Test
-    public void user_name_age_isCorrect() {
-        User u = new User("Han", 34, new ArrayList<String>());
-        String expectedName = "Han";
-        int expectedAge = 34;
+    public void user_getter_isCorrect() {
+        User u = new User("Han", "Tu", new ArrayList<String>());
+        String expectedfName = "Han";
+        String expectedlName = "Tu";
+        String expectedFullName = expectedfName + " " + expectedlName;
 
-        assertEquals(u.getName(),expectedName);
-        assertEquals(u.getAge(),expectedAge);
+        assertEquals(u.getfName(),expectedfName);
+        assertEquals(u.getlName(),expectedlName);
+        assertEquals(u.getName(), expectedFullName);
+        assertNotNull(u.getUID());
+        assertFalse(u.getisActive());
     }
 }

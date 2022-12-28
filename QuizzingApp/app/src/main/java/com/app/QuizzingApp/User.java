@@ -1,30 +1,47 @@
 package com.app.QuizzingApp;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 // comment
 public class User {
 
-    private String name;
-    private int age;
+    private final String UID;
+    private String fName;
+    private String lName;
+    private boolean isActive;
     private ArrayList<String> questions;
 
-    public User() {}
-
-    public String getName() {
-        return name;
+    public User(String firstName, String lastName, ArrayList<String> questions) {
+        this.UID = UUID.randomUUID().toString();
+        this.fName = firstName;
+        this.lName = lastName;
+        this.isActive = false;
+        this.questions = questions;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getfName() {
+        return fName;
     }
 
-    public int getAge() {
-        return age;
+    protected void setfName(String fName) {
+        this.fName = fName.trim();
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public String getlName() {
+        return lName;
+    }
+
+    protected void setlName(String lName) {
+        this.lName = lName.trim();
+    }
+
+    public boolean getisActive() {
+        return isActive;
+    }
+
+    protected void setisActive(Boolean isActive) {
+        this.isActive = isActive;
     }
 
     public ArrayList<String> getQuestions() {
@@ -35,10 +52,11 @@ public class User {
         this.questions = questions;
     }
 
-    public User(String name, int age, ArrayList<String> questions) {
-        this.name = name;
-        this.age = age;
-        this.questions = questions;
+    public String getUID() {
+        return UID;
+    }
 
+    public String getName() {
+        return this.fName + " " + this.lName;
     }
 }

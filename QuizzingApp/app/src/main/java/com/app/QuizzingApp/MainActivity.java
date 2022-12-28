@@ -45,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
         questions.add("hi");
         questions.add("bye");
 
-        User user = new User("Abhi", 34, questions);
-        User user1 = new User("Han", 30, questions); // new user
+        User user = new User("Abhi", "Bhashyam", questions);
+        User user1 = new User("Han", "Tu", questions); // new user
 
         Question q = new Question("blob", "hard");
 
