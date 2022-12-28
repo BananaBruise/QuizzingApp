@@ -6,18 +6,53 @@ import java.util.UUID;
 // comment
 public class User {
 
-    private final String UID;
+    private String UID;
     private String fName;
     private String lName;
     private boolean isActive;
-    private ArrayList<String> questions;
+    private String email;
+    private String password;
+    private boolean isQuestioner;
 
-    public User(String firstName, String lastName, ArrayList<String> questions) {
-        this.UID = UUID.randomUUID().toString();
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public User() {}
+
+    public void setUID(String UID) {
+        this.UID = UID;
+    }
+
+    public boolean isQuestioner() {
+        return isQuestioner;
+    }
+
+    public void setQuestioner(boolean questioner) {
+        isQuestioner = questioner;
+    }
+
+    public User(String firstName, String lastName, String UID, String email, String password, boolean isQuestioner) {
+        this.UID = UID;
         this.fName = firstName;
         this.lName = lastName;
         this.isActive = false;
-        this.questions = questions;
+        this.isQuestioner = isQuestioner;
+        this.email = email;
+        this.password = password;
     }
 
     public String getfName() {
@@ -44,13 +79,6 @@ public class User {
         this.isActive = isActive;
     }
 
-    public ArrayList<String> getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(ArrayList<String> questions) {
-        this.questions = questions;
-    }
 
     public String getUID() {
         return UID;
