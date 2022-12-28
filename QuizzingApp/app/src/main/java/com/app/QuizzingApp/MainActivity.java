@@ -50,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
 
         Question q = new Question("blob", "hard");
 
+        db.collection("Users").document(user.getName()).set(user);
+        db.collection("Users").document(user.getName()).set(user1);
+
         db.collection("Users").document(user.getName()).collection("Questions").document("Question1").set(q);
         db.collection("Users").document(user.getName()).collection("Questions").document("Question1").update("diff", "medium");
 
