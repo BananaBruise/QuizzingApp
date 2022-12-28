@@ -19,7 +19,7 @@ public class ExampleUnitTest {
 
     @Test
     public void user_getter_isCorrect() {
-        User u = new User("Han", "Tu", new ArrayList<String>());
+        User u = new User("Han", "Tu", "124", "htu@gmail.com", "password", true);
         String expectedfName = "Han";
         String expectedlName = "Tu";
         String expectedFullName = expectedfName + " " + expectedlName;
