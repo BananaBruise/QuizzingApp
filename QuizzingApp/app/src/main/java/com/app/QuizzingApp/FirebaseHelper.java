@@ -30,6 +30,8 @@ public class FirebaseHelper {
         return mAuth;
     }
 
+    public FirebaseFirestore getmdb() { return db; }
+
     public void addUserToFirestore(String firstName, String lastName, String uid, String email, String password, boolean isQuestioner)
     {
         User toAdd = new User(firstName, lastName, uid, email, password, isQuestioner);
@@ -49,19 +51,5 @@ public class FirebaseHelper {
                     }
                 });
 
-    }
-
-    public User getUser(String uid) {
-        final User[] result = new User[1];
-
-        DocumentReference docRef = db.collection("users").document(uid);
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                result[0] = documentSnapshot.toObject(User.class);
-            }
-        });
-
-        return result[0];
     }
 }
