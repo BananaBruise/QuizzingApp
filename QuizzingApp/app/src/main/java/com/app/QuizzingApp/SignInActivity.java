@@ -57,6 +57,9 @@ public class SignInActivity extends AppCompatActivity {
                     if (result[0].getisActive()==false && result[0].isQuestioner() == false) {
                         startActivity(new Intent(getApplicationContext(), AnswererSyncActivity.class));
                     }
+                    else if (result[0].getisActive()==false && result[0].isQuestioner() == true) {
+                        // TODO: take to questioner sync
+                    }
                     // otherwise is active, go to homescreen
                     else{
                         // TODO
