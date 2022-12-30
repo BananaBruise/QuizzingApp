@@ -27,6 +27,21 @@ public class SignInActivity extends AppCompatActivity {
 
         firebaseHelper = new FirebaseHelper();
 
+        // if user context exists, check for sync right away
+        if (firebaseHelper.getmAuth().getCurrentUser()!=null){
+            String uid = firebaseHelper.getmAuth().getCurrentUser().getUid();
+            User u = firebaseHelper.getUser(uid);
+            // if user is not active, take them to sync screen based on role
+            if (u.getisActive()==false){
+                takeToSync(u.isQuestioner());
+            }
+            // otherwise is active, go to homescreen
+            else{
+                // TODO
+            }
+
+        }
+
         emailET = findViewById(R.id.signInEmailET);
         passwordET = findViewById(R.id.signInPasswordET);
     }
@@ -34,6 +49,16 @@ public class SignInActivity extends AppCompatActivity {
     public void takeToSignUp(View v) {
         Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
         startActivity(intent);
+    }
+
+    public void takeToSync(boolean Questioner){
+        if (Questioner){
+            // TODO
+            // intent = new Intent(getApplicationContext(), QuestionerSyncActivity.class);
+        }
+        else
+            startActivity(new Intent(getApplicationContext(), AnswererSyncActivity.class));
+
     }
 
     public void signIn(View v) {
@@ -56,6 +81,19 @@ public class SignInActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 Toast.makeText(getApplicationContext(), "Sign in successful", Toast.LENGTH_SHORT).show();
                                 // this is another way to create the intent from inside the OnCompleteListener
+                                if (firebaseHelper.getmAuth().getCurrentUser()!=null){
+                                    String uid = firebaseHelper.getmAuth().getCurrentUser().getUid();
+                                    User u = firebaseHelper.getUser(uid);
+                                        // if user is not active, take them to sync screen based on role
+                                        if (u.getisActive()==false){
+                                            takeToSync(u.isQuestioner());
+                                        }
+                                        // otherwise is active, go to homescreen
+                                        else{
+                                            // TODO
+                                        }
+
+                                }
                             }
                             else {
                                 //sign in failed
