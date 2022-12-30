@@ -30,4 +30,35 @@ public class ExampleUnitTest {
         assertNotNull(u.getUID());
         assertFalse(u.getisActive());
     }
+
+    @Test
+    public void answer_getter_isCorrect(){
+        Answer ansNoArg = new Answer(); // default no arg constructor
+        Answer ansArg = new Answer("a custom prompt", true); // custom arg constructor
+
+        // no arg constructor test
+        assertFalse(ansNoArg.getCorrect());
+        assertEquals(ansNoArg.getPrompt(), "Example prompt; please change me.");
+
+        // constructor with arg
+        assertTrue(ansArg.getCorrect());
+        assertEquals(ansArg.getPrompt(), "a custom prompt");
+    }
+
+    @Test
+    public void answer_setter_isCorrect(){
+        Answer ansNoArg = new Answer(); // default no arg constructor
+
+        // before modify
+        assertFalse(ansNoArg.getCorrect());
+        assertEquals(ansNoArg.getPrompt(), "Example prompt; please change me.");
+
+        // modify
+        ansNoArg.setCorrect(true);
+        ansNoArg.setPrompt("updated prompt");
+
+        // after modify
+        assertTrue(ansNoArg.getCorrect());
+        assertEquals(ansNoArg.getPrompt(), "updated prompt");
+    }
 }
