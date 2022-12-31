@@ -24,7 +24,6 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="sync code"
-        android:inputType="number|text"
         android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

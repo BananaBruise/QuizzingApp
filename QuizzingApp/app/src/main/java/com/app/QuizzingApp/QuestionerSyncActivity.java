@@ -34,11 +34,11 @@ public class QuestionerSyncActivity extends AppCompatActivity {
                 if (!u.getisActive()) {
                     Toast.makeText(getApplicationContext(), "You were not connected successfully to the student", Toast.LENGTH_SHORT).show();
                 } else {
-                    // TODO: dashboard
+                    Toast.makeText(getApplicationContext(), "You were successfully to the student!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-      
+
     }
 
     public void signOut(View v) {
