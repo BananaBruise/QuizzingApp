@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,13 +28,18 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
+        // initialize helper class
         firebaseHelper = new FirebaseHelper();
-        if (firebaseHelper.getmAuth().getCurrentUser()!=null) {
-            moveToSync(firebaseHelper.getmAuth().getCurrentUser().getUid());
-        }
 
+        // grab view elements
         emailET = findViewById(R.id.signInEmailET);
         passwordET = findViewById(R.id.signInPasswordET);
+
+        // checking for already signed in user
+        if (firebaseHelper.getmAuth().getCurrentUser()!=null) {
+            takeToPostSignIn(firebaseHelper.getmAuth().getCurrentUser().getUid());
+        }
+
     }
 
     public void takeToSignUp(View v) {
@@ -43,7 +47,7 @@ public class SignInActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void moveToSync(String uid) {
+    public void takeToPostSignIn(String uid) {
         final User[] result = new User[1];
 
         FirebaseHelper fbh = new FirebaseHelper();
@@ -58,11 +62,11 @@ public class SignInActivity extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), AnswererSyncActivity.class));
                     }
                     else if (result[0].getisActive()==false && result[0].isQuestioner() == true) {
-                        // TODO: take to questioner sync
+                        startActivity(new Intent(getApplicationContext(), QuestionerSyncActivity.class));
                     }
                     // otherwise is active, go to homescreen
                     else{
-                        // TODO
+                        // TODO: the quiz itself
                     }
                 }
             }});
@@ -87,7 +91,7 @@ public class SignInActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 Toast.makeText(getApplicationContext(), "Sign in successful", Toast.LENGTH_SHORT).show();
-                                // this is another way to create the intent from inside the OnCompleteListener
+                                takeToPostSignIn(firebaseHelper.getmAuth().getCurrentUser().getUid()); // direct authenticated user to next activity
                             }
                             else {
                                 //sign in failed
