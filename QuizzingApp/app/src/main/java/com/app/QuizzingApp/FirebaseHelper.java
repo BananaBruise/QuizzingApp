@@ -60,7 +60,6 @@ public class FirebaseHelper {
     }
 
     public void readUser(String uid, FirestoreCallback callback) {
-        final User[] result = new User[1];
 
         DocumentReference docRef = db.collection("Users").document(uid);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -73,6 +72,7 @@ public class FirebaseHelper {
         });
 
     }
+
 
     public interface FirestoreCallback {
         void onCallbackUser(User u);

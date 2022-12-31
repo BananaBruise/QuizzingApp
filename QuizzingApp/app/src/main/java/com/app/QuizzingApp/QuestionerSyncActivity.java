@@ -5,22 +5,40 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class QuestionerSyncActivity extends AppCompatActivity {
 
+    TextView codeTV;
     FirebaseHelper firebaseHelper = new FirebaseHelper();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questioner_sync);
+
+        codeTV = findViewById(R.id.CodeTV);
+
+        String userUid = firebaseHelper.getmAuth().getCurrentUser().getUid();
+
+        codeTV.setText("CODE: " + userUid);
     }
 
     public void syncQuestioner(View v){
-        // update User object
+        // check if my isActive and other isActive is true
 
-        // if User.isActive is true --> go to next screen
 
-        // else --> toast of failed sync
+        firebaseHelper.readUser(firebaseHelper.getmAuth().getCurrentUser().getUid(), new FirebaseHelper.FirestoreCallback() {
+            @Override
+            public void onCallbackUser(User u) {
+                if (!u.getisActive()) {
+                    Toast.makeText(getApplicationContext(), "You were not connected successfully to the student", Toast.LENGTH_SHORT).show();
+                } else {
+                    // TODO: dashboard
+                }
+            }
+        });
+      
     }
 
     public void signOut(View v) {

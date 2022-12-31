@@ -10,8 +10,8 @@
 
     <TextView
         android:id="@+id/CodeTV"
-        android:layout_width="79dp"
-        android:layout_height="22dp"
+        android:layout_width="285dp"
+        android:layout_height="48dp"
         android:text="CODE:"
         android:textAlignment="center"
         android:textColor="@color/black"
