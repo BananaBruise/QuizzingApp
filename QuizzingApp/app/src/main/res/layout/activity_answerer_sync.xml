@@ -43,4 +43,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SyncCodeET"
         app:layout_constraintVertical_bias="0.07999998" />
+
+    <Button
+        android:id="@+id/signOutBT2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="signOut"
+        android:text="SIGN OUT"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.873" />
 </androidx.constraintlayout.widget.ConstraintLayout>

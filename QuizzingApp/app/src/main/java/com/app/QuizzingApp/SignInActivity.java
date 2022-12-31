@@ -35,10 +35,13 @@ public class SignInActivity extends AppCompatActivity {
         emailET = findViewById(R.id.signInEmailET);
         passwordET = findViewById(R.id.signInPasswordET);
 
+
         // checking for already signed in user
         if (firebaseHelper.getmAuth().getCurrentUser()!=null) {
             takeToPostSignIn(firebaseHelper.getmAuth().getCurrentUser().getUid());
         }
+
+
 
     }
 
@@ -48,28 +51,19 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     public void takeToPostSignIn(String uid) {
-        final User[] result = new User[1];
-
-        FirebaseHelper fbh = new FirebaseHelper();
-        DocumentReference docRef = fbh.getmdb().collection("Users").document(uid);
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        firebaseHelper.readUser(firebaseHelper.getmAuth().getCurrentUser().getUid(), new FirebaseHelper.FirestoreCallback() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                result[0] = documentSnapshot.toObject(User.class);
-                if (fbh.getmAuth().getCurrentUser()!=null){
-                    // if user is not active, take them to sync screen based on role
-                    if (result[0].getisActive()==false && result[0].isQuestioner() == false) {
-                        startActivity(new Intent(getApplicationContext(), AnswererSyncActivity.class));
-                    }
-                    else if (result[0].getisActive()==false && result[0].isQuestioner() == true) {
-                        startActivity(new Intent(getApplicationContext(), QuestionerSyncActivity.class));
-                    }
-                    // otherwise is active, go to homescreen
-                    else{
-                        // TODO: the quiz itself
-                    }
+            public void onCallbackUser(User u) {
+                if (u.getisActive()==false && u.isQuestioner() == false) {
+                    startActivity(new Intent(getApplicationContext(), AnswererSyncActivity.class));
                 }
-            }});
+                else if (u.getisActive()==false && u.isQuestioner() == true) {
+                    startActivity(new Intent(getApplicationContext(), QuestionerSyncActivity.class));
+                } else {
+                    // TODO: take to dashboard
+                }
+            }
+        });
     }
 
     public void signIn(View v) {

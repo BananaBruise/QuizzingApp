@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,9 +13,12 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -63,7 +67,7 @@ public class SignUpActivity extends AppCompatActivity {
 //                            // take the user to the screen where they can enter their wishlist items
 //                            // get application context will get the activity we are currently in that
 //                            // is sending the intent. Similar to how we have said "this" in the past
-//
+                                takeToPostSignUp(user.getUid());
 //                            Intent intent = new Intent(getApplicationContext(), bVolViewProfile.class);
 //                            startActivity(intent);
                             } else {
@@ -77,6 +81,20 @@ public class SignUpActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "An error occured", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    public void takeToPostSignUp(String uid) {
+        firebaseHelper.readUser(firebaseHelper.getmAuth().getCurrentUser().getUid(), new FirebaseHelper.FirestoreCallback() {
+            @Override
+            public void onCallbackUser(User u) {
+                if (u.isQuestioner() == false) {
+                    startActivity(new Intent(getApplicationContext(), AnswererSyncActivity.class));
+                }
+                else if (u.isQuestioner() == true) {
+                    startActivity(new Intent(getApplicationContext(), QuestionerSyncActivity.class));
+                }
+            }
+        });
     }
 
 }

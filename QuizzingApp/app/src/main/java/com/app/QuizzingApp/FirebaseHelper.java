@@ -20,9 +20,15 @@ public class FirebaseHelper {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
+    private User currUser;
+
     public FirebaseHelper() {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+    }
+
+    public User getCurrUser() {
+        return currUser;
     }
 
     public FirebaseAuth getmAuth()
@@ -52,4 +58,25 @@ public class FirebaseHelper {
                 });
 
     }
+
+    public void readUser(String uid, FirestoreCallback callback) {
+        final User[] result = new User[1];
+
+        DocumentReference docRef = db.collection("Users").document(uid);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                currUser = documentSnapshot.toObject(User.class);
+                //Log.d("FBH", currUser.getName());
+                callback.onCallbackUser(currUser);
+            }
+        });
+
+    }
+
+    public interface FirestoreCallback {
+        void onCallbackUser(User u);
+    }
+
+
 }

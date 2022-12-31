@@ -8,30 +8,19 @@
     android:onClick="syncQuestioner"
     tools:context=".QuestionerSyncActivity">
 
-    <EditText
-        android:id="@+id/PromptET"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:width="1024dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Please use the following code to sync with student"
+    <TextView
+        android:id="@+id/CodeTV"
+        android:layout_width="79dp"
+        android:layout_height="22dp"
+        android:text="CODE:"
+        android:textAlignment="center"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.20999998" />
-
-    <TextView
-        android:id="@+id/CodeET"
-        android:layout_width="58dp"
-        android:layout_height="15dp"
-        android:text="CODE"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PromptET"
-        app:layout_constraintVertical_bias="0.100000024" />
+        app:layout_constraintVertical_bias="0.321" />
 
     <Button
         android:id="@+id/syncBT"
@@ -40,7 +29,35 @@
         android:text="My student is synced"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CodeET"
-        app:layout_constraintVertical_bias="0.19999999" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.499" />
+
+    <TextView
+        android:id="@+id/messageTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please sync with student (use code):"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.166" />
+
+    <Button
+        android:id="@+id/signOutBT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="signOut"
+        android:text="SIGN OUT"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.866" />
 </androidx.constraintlayout.widget.ConstraintLayout>
