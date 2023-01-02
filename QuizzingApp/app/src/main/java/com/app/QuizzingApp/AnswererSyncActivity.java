@@ -38,12 +38,13 @@ public class AnswererSyncActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
+                    DocumentSnapshot document = task.getResult(); // getting otherUser record
                     if (document.exists()) {
                         // my user is active
                         firebaseHelper.getmdb().collection("Users").document(firebaseHelper.getmAuth().getCurrentUser().getUid()).update("isActive", true);
                         // other user is active
                         docRef.update("isActive", true);
+                        docRef.update("questionID",document.get("UID")); // otherUser's UID becomes how we look up question set (questionID)
                         // log
                         Log.d("TAG", "DocumentSnapshot data: " + document.getData());
                         // toast

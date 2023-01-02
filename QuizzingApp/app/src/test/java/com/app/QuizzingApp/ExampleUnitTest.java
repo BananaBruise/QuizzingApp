@@ -29,6 +29,7 @@ public class ExampleUnitTest {
         assertEquals(u.getName(), expectedFullName);
         assertNotNull(u.getUID());
         assertFalse(u.getisActive());
+        assertNull(u.getQuestionID());
     }
 
     @Test
