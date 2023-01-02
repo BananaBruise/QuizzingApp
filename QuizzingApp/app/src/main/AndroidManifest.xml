@@ -13,6 +13,13 @@
         android:theme="@style/Theme.QuizzingApp"
         tools:targetApi="31">
         <activity
+            android:name=".QuestionMakerActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".QuestionerSyncActivity"
             android:exported="false">
             <meta-data

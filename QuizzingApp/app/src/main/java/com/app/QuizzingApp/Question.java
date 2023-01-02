@@ -1,17 +1,19 @@
 package com.app.QuizzingApp;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // comment
 public class Question {
-    private final int MAX_CHOICES = 5;
+    private final int MAX_CHOICES = 4;
     private String name;
-    private String diff;
+    private int diff;
     private List<Answer> answers;
 
-    public Question(String name, String diff) {
+    public Question(String name, int diff) {
         this.name = name;
         this.diff = diff;
+        this.answers = new ArrayList<Answer>(MAX_CHOICES);
     }
 
     public Question() {}
@@ -24,11 +26,11 @@ public class Question {
         this.name = name;
     }
 
-    public String getDiff() {
+    public int getDiff() {
         return diff;
     }
 
-    public void setDiff(String diff) {
+    public void setDiff(int diff) {
         this.diff = diff;
     }
 
