@@ -30,7 +30,7 @@ public class QuestionMakerActivity extends AppCompatActivity {
     CheckBox correct4;
     EditText answerText4;
 
-    public static FirebaseHelper firebaseHelper;
+    public static FirebaseHelper firebaseHelper = new FirebaseHelper();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
