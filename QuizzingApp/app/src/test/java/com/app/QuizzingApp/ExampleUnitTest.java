@@ -29,7 +29,37 @@ public class ExampleUnitTest {
         assertEquals(u.getName(), expectedFullName);
         assertNotNull(u.getUID());
         assertFalse(u.getisActive());
-        assertNull(u.getQuestionID());
+    }
+
+    @Test
+    public void answerer_getter_isCorrect(){
+        Answerer a = new Answerer("Han", "Tu", "1234", "htu@gmail.com", "password");
+        String expectedfName = "Han";
+        String expectedlName = "Tu";
+        String expectedFullName = expectedfName + " " + expectedlName;
+
+        assertEquals(a.getfName(),expectedfName);
+        assertEquals(a.getlName(),expectedlName);
+        assertEquals(a.getName(), expectedFullName);
+        assertNotNull(a.getUID());
+        assertFalse(a.getisActive());
+        assertNull(a.getQuestionID());
+    }
+
+    @Test
+    public void questioner_getter_isCorrect(){
+        Questioner q = new Questioner("Han", "Tu", "1234", "htu@gmail.com", "password");
+        String expectedfName = "Han";
+        String expectedlName = "Tu";
+        String expectedFullName = expectedfName + " " + expectedlName;
+        int question_size = 0;
+
+        assertEquals(q.getfName(),expectedfName);
+        assertEquals(q.getlName(),expectedlName);
+        assertEquals(q.getName(), expectedFullName);
+        assertNotNull(q.getUID());
+        assertFalse(q.getisActive());
+        assertEquals(q.getQuestionList().size(), question_size);
     }
 
     @Test

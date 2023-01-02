@@ -31,15 +31,15 @@ public class FirebaseHelper {
         return currUser;
     }
 
-    public FirebaseAuth getmAuth()
-    {
+    public FirebaseAuth getmAuth() {
         return mAuth;
     }
 
-    public FirebaseFirestore getmdb() { return db; }
+    public FirebaseFirestore getmdb() {
+        return db;
+    }
 
-    public void addUserToFirestore(String firstName, String lastName, String uid, String email, String password, boolean isQuestioner)
-    {
+    public void addUserToFirestore(String firstName, String lastName, String uid, String email, String password, boolean isQuestioner) {
         User toAdd = new User(firstName, lastName, uid, email, password, isQuestioner);
 
         db.collection("Users").document(uid)
@@ -56,11 +56,26 @@ public class FirebaseHelper {
                         Log.d("TAG", "Error adding account", e);
                     }
                 });
+    }
 
+    public <T extends User> void addGenericUserToFirestore(T toAdd) {
+        db.collection("Users").document(toAdd.getUID())
+                .set(toAdd)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.i("TAG", "account added");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("TAG", "Error adding account", e);
+                    }
+                });
     }
 
     public void readUser(String uid, FirestoreCallback callback) {
-
         DocumentReference docRef = db.collection("Users").document(uid);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -70,13 +85,21 @@ public class FirebaseHelper {
                 callback.onCallbackUser(currUser);
             }
         });
-
     }
 
+    public <T extends User> void readGenericUser(String uid, FirestoreCallback callback, Class<T> userClass) {
+        DocumentReference docRef = db.collection("Users").document(uid);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                currUser = documentSnapshot.toObject(userClass);
+                //Log.d("FBH", currUser.getName());
+                callback.onCallbackUser(currUser);
+            }
+        });
+    }
 
     public interface FirestoreCallback {
         void onCallbackUser(User u);
     }
-
-
 }

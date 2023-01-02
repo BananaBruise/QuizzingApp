@@ -27,7 +27,6 @@ public class QuestionerSyncActivity extends AppCompatActivity {
     public void syncQuestioner(View v){
         // check if my isActive and other isActive is true
 
-
         firebaseHelper.readUser(firebaseHelper.getmAuth().getCurrentUser().getUid(), new FirebaseHelper.FirestoreCallback() {
             @Override
             public void onCallbackUser(User u) {

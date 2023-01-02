@@ -13,8 +13,6 @@ public class User {
     private String email;
     private String password;
     private boolean isQuestioner;
-    private String questionID; // when user isActive and Answerer (isQuestioner == false),
-                               // they would find question set via QuestionID
 
 
     public String getEmail() {
@@ -32,8 +30,6 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public User() {}
 
     public void setUID(String UID) {
         this.UID = UID;
@@ -55,7 +51,9 @@ public class User {
         this.isQuestioner = isQuestioner;
         this.email = email;
         this.password = password;
-        this.questionID = null;
+    }
+
+    public User() {
     }
 
     public String getfName() {
@@ -90,6 +88,4 @@ public class User {
     public String getName() {
         return this.fName + " " + this.lName;
     }
-
-    public String getQuestionID() { return this.questionID; }
 }

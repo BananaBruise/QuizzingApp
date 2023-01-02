@@ -27,6 +27,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     public static FirebaseHelper firebaseHelper;
 
+    private final String TAG = "SignUpActivity";
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,42 +43,46 @@ public class SignUpActivity extends AppCompatActivity {
 
         firebaseHelper = new FirebaseHelper();
     }
+
     public void signUp(View v) {
         String email = emailET.getText().toString();
         String password = passwordET.getText().toString();
-        Log.w("TAG", email + password);
+        Log.w(TAG, email + password);
         String firstName = firstNameET.getText().toString();
         String lastName = lastNameET.getText().toString();
         boolean isQuestioner = !isStudentSwitch.isChecked();
 
         try {
-            firebaseHelper.getmAuth().createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // user account was created in firebase auth
-                                Log.i("TAG", email + " account created");
+            firebaseHelper.getmAuth().createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        // user account was created in firebase auth
+                        Log.i(TAG, email + " account created");
 
-                                FirebaseUser user = firebaseHelper.getmAuth().getCurrentUser();
+                        FirebaseUser user = firebaseHelper.getmAuth().getCurrentUser();
 
-                                firebaseHelper.addUserToFirestore(firstName, lastName, user.getUid(), email, password, isQuestioner);
+                        if (isQuestioner){
+                            firebaseHelper.addGenericUserToFirestore(new Questioner(firstName, lastName, user.getUid(), email, password));
+                        } else {
+                            firebaseHelper.addGenericUserToFirestore(new Answerer(firstName, lastName, user.getUid(), email, password));
+                        }
 
-                                Toast.makeText(getApplicationContext(), "Welcome, " + firstName + "!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Welcome, " + firstName + "!", Toast.LENGTH_SHORT).show();
 //                            // choose whatever actions you want - update UI, switch to a new screen, etc.
 //                            // take the user to the screen where they can enter their wishlist items
 //                            // get application context will get the activity we are currently in that
 //                            // is sending the intent. Similar to how we have said "this" in the past
-                                takeToPostSignUp(user.getUid());
+                        takeToPostSignUp(user.getUid());
 //                            Intent intent = new Intent(getApplicationContext(), bVolViewProfile.class);
 //                            startActivity(intent);
-                            } else {
-                                // user WASN'T created
-                                Log.d("TAG", email + " sign up failed");
-                                Toast.makeText(getApplicationContext(), "Sign up failed", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                    } else {
+                        // user WASN'T created
+                        Log.d(TAG, email + " sign up failed");
+                        Toast.makeText(getApplicationContext(), "Sign up failed", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "An error occured", Toast.LENGTH_SHORT).show();
         }
@@ -89,8 +95,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onCallbackUser(User u) {
                 if (u.isQuestioner() == false) {
                     startActivity(new Intent(getApplicationContext(), AnswererSyncActivity.class));
-                }
-                else if (u.isQuestioner() == true) {
+                } else if (u.isQuestioner() == true) {
                     startActivity(new Intent(getApplicationContext(), QuestionerSyncActivity.class));
                 }
             }

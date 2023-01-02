@@ -40,11 +40,27 @@ public class AnswererSyncActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult(); // getting otherUser record
                     if (document.exists()) {
-                        // my user is active
-                        firebaseHelper.getmdb().collection("Users").document(firebaseHelper.getmAuth().getCurrentUser().getUid()).update("isActive", true);
+                        // my user is active and links to otherUid
+                        DocumentReference myDocRef = firebaseHelper.getmdb().collection("Users").document(firebaseHelper.getmAuth().getCurrentUser().getUid());
+                        myDocRef.update("isActive", true).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d("TAG", "Answerer's isActive successfully updated!");
+                            }
+                        });
+                        myDocRef.update("questionID",otherUid).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d("TAG", "questionID successfully updated!");
+                            }
+                        }); // otherUser's UID becomes how we look up question set (questionID)
                         // other user is active
-                        docRef.update("isActive", true);
-                        docRef.update("questionID",document.get("UID")); // otherUser's UID becomes how we look up question set (questionID)
+                        docRef.update("isActive", true).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d("TAG", "Questioner's isActive successfully updated!");
+                            }
+                        });
                         // log
                         Log.d("TAG", "DocumentSnapshot data: " + document.getData());
                         // toast
