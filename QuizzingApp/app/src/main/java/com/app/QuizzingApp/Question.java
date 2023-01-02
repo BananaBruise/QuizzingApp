@@ -16,25 +16,33 @@ public class Question {
         this.answers = new ArrayList<Answer>(MAX_CHOICES);
     }
 
+    // constructor
     public Question() {}
 
+    // getter
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public Boolean isQuestionCorrectlyAnswered(){
+        return false;
     }
 
     public int getDiff() {
         return diff;
     }
 
+    public List<Answer> getAnswers() {return this.answers;}
+
+    // setters
     public void setDiff(int diff) {
         this.diff = diff;
     }
 
-    // setters
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void addAnswers(ArrayList<Answer> answers){
         // list size must be under MAX_CHOICES
         if (answers.size()>MAX_CHOICES)
@@ -68,9 +76,5 @@ public class Question {
 
     public String printQuestion(){
         return "question";
-    }
-
-    public Boolean isQuestionCorrectlyAnswered(){
-        return false;
     }
 }
