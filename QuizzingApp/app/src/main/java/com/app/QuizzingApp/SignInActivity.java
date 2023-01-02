@@ -61,6 +61,7 @@ public class SignInActivity extends AppCompatActivity {
                     startActivity(new Intent(getApplicationContext(), QuestionerSyncActivity.class));
                 } else {
                     // TODO: take to dashboard
+                    startActivity(new Intent(getApplicationContext(), QuestionMakerActivity.class));
                 }
             }
         });

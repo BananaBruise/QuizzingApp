@@ -34,6 +34,17 @@ public class Question {
         this.diff = diff;
     }
 
+    // setters
+    public void addAnswers(ArrayList<Answer> answers){
+        // list size must be under MAX_CHOICES
+        if (answers.size()>MAX_CHOICES)
+            throw new IllegalStateException("exceeds max number of choices of " + MAX_CHOICES);
+
+        // add list
+        this.answers = answers;
+    }
+
+
     // TODO: implement these stubbed methods
     public void addAnswer(){
         // Answer list should not exceed MAX_CHOICES
