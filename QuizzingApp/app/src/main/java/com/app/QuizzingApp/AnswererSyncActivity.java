@@ -48,7 +48,7 @@ public class AnswererSyncActivity extends AppCompatActivity {
                                 Log.d("TAG", "Answerer's isActive successfully updated!");
                             }
                         });
-                        myDocRef.update("questionID",otherUid).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        myDocRef.update("questionerID",otherUid).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Log.d("TAG", "questionID successfully updated!");
