@@ -43,7 +43,7 @@ public class ExampleUnitTest {
         assertEquals(a.getName(), expectedFullName);
         assertNotNull(a.getUID());
         assertFalse(a.getisActive());
-        assertNull(a.getQuestionID());
+        assertNull(a.getQuestionerID());
     }
 
     @Test
