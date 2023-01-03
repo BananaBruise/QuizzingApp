@@ -28,4 +28,8 @@ public class Answer {
     public void setPrompt(String prompt) {
         this.prompt = prompt;
     }
+
+    public String toString() {
+        return this.prompt + ", " + (isCorrect ? "correct!" : "incorrect!");
+    }
 }

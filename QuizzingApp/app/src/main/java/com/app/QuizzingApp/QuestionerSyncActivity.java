@@ -34,9 +34,14 @@ public class QuestionerSyncActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "You were not connected successfully to the student", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "You were successfully to the student!", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), QuestionerDashboardActivity.class));
                 }
+
+
             }
         });
+
+
 
     }
 

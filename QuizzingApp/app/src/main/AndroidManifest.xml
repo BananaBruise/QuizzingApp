@@ -13,6 +13,20 @@
         android:theme="@style/Theme.QuizzingApp"
         tools:targetApi="31">
         <activity
+            android:name=".ViewQuestionActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".QuestionerDashboardActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".QuestionMakerActivity"
             android:exported="false">
             <meta-data

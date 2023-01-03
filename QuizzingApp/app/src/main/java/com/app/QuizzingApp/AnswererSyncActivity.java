@@ -73,6 +73,7 @@ public class AnswererSyncActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     public void signOut(View v) {

@@ -3,6 +3,7 @@ package com.app.QuizzingApp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -92,6 +93,8 @@ public class QuestionMakerActivity extends AppCompatActivity {
                         public void onSuccess(Void unused) {
                             Log.i("TAG", "question added");
                             Toast.makeText(getApplicationContext(), "Question added successfully!", Toast.LENGTH_SHORT).show();
+                            // take back
+                            startActivity(new Intent(getApplicationContext(), QuestionerDashboardActivity.class));
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override

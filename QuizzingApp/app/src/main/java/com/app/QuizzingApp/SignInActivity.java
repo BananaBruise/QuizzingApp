@@ -59,9 +59,10 @@ public class SignInActivity extends AppCompatActivity {
                 }
                 else if (u.getisActive()==false && u.isQuestioner() == true) {
                     startActivity(new Intent(getApplicationContext(), QuestionerSyncActivity.class));
-                } else {
-                    // TODO: take to dashboard
-                    startActivity(new Intent(getApplicationContext(), QuestionMakerActivity.class));
+                } else if (u.getisActive() == true && u.isQuestioner()){
+                    startActivity(new Intent(getApplicationContext(), QuestionerDashboardActivity.class));
+                } else if (u.getisActive() == true && u.isQuestioner() == false) {
+                    // TODO: ans dashboard
                 }
             }
         });
