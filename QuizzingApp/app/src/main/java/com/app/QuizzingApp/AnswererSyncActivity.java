@@ -65,6 +65,7 @@ public class AnswererSyncActivity extends AppCompatActivity {
                         Log.d("TAG", "DocumentSnapshot data: " + document.getData());
                         // toast
                         Toast.makeText(getApplicationContext(), "You are synced to " + document.get("fName"), Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(), AnswererDashboardActivity.class));
                     } else {
                         Toast.makeText(getApplicationContext(), "You entered an invalid code", Toast.LENGTH_SHORT).show();
                     }

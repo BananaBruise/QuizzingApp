@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#e8b246"
-    tools:context=".StudentDashboardActivity">
+    tools:context=".AnswererDashboardActivity">
 
     <ListView
         android:id="@+id/answererlistview"

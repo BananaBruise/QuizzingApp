@@ -62,7 +62,7 @@ public class SignInActivity extends AppCompatActivity {
                 } else if (u.getisActive() == true && u.isQuestioner()){
                     startActivity(new Intent(getApplicationContext(), QuestionerDashboardActivity.class));
                 } else if (u.getisActive() == true && u.isQuestioner() == false) {
-                    // TODO: ans dashboard
+                    startActivity(new Intent(getApplicationContext(), AnswererDashboardActivity.class));
                 }
             }
         });
