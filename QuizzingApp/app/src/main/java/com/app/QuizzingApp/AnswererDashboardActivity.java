@@ -72,4 +72,10 @@ public class AnswererDashboardActivity extends AppCompatActivity {
     }
 
     // populate answerlistview
+    // TODO: Tinder-like swiping with Binding layout
+    // references:
+    // binding and cardstack tutorial: https://www.youtube.com/watch?v=3HvfQ_B7-RQ
+    // binding documentation: https://developer.android.com/topic/libraries/view-binding
+    // recycleView doc: https://developer.android.com/develop/ui/views/layout/recyclerview
+    // tinder swiping module (CardStackView): https://github.com/yuyakaido/CardStackView
 }
