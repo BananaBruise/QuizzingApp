@@ -87,7 +87,7 @@ public class FirebaseHelper {
         });
     }
 
-    public <T extends User> void readGenericUser(String uid, FirestoreCallback callback, Class<T> userClass) {
+    public <T extends User> void readGenericUser(String uid, Class<T> userClass, FirestoreCallback callback) {
         DocumentReference docRef = db.collection("Users").document(uid);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
