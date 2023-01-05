@@ -7,34 +7,19 @@
     android:background="#e8b246"
     tools:context=".AnswererDashboardActivity">
 
-    <ListView
-        android:id="@+id/answererlistview"
-        android:layout_width="406dp"
-        android:layout_height="488dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="1dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.19">
-
-    </ListView>
 
     <Button
         android:id="@+id/signoutbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="158dp"
-        android:layout_marginTop="14dp"
         android:layout_marginEnd="159dp"
         android:layout_marginBottom="17dp"
         android:onClick="signOut"
         android:text="SIGN OUT"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/answererlistview" />
+        app:layout_constraintStart_toStartOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

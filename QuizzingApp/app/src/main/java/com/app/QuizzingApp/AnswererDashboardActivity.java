@@ -26,7 +26,7 @@ public class AnswererDashboardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_dashboard);
+        setContentView(R.layout.activity_answerer_dashboard);
 
         questionsList.clear();
         String uid = firebaseHelper.getmAuth().getCurrentUser().getUid();
