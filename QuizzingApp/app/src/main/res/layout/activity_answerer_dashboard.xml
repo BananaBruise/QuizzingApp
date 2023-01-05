@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#e8b246"
     tools:context=".AnswererDashboardActivity">
-    
+
     <Button
         android:id="@+id/signoutbutton"
         android:layout_width="wrap_content"
