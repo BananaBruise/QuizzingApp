@@ -34,16 +34,43 @@ public class AnswererDashboardActivity extends AppCompatActivity {
         binding = ActivityAnswererDashboardBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        List<Card> cards = new ArrayList<>();
-        cards.add(new Card("a", "diff: 4", "a", "b", "c", "d"));
-        cards.add(new Card("b", "diff: 4", "a", "b", "c", "d"));
-        cards.add(new Card("c", "diff: 4", "a", "b", "c", "d"));
-        cards.add(new Card("d", "diff: 4", "a", "b", "c", "d"));
-        cards.add(new Card("e", "diff: 4", "a", "b", "c", "d"));
+        String uid = firebaseHelper.getmAuth().getCurrentUser().getUid();
+        firebaseHelper.readGenericUser(uid, Answerer.class, new FirebaseHelper.FirestoreCallback() {
+            @Override
+            public void onCallbackUser(User u) {
+                Answerer answerer = (Answerer) u;
+                String questionerID = answerer.getQuestionerID();
+                firebaseHelper.getmdb().collection("Users").document(questionerID).collection("Questions")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    List<Card> cardList = new ArrayList<>();
 
-        CardAdapter adapter = new CardAdapter(cards);
-        binding.cardStack.setLayoutManager(new CardStackLayoutManager(getApplicationContext()));
-        binding.cardStack.setAdapter(adapter);
+                                    for (DocumentSnapshot doc : task.getResult()) {
+                                        Log.i("TAG", doc.getData().toString());
+                                        Question q = doc.toObject(Question.class);
+                                        Card c = new Card(q.getName(), "difficulty: " + q.getDiff()
+                                                , q.getAnswers().get(0).getPrompt()
+                                                , q.getAnswers().get(1).getPrompt()
+                                                , q.getAnswers().get(2).getPrompt()
+                                                , q.getAnswers().get(3).getPrompt()
+                                        );
+                                        cardList.add(c);
+                                    }
+
+                                    Log.i("TAG", "success grabbing questions");
+                                    Log.i("TAG", Integer.toString(cardList.size()));
+
+                                    CardAdapter adapter = new CardAdapter(cardList);
+                                    binding.cardStack.setLayoutManager(new CardStackLayoutManager(getApplicationContext()));
+                                    binding.cardStack.setAdapter(adapter);
+                                }
+                            }
+                        });
+            }
+        });
     }
 
     public void signOut(View v) {
