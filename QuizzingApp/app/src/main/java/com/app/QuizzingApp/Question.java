@@ -7,11 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 // comment
-public class Question implements Parcelable {
+public class Question implements Parcelable, Comparable<Question> {
     private final int MAX_CHOICES = 4;
     private String name;
     private int diff;
     private List<Answer> answers;
+    private boolean isCorrectlyAnsweredLastTime;
 
     public static final Parcelable.Creator<Question> CREATOR = new Parcelable.Creator<Question>() {
 
@@ -41,12 +42,11 @@ public class Question implements Parcelable {
         dest.writeInt(diff);
     }
 
-
-
     public Question(String name, int diff) {
         this.name = name;
         this.diff = diff;
         this.answers = new ArrayList<Answer>(MAX_CHOICES);
+        this.isCorrectlyAnsweredLastTime = false;
     }
 
     // constructor
@@ -66,6 +66,28 @@ public class Question implements Parcelable {
     }
 
     public List<Answer> getAnswers() {return this.answers;}
+
+    public boolean isCorrectlyAnsweredLastTime() {
+        return isCorrectlyAnsweredLastTime;
+    }
+
+    public void setCorrectlyAnsweredLastTime(boolean correctlyAnsweredLastTime) {
+        isCorrectlyAnsweredLastTime = correctlyAnsweredLastTime;
+    }
+
+    public String printAnswers(){
+        String output = "";
+
+        for (int i = 0; i < MAX_CHOICES; i++) {
+            output += answers.get(i).toString() + "\n";
+        }
+
+        return output.trim();
+    }
+
+    public String toString() {
+        return this.name + ", difficulty: " + this.diff;
+    }
 
     // setters
     public void setDiff(int diff) {
@@ -103,21 +125,15 @@ public class Question implements Parcelable {
         return;
     }
 
-    public String printAnswers(){
-        String output = "";
-
-        for (int i = 0; i < MAX_CHOICES; i++) {
-            output += answers.get(i).toString() + "\n";
-        }
-
-        return output.trim();
-    }
-
     public String printQuestion(){
         return "question";
     }
 
-    public String toString() {
-        return this.name + ", difficulty: " + this.diff;
+    @Override
+    public int compareTo(Question question) {
+//        1. if the missed it last time (false)
+//        2. higher difficulty
+
+        return 0;
     }
 }
