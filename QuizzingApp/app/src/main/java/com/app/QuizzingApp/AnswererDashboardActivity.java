@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.app.QuizzingApp.databinding.ActivityAnswererDashboardBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,24 +44,19 @@ public class AnswererDashboardActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()) {
-                                    List<Card> cardList = new ArrayList<>();
+                                    List<Question> cardList = new ArrayList<>();
 
                                     for (DocumentSnapshot doc : task.getResult()) {
                                         Log.i("TAG", doc.getData().toString());
                                         Question q = doc.toObject(Question.class);
-                                        Card c = new Card(q.getName(), "difficulty: " + q.getDiff()
-                                                , q.getAnswers().get(0).getPrompt()
-                                                , q.getAnswers().get(1).getPrompt()
-                                                , q.getAnswers().get(2).getPrompt()
-                                                , q.getAnswers().get(3).getPrompt()
-                                        );
-                                        cardList.add(c);
+
+                                        cardList.add(q);
                                     }
 
                                     Log.i("TAG", "success grabbing questions");
                                     Log.i("TAG", Integer.toString(cardList.size()));
 
-                                    CardAdapter adapter = new CardAdapter(cardList);
+                                    QuestionCardAdapter adapter = new QuestionCardAdapter(cardList);
                                     binding.cardStack.setLayoutManager(new CardStackLayoutManager(getApplicationContext()));
                                     binding.cardStack.setAdapter(adapter);
                                 }
