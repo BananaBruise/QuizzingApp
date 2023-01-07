@@ -70,9 +70,10 @@ public class QuestionMakerActivity extends AppCompatActivity {
         if (t1.isEmpty() || t2.isEmpty() || t3.isEmpty() || t4.isEmpty() || name.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Fill in all fields!", Toast.LENGTH_SHORT).show();
         } else {
+            int qid = (int) (Math.random() * 1000000);
             // create our answers and question
             // question
-            Question q = new Question(name, diff);
+            Question q = new Question(name, diff, qid);
             // answers
             Answer a1 = new Answer(t1, c1);
             Answer a2 = new Answer(t2, c2);
@@ -84,9 +85,9 @@ public class QuestionMakerActivity extends AppCompatActivity {
             // submit as a collection to current ID document
             FirebaseFirestore db = firebaseHelper.getmdb();
             String uid = firebaseHelper.getmAuth().getCurrentUser().getUid();
-            int qid = (int) (Math.random() * 1000000);
 
-            db.collection("Users").document(uid).collection("Questions").document(Integer.toString(qid))
+
+            db.collection("Users").document(uid).collection("Questions").document(Integer.toString(q.getQuestionID()))
                     .set(q)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override

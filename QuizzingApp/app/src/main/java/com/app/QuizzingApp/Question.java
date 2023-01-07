@@ -13,6 +13,7 @@ public class Question implements Parcelable, Comparable<Question> {
     private int diff;
     private List<Answer> answers;
     private boolean isCorrectlyAnsweredLastTime;
+    private int questionID;
 
     public static final Parcelable.Creator<Question> CREATOR = new Parcelable.Creator<Question>() {
 
@@ -42,11 +43,20 @@ public class Question implements Parcelable, Comparable<Question> {
         dest.writeInt(diff);
     }
 
-    public Question(String name, int diff) {
+    public int getQuestionID() {
+        return questionID;
+    }
+
+    public void setQuestionID(int questionID) {
+        this.questionID = questionID;
+    }
+
+    public Question(String name, int diff, int questionID) {
         this.name = name;
         this.diff = diff;
         this.answers = new ArrayList<Answer>(MAX_CHOICES);
         this.isCorrectlyAnsweredLastTime = false;
+        this.questionID = questionID;
     }
 
     // constructor
@@ -57,9 +67,6 @@ public class Question implements Parcelable, Comparable<Question> {
         return name;
     }
 
-    public Boolean isQuestionCorrectlyAnswered(){
-        return false;
-    }
 
     public int getDiff() {
         return diff;
@@ -69,10 +76,6 @@ public class Question implements Parcelable, Comparable<Question> {
 
     public boolean isCorrectlyAnsweredLastTime() {
         return isCorrectlyAnsweredLastTime;
-    }
-
-    public void setCorrectlyAnsweredLastTime(boolean correctlyAnsweredLastTime) {
-        isCorrectlyAnsweredLastTime = correctlyAnsweredLastTime;
     }
 
     public String printAnswers(){
