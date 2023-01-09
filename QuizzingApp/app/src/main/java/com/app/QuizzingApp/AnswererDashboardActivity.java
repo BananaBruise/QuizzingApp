@@ -50,10 +50,10 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
 
         // create manager object for cardstack (first arg = context, second arg = listener interface)
         manager = new CardStackLayoutManager(this, this);
-        manager.setStackFrom(StackFrom.None);
-        manager.setVisibleCount(3);
-        manager.setTranslationInterval(8.0f);
-        manager.setScaleInterval(0.95f);
+        manager.setStackFrom(StackFrom.Top);
+        manager.setVisibleCount(5);
+        manager.setTranslationInterval(12.0f);
+        manager.setScaleInterval(0.80f);
         manager.setSwipeThreshold(0.3f);
         manager.setMaxDegree(20.0f);
         manager.setDirections(Direction.HORIZONTAL);
