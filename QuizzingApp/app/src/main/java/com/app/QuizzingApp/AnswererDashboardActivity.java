@@ -20,11 +20,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackListener;
 import com.yuyakaido.android.cardstackview.Direction;
+import com.yuyakaido.android.cardstackview.StackFrom;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AnswererDashboardActivity extends AppCompatActivity  {
+public class AnswererDashboardActivity extends AppCompatActivity implements CardStackListener {
 
     public static FirebaseHelper firebaseHelper = new FirebaseHelper();
 
@@ -39,103 +40,19 @@ public class AnswererDashboardActivity extends AppCompatActivity  {
     CardStackLayoutManager manager;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // grab layout (binding) of this activity
         binding = ActivityAnswererDashboardBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // create manager object for cardstack (first arg = context, second arg = listener interface)
+        manager = new CardStackLayoutManager(this, this);
+        manager.setStackFrom(StackFrom.Top);
 
-        manager = new CardStackLayoutManager(this, new CardStackListener() {
-            @Override
-            public void onCardDragging(Direction direction, float ratio) {
-
-            }
-
-            @Override
-            public void onCardSwiped(Direction direction) {
-                Log.i("TAG", "swiped");
-            }
-
-            @Override
-            public void onCardRewound() {
-
-            }
-
-            @Override
-            public void onCardCanceled() {
-
-            }
-
-            @Override
-            public void onCardAppeared(View view, int position) {
-
-            }
-
-            @Override
-            public void onCardDisappeared(View view, int position) {
-                correct1CB = view.findViewById(R.id.cor1);
-                correct2CB = view.findViewById(R.id.cor2);
-                correct3CB = view.findViewById(R.id.cor3);
-                correct4CB = view.findViewById(R.id.cor4);
-                // user answers
-                Log.i("TAG", "dissappeared");
-                List<Boolean> entered = new ArrayList<>();
-                entered.add(correct1CB.isChecked());
-                entered.add(correct2CB.isChecked());
-                entered.add(correct3CB.isChecked());
-                entered.add(correct4CB.isChecked());
-
-                // actual answers
-                List<Answer> answerList = cardList.get(position).getAnswers();
-
-                for (int i = 0; i < entered.size(); i++) {
-                    if (entered.get(i) != answerList.get(i).getCorrect()) {
-                        Log.i("if", "in if");
-                        firebaseHelper.getmdb().collection("Users").document(questionerID).collection("Questions")
-                                .document(Integer.toString(cardList.get(position).getQuestionID()))
-                                .update("correctlyAnsweredLastTime", false)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        Toast.makeText(getApplicationContext(), "Question was INCORRECT!", Toast.LENGTH_SHORT).show();
-                                        Log.i("onSuccess", "Question was incorrect");
-
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.i("failed", "onfailure");
-                                    }
-                                });
-                        return;
-
-                    }
-                }
-
-                firebaseHelper.getmdb().collection("Users").document(questionerID).collection("Questions")
-                        .document(Integer.toString(cardList.get(position).getQuestionID()))
-                        .update("correctlyAnsweredLastTime", true)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                Toast.makeText(getApplicationContext(), "Question was CORRECT!", Toast.LENGTH_SHORT).show();
-
-                            }
-                        });
-
-
-
-
-
-            }
-        });
-
-
-
+        // populate stack of questions for answerer
         String uid = firebaseHelper.getmAuth().getCurrentUser().getUid();
         firebaseHelper.readGenericUser(uid, Answerer.class, new FirebaseHelper.FirestoreCallback() {
             @Override
@@ -175,6 +92,85 @@ public class AnswererDashboardActivity extends AppCompatActivity  {
 
         Intent i = new Intent(getApplicationContext(), SignInActivity.class);
         startActivity(i);
+    }
+
+    @Override
+    public void onCardDragging(Direction direction, float ratio) {
+
+    }
+
+    @Override
+    public void onCardSwiped(Direction direction) {
+
+    }
+
+    @Override
+    public void onCardRewound() {
+
+    }
+
+    @Override
+    public void onCardCanceled() {
+
+    }
+
+    @Override
+    public void onCardAppeared(View view, int position) {
+
+    }
+
+    @Override
+    public void onCardDisappeared(View view, int position) {
+        correct1CB = view.findViewById(R.id.cor1);
+        correct2CB = view.findViewById(R.id.cor2);
+        correct3CB = view.findViewById(R.id.cor3);
+        correct4CB = view.findViewById(R.id.cor4);
+        // user answers
+        Log.i("TAG", "dissappeared");
+        List<Boolean> entered = new ArrayList<>();
+        entered.add(correct1CB.isChecked());
+        entered.add(correct2CB.isChecked());
+        entered.add(correct3CB.isChecked());
+        entered.add(correct4CB.isChecked());
+
+        // actual answers
+        List<Answer> answerList = cardList.get(position).getAnswers();
+
+        for (int i = 0; i < entered.size(); i++) {
+            if (entered.get(i) != answerList.get(i).getCorrect()) {
+                Log.i("if", "in if");
+                firebaseHelper.getmdb().collection("Users").document(questionerID).collection("Questions")
+                        .document(Integer.toString(cardList.get(position).getQuestionID()))
+                        .update("correctlyAnsweredLastTime", false)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(getApplicationContext(), "Question was INCORRECT!", Toast.LENGTH_SHORT).show();
+                                Log.i("onSuccess", "Question was incorrect");
+
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.i("failed", "onfailure");
+                            }
+                        });
+                return;
+
+            }
+        }
+
+        firebaseHelper.getmdb().collection("Users").document(questionerID).collection("Questions")
+                .document(Integer.toString(cardList.get(position).getQuestionID()))
+                .update("correctlyAnsweredLastTime", true)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(getApplicationContext(), "Question was CORRECT!", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
     }
 
 
