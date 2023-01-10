@@ -52,12 +52,7 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
         manager = new CardStackLayoutManager(this, this);
         manager.setStackFrom(StackFrom.Top);
         manager.setVisibleCount(5);
-        manager.setTranslationInterval(12.0f);
-        manager.setScaleInterval(0.80f);
-        manager.setSwipeThreshold(0.3f);
-        manager.setMaxDegree(20.0f);
         manager.setDirections(Direction.HORIZONTAL);
-        manager.setCanScrollHorizontal(true);
         manager.setCanScrollVertical(false);
 
         // populate stack of questions for answerer
