@@ -36,6 +36,8 @@ public class QuestionCardAdapter extends RecyclerView.Adapter<QuestionCardAdapte
     @Override
     public void onBindViewHolder(@NonNull QuestionCardAdapter.myViewHolder holder, int position) {
         Question cardItem = cardList.get(position);
+        holder.binding.progress.setMax(cardList.size());
+        holder.binding.progress.setProgress(position + 1);
         holder.binding.cardQuestionName.setText(cardItem.getName());
         holder.binding.cardQuestionDiff.setText("difficulty: " + cardItem.getDiff());
         holder.binding.answer1.setText(cardItem.getAnswers().get(0).getPrompt());

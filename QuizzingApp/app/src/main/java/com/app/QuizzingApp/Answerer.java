@@ -1,5 +1,8 @@
 package com.app.QuizzingApp;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 public class Answerer extends User {
     private String questionerID; // active user (isActive) would find question set via QuestionID
 
@@ -14,4 +17,6 @@ public class Answerer extends User {
     public String getQuestionerID() {
         return this.questionerID;
     }
+
+
 }

@@ -3,6 +3,9 @@ package com.app.QuizzingApp;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.checkerframework.checker.units.qual.A;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +34,7 @@ public class Question implements Parcelable, Comparable<Question> {
     public Question(Parcel parcel) {
         name = parcel.readString();
         diff = parcel.readInt();
+        answers = parcel.createTypedArrayList(Answer.CREATOR);
     }
 
     @Override
@@ -41,6 +45,7 @@ public class Question implements Parcelable, Comparable<Question> {
     public void writeToParcel(Parcel dest, int i) {
         dest.writeString(name);
         dest.writeInt(diff);
+        dest.writeTypedList(answers);
     }
 
     public int getQuestionID() {
@@ -87,6 +92,7 @@ public class Question implements Parcelable, Comparable<Question> {
 
         return output.trim();
     }
+
 
     public String toString() {
         return this.name + ", difficulty: " + this.diff;

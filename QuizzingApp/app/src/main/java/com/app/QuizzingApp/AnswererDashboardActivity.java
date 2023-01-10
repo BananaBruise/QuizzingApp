@@ -22,6 +22,7 @@ import com.yuyakaido.android.cardstackview.CardStackListener;
 import com.yuyakaido.android.cardstackview.Direction;
 import com.yuyakaido.android.cardstackview.StackFrom;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +40,9 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
 
     CardStackLayoutManager manager;
 
+    Toast m_currentToast = null;
+
+    ArrayList<Question> wrong = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +77,7 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
                                     for (DocumentSnapshot doc : task.getResult()) {
                                         Log.i("TAG", doc.getData().toString());
                                         Question q = doc.toObject(Question.class);
-
+                                        Log.i("answerdashboard", q.printAnswers());
                                         cardList.add(q);
                                     }
 
@@ -148,9 +152,14 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-                                Toast.makeText(getApplicationContext(), "Question was INCORRECT!", Toast.LENGTH_SHORT).show();
                                 Log.i("onSuccess", "Question was incorrect");
-
+                                wrong.add(cardList.get(position));
+                                if (position == cardList.size() - 1) {
+                                    Log.i("cards done", "Cards done");
+                                    showToast("You finished the quiz!");
+                                    Log.i("wrong questions", wrong.toString());
+                                    takeToViewQuestion(wrong);
+                                }
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -170,10 +179,35 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        Toast.makeText(getApplicationContext(), "Question was CORRECT!", Toast.LENGTH_SHORT).show();
+                        if (position == cardList.size() - 1) {
+                            Log.i("cards done", "Cards done");
+                            showToast("You finished the quiz!");
+                            takeToViewQuestion(wrong);
+                        }
 
                     }
                 });
+    }
+
+    void showToast(String text)
+    {
+        if(m_currentToast != null)
+        {
+            m_currentToast.cancel();
+        }
+        m_currentToast = Toast.makeText(this, text, Toast.LENGTH_LONG);
+        m_currentToast.show();
+
+    }
+
+    public void takeToViewQuestion(ArrayList<Question> wrongQuestions) {
+        Intent i = new Intent(getApplicationContext(), PostQuizActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("WRONGS", wrongQuestions);
+        i.putExtra("INCORRECT_QUESTIONS", bundle);
+        Log.i("wrong questions", wrongQuestions.get(0).printAnswers());
+        startActivity(i);
+
     }
 
 

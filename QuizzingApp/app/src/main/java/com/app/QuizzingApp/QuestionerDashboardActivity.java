@@ -11,16 +11,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SearchView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.sql.Array;
 import java.util.ArrayList;
 
 public class QuestionerDashboardActivity extends AppCompatActivity {
@@ -60,7 +57,7 @@ public class QuestionerDashboardActivity extends AppCompatActivity {
                                     getApplicationContext(), android.R.layout.simple_list_item_1, questionsList);
 
 
-                            ListView listView = (ListView) findViewById(R.id.listview);
+                            ListView listView = (ListView) findViewById(R.id.wrongQuestionsListView);
                             listView.setAdapter(listAdapter);
 
                             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -105,7 +102,7 @@ public class QuestionerDashboardActivity extends AppCompatActivity {
                     getApplicationContext(), android.R.layout.simple_list_item_1, questionsList);
 
 
-            ListView listView = (ListView) findViewById(R.id.listview);
+            ListView listView = (ListView) findViewById(R.id.wrongQuestionsListView);
             listView.setAdapter(listAdapter);
 
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -138,7 +135,7 @@ public class QuestionerDashboardActivity extends AppCompatActivity {
                 getApplicationContext(), android.R.layout.simple_list_item_1, searched);
 
 
-        ListView listView = (ListView) findViewById(R.id.listview);
+        ListView listView = (ListView) findViewById(R.id.wrongQuestionsListView);
         listView.setAdapter(listAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
