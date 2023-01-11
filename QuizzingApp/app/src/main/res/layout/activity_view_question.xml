@@ -38,8 +38,6 @@
         android:id="@+id/answersTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding_right="30dp"
-        android:padding_left="30dp"
         android:text="Answer 1:"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
