@@ -9,8 +9,8 @@
 
     <TextView
         android:id="@+id/questionNameTV"
-        android:layout_width="332dp"
-        android:layout_height="62dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
         android:text="TextView"
@@ -36,8 +36,10 @@
 
     <TextView
         android:id="@+id/answersTV"
-        android:layout_width="290dp"
-        android:layout_height="143dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding_right="30dp"
+        android:padding_left="30dp"
         android:text="Answer 1:"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
