@@ -35,7 +35,7 @@
         app:srcCompat="@android:drawable/ic_menu_add" />
 
     <Button
-        android:id="@+id/signout"
+        android:id="@+id/signOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="signOut"
@@ -62,7 +62,7 @@
         app:layout_constraintVertical_bias="0.056" />
 
     <Button
-        android:id="@+id/search"
+        android:id="@+id/searchBT"
         android:layout_width="57dp"
         android:layout_height="45dp"
         android:onClick="searchHelper"
@@ -75,7 +75,7 @@
         app:layout_constraintVertical_bias="0.048" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/infoTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Clear search bar to reset search"

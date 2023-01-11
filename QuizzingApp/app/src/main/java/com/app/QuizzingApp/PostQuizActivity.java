@@ -41,9 +41,7 @@ public class PostQuizActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), ViewQuestionActivity.class);
 
 
-                intent.putExtra("ITEM_TO_EDIT", wrongQuestions.get(i));
-                Log.i("ANSWERS", wrongQuestions.get(i).printAnswers());
-                intent.putExtra("ANSWERS", wrongQuestions.get(i).printAnswers());
+                intent.putExtra("ITEM", wrongQuestions.get(i));
                 startActivity(intent);
 
             }

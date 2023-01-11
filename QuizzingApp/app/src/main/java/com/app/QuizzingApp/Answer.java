@@ -4,9 +4,48 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Answer implements Parcelable {
+    // instance vars
     private String prompt;
-    private Boolean isCorrect;
+    private boolean isCorrect;
 
+    // constructor
+    public Answer() {
+        this("Example prompt; please change me.", false);
+    }
+
+    public Answer(String prompt, boolean isCorrect) {
+        this.prompt = prompt;
+        this.isCorrect = isCorrect;
+    }
+
+    public Answer(Parcel parcel) {
+        prompt = parcel.readString();
+        isCorrect = parcel.readBoolean();
+    }
+
+    // getters
+    public boolean getCorrect() {
+        return isCorrect;
+    }
+
+    public String getPrompt() {
+        return prompt;
+    }
+
+    public String toString() {
+        return this.prompt + ", " + (isCorrect ? "correct!" : "incorrect!");
+    }
+
+    // setters
+    public void setCorrect(boolean correct) {
+        isCorrect = correct;
+    }
+
+    public void setPrompt(String prompt) {
+        this.prompt = prompt;
+    }
+
+    // Parcelable
     public static final Parcelable.Creator<Answer> CREATOR = new Parcelable.Creator<Answer>() {
 
         @Override
@@ -19,40 +58,6 @@ public class Answer implements Parcelable {
             return new Answer[0];
         }
     };
-
-    public Answer(String prompt, Boolean isCorrect){
-        this.prompt = prompt;
-        this.isCorrect = isCorrect;
-    }
-
-    public Answer(Parcel parcel) {
-        prompt = parcel.readString();
-        isCorrect = parcel.readBoolean();
-    }
-
-    public Answer(){
-        this("Example prompt; please change me.", false);
-    }
-
-    public Boolean getCorrect() {
-        return isCorrect;
-    }
-
-    public void setCorrect(Boolean correct) {
-        isCorrect = correct;
-    }
-
-    public String getPrompt() {
-        return prompt;
-    }
-
-    public void setPrompt(String prompt) {
-        this.prompt = prompt;
-    }
-
-    public String toString() {
-        return this.prompt + ", " + (isCorrect ? "correct!" : "incorrect!");
-    }
 
     @Override
     public int describeContents() {

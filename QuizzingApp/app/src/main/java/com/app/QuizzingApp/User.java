@@ -3,9 +3,8 @@ package com.app.QuizzingApp;
 import java.util.ArrayList;
 import java.util.UUID;
 
-// comment
 public class User {
-
+    // instance vars
     private String UID;
     private String fName;
     private String lName;
@@ -14,33 +13,8 @@ public class User {
     private String password;
     private boolean isQuestioner;
 
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setUID(String UID) {
-        this.UID = UID;
-    }
-
-    public boolean isQuestioner() {
-        return isQuestioner;
-    }
-
-    public void setQuestioner(boolean questioner) {
-        isQuestioner = questioner;
+    // constructor
+    public User() {
     }
 
     public User(String firstName, String lastName, String UID, String email, String password, boolean isQuestioner) {
@@ -53,33 +27,30 @@ public class User {
         this.password = password;
     }
 
-    public User() {
+    // getters
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public boolean isQuestioner() {
+        return isQuestioner;
     }
 
     public String getfName() {
         return fName;
     }
 
-    protected void setfName(String fName) {
-        this.fName = fName.trim();
-    }
-
     public String getlName() {
         return lName;
-    }
-
-    protected void setlName(String lName) {
-        this.lName = lName.trim();
     }
 
     public boolean getisActive() {
         return isActive;
     }
-
-    protected void setisActive(Boolean isActive) {
-        this.isActive = isActive;
-    }
-
 
     public String getUID() {
         return UID;
@@ -88,4 +59,34 @@ public class User {
     public String getName() {
         return this.fName + " " + this.lName;
     }
+
+    // setters
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setUID(String UID) {
+        this.UID = UID;
+    }
+
+    public void setQuestioner(boolean questioner) {
+        isQuestioner = questioner;
+    }
+
+    protected void setfName(String fName) {
+        this.fName = fName.trim();
+    }
+
+    protected void setlName(String lName) {
+        this.lName = lName.trim();
+    }
+
+    protected void setisActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+
 }

@@ -12,17 +12,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 
 public class SignInActivity extends AppCompatActivity {
 
     private EditText emailET, passwordET;
 
-    public static FirebaseHelper firebaseHelper;
+    FirebaseHelper firebaseHelper;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,14 +32,10 @@ public class SignInActivity extends AppCompatActivity {
         emailET = findViewById(R.id.signInEmailET);
         passwordET = findViewById(R.id.signInPasswordET);
 
-
         // checking for already signed in user
         if (firebaseHelper.getmAuth().getCurrentUser()!=null) {
             takeToPostSignIn(firebaseHelper.getmAuth().getCurrentUser().getUid());
         }
-
-
-
     }
 
     public void takeToSignUp(View v) {
@@ -51,7 +44,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     public void takeToPostSignIn(String uid) {
-        firebaseHelper.readUser(firebaseHelper.getmAuth().getCurrentUser().getUid(), new FirebaseHelper.FirestoreCallback() {
+        firebaseHelper.readUser(firebaseHelper.getmAuth().getCurrentUser().getUid(), new FirebaseHelper.FirestoreUserCallback() {
             @Override
             public void onCallbackUser(User u) {
                 if (u.getisActive()==false && u.isQuestioner() == false) {
@@ -91,7 +84,7 @@ public class SignInActivity extends AppCompatActivity {
                             }
                             else {
                                 //sign in failed
-                                Log.d("TAG", email + " failed to log in" + task.getException());
+                                Log.d("SignInActivity", email + " failed to log in" + task.getException());
                                 Toast.makeText(getApplicationContext(), "Wrong email or password", Toast.LENGTH_SHORT).show();
                             }
                         }

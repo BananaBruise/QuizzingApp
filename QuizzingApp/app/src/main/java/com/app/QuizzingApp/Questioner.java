@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Questioner extends User {
+    // instance var
     private List<Question> questionList;
 
+    // constructor
     public Questioner() {
     }
 
@@ -14,6 +16,7 @@ public class Questioner extends User {
         this.questionList = new ArrayList<Question>();
     }
 
+    // getter
     public List<Question> getQuestionList() {
         return this.questionList;
     }

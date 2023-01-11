@@ -13,12 +13,9 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -47,7 +44,6 @@ public class SignUpActivity extends AppCompatActivity {
     public void signUp(View v) {
         String email = emailET.getText().toString();
         String password = passwordET.getText().toString();
-        Log.w(TAG, email + password);
         String firstName = firstNameET.getText().toString();
         String lastName = lastNameET.getText().toString();
         boolean isQuestioner = !isStudentSwitch.isChecked();
@@ -69,13 +65,7 @@ public class SignUpActivity extends AppCompatActivity {
                         }
 
                         Toast.makeText(getApplicationContext(), "Welcome, " + firstName + "!", Toast.LENGTH_SHORT).show();
-//                            // choose whatever actions you want - update UI, switch to a new screen, etc.
-//                            // take the user to the screen where they can enter their wishlist items
-//                            // get application context will get the activity we are currently in that
-//                            // is sending the intent. Similar to how we have said "this" in the past
                         takeToPostSignUp(user.getUid());
-//                            Intent intent = new Intent(getApplicationContext(), bVolViewProfile.class);
-//                            startActivity(intent);
                     } else {
                         // user WASN'T created
                         Log.d(TAG, email + " sign up failed");
@@ -90,7 +80,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public void takeToPostSignUp(String uid) {
-        firebaseHelper.readUser(firebaseHelper.getmAuth().getCurrentUser().getUid(), new FirebaseHelper.FirestoreCallback() {
+        firebaseHelper.readUser(firebaseHelper.getmAuth().getCurrentUser().getUid(), new FirebaseHelper.FirestoreUserCallback() {
             @Override
             public void onCallbackUser(User u) {
                 if (u.isQuestioner() == false) {
@@ -101,5 +91,4 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
     }
-
 }

@@ -22,7 +22,6 @@ import com.yuyakaido.android.cardstackview.CardStackListener;
 import com.yuyakaido.android.cardstackview.Direction;
 import com.yuyakaido.android.cardstackview.StackFrom;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,7 +60,7 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
 
         // populate stack of questions for answerer
         String uid = firebaseHelper.getmAuth().getCurrentUser().getUid();
-        firebaseHelper.readGenericUser(uid, Answerer.class, new FirebaseHelper.FirestoreCallback() {
+        firebaseHelper.readGenericUser(uid, Answerer.class, new FirebaseHelper.FirestoreUserCallback() {
             @Override
             public void onCallbackUser(User u) {
                 Answerer answerer = (Answerer) u;

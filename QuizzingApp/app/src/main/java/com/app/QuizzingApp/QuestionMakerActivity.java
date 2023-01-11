@@ -32,7 +32,7 @@ public class QuestionMakerActivity extends AppCompatActivity {
     CheckBox correct4;
     EditText answerText4;
 
-    public static FirebaseHelper firebaseHelper = new FirebaseHelper();
+    FirebaseHelper firebaseHelper = new FirebaseHelper();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,25 +86,15 @@ public class QuestionMakerActivity extends AppCompatActivity {
             FirebaseFirestore db = firebaseHelper.getmdb();
             String uid = firebaseHelper.getmAuth().getCurrentUser().getUid();
 
-
-            db.collection("Users").document(uid).collection("Questions").document(Integer.toString(q.getQuestionID()))
-                    .set(q)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            Log.i("TAG", "question added");
-                            Toast.makeText(getApplicationContext(), "Question added successfully!", Toast.LENGTH_SHORT).show();
-                            // take back
-                            startActivity(new Intent(getApplicationContext(), QuestionerDashboardActivity.class));
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.d("TAG", "Error adding question", e);
-                            Toast.makeText(getApplicationContext(), "Error adding question", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
+            firebaseHelper.writeQuestion(uid, Integer.toString(q.getQuestionID()), q, new FirebaseHelper.FirestoreQuestionCallback() {
+                @Override
+                public void onCallbackQuestionWriter() {
+                    Log.i("QuestionMakerActivity", "question added");
+                    Toast.makeText(getApplicationContext(), "Question added successfully!", Toast.LENGTH_SHORT).show();
+                    // take back
+                    startActivity(new Intent(getApplicationContext(), QuestionerDashboardActivity.class));
+                }
+            });
         }
     }
 

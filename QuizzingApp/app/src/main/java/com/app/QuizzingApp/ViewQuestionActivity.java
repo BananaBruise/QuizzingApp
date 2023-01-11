@@ -22,8 +22,7 @@ public class ViewQuestionActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        clickedQuestion = (Question) intent.getParcelableExtra("ITEM_TO_EDIT");
-        answers = intent.getStringExtra("ANSWERS");
+        clickedQuestion = (Question) intent.getParcelableExtra("ITEM");
 
         questionNameTV = findViewById(R.id.questionNameTV);
         difficultyTV = findViewById(R.id.difficultyTV);
@@ -31,7 +30,7 @@ public class ViewQuestionActivity extends AppCompatActivity {
 
         questionNameTV.setText(clickedQuestion.getName());
         difficultyTV.setText("difficulty: " + clickedQuestion.getDiff());
-        answersTV.setText(answers);
+        answersTV.setText(clickedQuestion.printAnswers());
 
     }
 }

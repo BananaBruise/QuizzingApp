@@ -9,7 +9,7 @@
     tools:context=".QuestionerSyncActivity">
 
     <TextView
-        android:id="@+id/CodeTV"
+        android:id="@+id/questionerSyncCodeTV"
         android:layout_width="285dp"
         android:layout_height="48dp"
         android:text="CODE:"
@@ -23,7 +23,7 @@
         app:layout_constraintVertical_bias="0.321" />
 
     <Button
-        android:id="@+id/syncBT"
+        android:id="@+id/questionerSyncBT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="syncQuestioner"
@@ -36,7 +36,7 @@
         app:layout_constraintVertical_bias="0.499" />
 
     <TextView
-        android:id="@+id/messageTV"
+        android:id="@+id/questionerMessageTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Please sync with student (use code):"
@@ -50,7 +50,7 @@
         app:layout_constraintVertical_bias="0.166" />
 
     <Button
-        android:id="@+id/signOutBT"
+        android:id="@+id/questionerSignOutBT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="signOut"
