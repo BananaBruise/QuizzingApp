@@ -43,6 +43,6 @@ public class QuestionerSyncActivity extends AppCompatActivity {
     }
 
     public void signOut(View v) {
-        new Navigation().signOut(getApplicationContext());
+        new Navigation().signOut(QuestionerSyncActivity.this);
     }
 }

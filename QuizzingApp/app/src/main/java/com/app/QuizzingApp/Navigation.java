@@ -8,13 +8,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
-public class Navigation extends Activity{
+public class Navigation {
     FirebaseHelper firebaseHelper = new FirebaseHelper();
 
-    public void signOut(Context c) {
+    public void signOut(Activity activity) {
         firebaseHelper.getmAuth().signOut();
-        Intent i = new Intent(c, SignInActivity.class);
-        startActivity(i);
+        Intent i = new Intent(activity, SignInActivity.class);
+        activity.startActivity(i);
     }
+
 }

@@ -1,6 +1,5 @@
 package com.app.QuizzingApp;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -12,8 +11,6 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -39,16 +36,16 @@ public class QuestionMakerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_maker);
 
-        qName = findViewById(R.id.QuestionNameET);
+        qName = findViewById(R.id.questionNameET);
         difficulty = findViewById(R.id.difficultyBar);
-        correct1 = findViewById(R.id.qCorrectBox1);
-        answerText1 = findViewById(R.id.answerTextET_1);
-        correct2 = findViewById(R.id.qCorrectBox2);
-        answerText2 = findViewById(R.id.answerTextET_2);
-        correct3 = findViewById(R.id.qCorrectBox3);
-        answerText3 = findViewById(R.id.answerTextET_3);
-        correct4 = findViewById(R.id.qCorrectBox4);
-        answerText4 = findViewById(R.id.answerTextET_4);
+        correct1 = findViewById(R.id.questionMakerCorrect1CB);
+        answerText1 = findViewById(R.id.questionMakerAnswer1ET);
+        correct2 = findViewById(R.id.questionMakerCorrect2CB);
+        answerText2 = findViewById(R.id.questionMakerAnswer2ET);
+        correct3 = findViewById(R.id.questionMakerCorrect3CB);
+        answerText3 = findViewById(R.id.questionMakerAnswer3ET);
+        correct4 = findViewById(R.id.questionMakerCorrect4CB);
+        answerText4 = findViewById(R.id.questionMakerAnswer4ET);
     }
 
     public void submitQuestion(View v) {

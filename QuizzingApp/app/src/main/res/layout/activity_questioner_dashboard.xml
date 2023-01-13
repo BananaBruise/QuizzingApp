@@ -8,7 +8,7 @@
     tools:context=".QuestionerDashboardActivity">
 
     <ListView
-        android:id="@+id/wrongQuestionsListView"
+        android:id="@+id/allQuestionsLV"
         android:layout_width="384dp"
         android:layout_height="402dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -19,7 +19,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/addQuestionBT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -35,7 +35,7 @@
         app:srcCompat="@android:drawable/ic_menu_add" />
 
     <Button
-        android:id="@+id/signOut"
+        android:id="@+id/questionerDashboardSignOutBT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="signOut"
@@ -75,7 +75,7 @@
         app:layout_constraintVertical_bias="0.048" />
 
     <TextView
-        android:id="@+id/infoTV"
+        android:id="@+id/questionerDashboardInfoTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Clear search bar to reset search"

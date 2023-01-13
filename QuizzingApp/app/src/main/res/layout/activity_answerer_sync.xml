@@ -8,7 +8,7 @@
     tools:context=".AnswererSyncActivity">
 
     <TextView
-        android:id="@+id/AnswererPromptView"
+        android:id="@+id/answererPromptTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Please sync with Teacher's code to see your questions"
@@ -19,7 +19,7 @@
         app:layout_constraintVertical_bias="0.128" />
 
     <EditText
-        android:id="@+id/SyncCodeET"
+        android:id="@+id/syncCodeET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -28,11 +28,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AnswererPromptView"
+        app:layout_constraintTop_toBottomOf="@+id/answererPromptTV"
         app:layout_constraintVertical_bias="0.19999999" />
 
     <Button
-        android:id="@+id/SyncBT"
+        android:id="@+id/syncBT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="syncAnswerer"
@@ -40,11 +40,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SyncCodeET"
+        app:layout_constraintTop_toBottomOf="@+id/syncCodeET"
         app:layout_constraintVertical_bias="0.07999998" />
 
     <Button
-        android:id="@+id/signOutBT2"
+        android:id="@+id/answererSyncSignOutBT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="signOut"

@@ -8,7 +8,7 @@
     tools:context=".QuestionMakerActivity">
 
     <EditText
-        android:id="@+id/answerTextET_4"
+        android:id="@+id/questionMakerAnswer4ET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
@@ -19,25 +19,25 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.264"
-        app:layout_constraintStart_toEndOf="@+id/qCorrectBox1"
+        app:layout_constraintStart_toEndOf="@+id/questionMakerCorrect1CB"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.824" />
 
     <CheckBox
-        android:id="@+id/qCorrectBox4"
+        android:id="@+id/questionMakerCorrect4CB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:text="Correct?"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/answerTextET_1"
+        app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswer1ET"
         app:layout_constraintHorizontal_bias="0.514"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.823" />
 
     <EditText
-        android:id="@+id/answerTextET_3"
+        android:id="@+id/questionMakerAnswer3ET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
@@ -48,25 +48,25 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.264"
-        app:layout_constraintStart_toEndOf="@+id/qCorrectBox1"
+        app:layout_constraintStart_toEndOf="@+id/questionMakerCorrect1CB"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.727" />
 
     <CheckBox
-        android:id="@+id/qCorrectBox3"
+        android:id="@+id/questionMakerCorrect3CB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:text="Correct?"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/answerTextET_1"
+        app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswer1ET"
         app:layout_constraintHorizontal_bias="0.514"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.726" />
 
     <EditText
-        android:id="@+id/answerTextET_2"
+        android:id="@+id/questionMakerAnswer2ET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
@@ -77,25 +77,25 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.264"
-        app:layout_constraintStart_toEndOf="@+id/qCorrectBox1"
+        app:layout_constraintStart_toEndOf="@+id/questionMakerCorrect1CB"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.634" />
 
     <CheckBox
-        android:id="@+id/qCorrectBox2"
+        android:id="@+id/questionMakerCorrect2CB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:text="Correct?"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/answerTextET_1"
+        app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswer1ET"
         app:layout_constraintHorizontal_bias="0.514"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.632" />
 
     <EditText
-        android:id="@+id/QuestionNameET"
+        android:id="@+id/questionNameET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -116,7 +116,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/QuestionNameET"
+        app:layout_constraintTop_toBottomOf="@+id/questionNameET"
         app:layout_constraintVertical_bias="0.110000014" />
 
     <TextView
@@ -131,7 +131,7 @@
         app:layout_constraintVertical_bias="0.00999999" />
 
     <EditText
-        android:id="@+id/answerTextET_1"
+        android:id="@+id/questionMakerAnswer1ET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
@@ -142,18 +142,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.26"
-        app:layout_constraintStart_toEndOf="@+id/qCorrectBox1"
+        app:layout_constraintStart_toEndOf="@+id/questionMakerCorrect1CB"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.537" />
 
     <CheckBox
-        android:id="@+id/qCorrectBox1"
+        android:id="@+id/questionMakerCorrect1CB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:text="Correct?"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/answerTextET_1"
+        app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswer1ET"
         app:layout_constraintHorizontal_bias="0.46"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

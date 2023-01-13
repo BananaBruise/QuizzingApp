@@ -36,7 +36,7 @@ public class SignUpActivity extends AppCompatActivity {
         passwordET = findViewById(R.id.passwordET);
         firstNameET = findViewById(R.id.firstNameET);
         lastNameET = findViewById(R.id.lastNameET);
-        isStudentSwitch = findViewById(R.id.isStudentID);
+        isStudentSwitch = findViewById(R.id.isStudentSW);
 
         firebaseHelper = new FirebaseHelper();
     }

@@ -38,12 +38,12 @@ public class QuestionCardAdapter extends RecyclerView.Adapter<QuestionCardAdapte
         Question cardItem = cardList.get(position);
         holder.binding.progress.setMax(cardList.size());
         holder.binding.progress.setProgress(position + 1);
-        holder.binding.cardQuestionName.setText(cardItem.getName());
-        holder.binding.cardQuestionDiff.setText("difficulty: " + cardItem.getDiff());
-        holder.binding.answer1.setText(cardItem.getAnswers().get(0).getPrompt());
-        holder.binding.answer2.setText(cardItem.getAnswers().get(1).getPrompt());
-        holder.binding.answer3.setText(cardItem.getAnswers().get(2).getPrompt());
-        holder.binding.answer4.setText(cardItem.getAnswers().get(3).getPrompt());
+        holder.binding.cardQuestionNameTV.setText(cardItem.getName());
+        holder.binding.cardQuestionDiffTV.setText("difficulty: " + cardItem.getDiff());
+        holder.binding.answer1ET.setText(cardItem.getAnswers().get(0).getPrompt());
+        holder.binding.answer2ET.setText(cardItem.getAnswers().get(1).getPrompt());
+        holder.binding.answer3ET.setText(cardItem.getAnswers().get(2).getPrompt());
+        holder.binding.answer4ET.setText(cardItem.getAnswers().get(3).getPrompt());
 
     }
 

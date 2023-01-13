@@ -20,49 +20,49 @@
         android:padding="20dp">
 
         <CheckBox
-            android:id="@+id/cor3"
+            android:id="@+id/cor3CB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:text="Correct?"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/answer3"
+            app:layout_constraintEnd_toStartOf="@+id/answer3ET"
             app:layout_constraintHorizontal_bias="0.514"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.726" />
 
         <CheckBox
-            android:id="@+id/cor1"
+            android:id="@+id/cor1CB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:text="Correct?"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/answer1"
+            app:layout_constraintEnd_toStartOf="@+id/answer1ET"
             app:layout_constraintHorizontal_bias="0.46"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.536" />
 
         <CheckBox
-            android:id="@+id/cor2"
+            android:id="@+id/cor2CB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:text="Correct?"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/answer2"
+            app:layout_constraintEnd_toStartOf="@+id/answer2ET"
             app:layout_constraintHorizontal_bias="0.514"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.632" />
 
         <EditText
-            android:id="@+id/answer1"
+            android:id="@+id/answer1ET"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
@@ -77,12 +77,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.26"
-            app:layout_constraintStart_toEndOf="@+id/cor1"
+            app:layout_constraintStart_toEndOf="@+id/cor1CB"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.537" />
 
         <EditText
-            android:id="@+id/answer3"
+            android:id="@+id/answer3ET"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
@@ -97,26 +97,26 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.264"
-            app:layout_constraintStart_toEndOf="@+id/cor3"
+            app:layout_constraintStart_toEndOf="@+id/cor3CB"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.727" />
 
         <CheckBox
-            android:id="@+id/cor4"
+            android:id="@+id/cor4CB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:text="Correct?"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/answer4"
+            app:layout_constraintEnd_toStartOf="@+id/answer4ET"
             app:layout_constraintHorizontal_bias="0.514"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.823" />
 
         <EditText
-            android:id="@+id/answer2"
+            android:id="@+id/answer2ET"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
@@ -131,12 +131,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.264"
-            app:layout_constraintStart_toEndOf="@+id/cor2"
+            app:layout_constraintStart_toEndOf="@+id/cor2CB"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.634" />
 
         <EditText
-            android:id="@+id/answer4"
+            android:id="@+id/answer4ET"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
@@ -151,12 +151,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.264"
-            app:layout_constraintStart_toEndOf="@+id/cor4"
+            app:layout_constraintStart_toEndOf="@+id/cor4CB"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.824" />
 
         <TextView
-            android:id="@+id/cardQuestionName"
+            android:id="@+id/cardQuestionNameTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
@@ -170,7 +170,7 @@
             app:layout_constraintVertical_bias="0.107" />
 
         <TextView
-            android:id="@+id/cardQuestionDiff"
+            android:id="@+id/cardQuestionDiffTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"

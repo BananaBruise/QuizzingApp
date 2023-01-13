@@ -5,34 +5,40 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class PostQuizActivity extends AppCompatActivity {
 
-    public static FirebaseHelper firebaseHelper = new FirebaseHelper();
-
+    TextView postQuizInfoTV;
     @Override
     @SuppressLint("MissingInflatedId")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_quiz);
 
+        postQuizInfoTV = findViewById(R.id.postQuizInfoTV);
+
         Bundle extras = getIntent().getBundleExtra("INCORRECT_QUESTIONS");
         ArrayList<Question> wrongQuestions = extras.getParcelableArrayList("WRONGS");
-        Log.i("answers", Integer.toString(wrongQuestions.get(0).getAnswers().size()));
+
+        // check if there were no questions missed
+        if (wrongQuestions.isEmpty()) {
+            postQuizInfoTV.setText("You got a perfect score!!");
+            Toast.makeText(getApplicationContext(), "You got a perfect score!", Toast.LENGTH_LONG).show();
+        }
 
         ArrayAdapter<Question> listAdapter = new ArrayAdapter<Question>(
                 getApplicationContext(), android.R.layout.simple_list_item_1, wrongQuestions);
 
 
-        ListView listView = (ListView) findViewById(R.id.wrongQuestionsListView);
+        ListView listView = (ListView) findViewById(R.id.allQuestionsLV);
         listView.setAdapter(listAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -50,10 +56,7 @@ public class PostQuizActivity extends AppCompatActivity {
     }
 
     public void signOut(View v) {
-        firebaseHelper.getmAuth().signOut();
-
-        Intent i = new Intent(getApplicationContext(), SignInActivity.class);
-        startActivity(i);
+        new Navigation().signOut(PostQuizActivity.this);
     }
 
     public void retry(View v){

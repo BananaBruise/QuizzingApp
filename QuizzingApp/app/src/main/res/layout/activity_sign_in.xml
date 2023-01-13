@@ -49,7 +49,7 @@
         app:layout_constraintVertical_bias="0.421" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/signInInfoTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="or, if you're new, "
@@ -62,7 +62,7 @@
         app:layout_constraintVertical_bias="0.517" />
 
     <Button
-        android:id="@+id/takeToSignUp"
+        android:id="@+id/takeToSignUpBT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="takeToSignUp"

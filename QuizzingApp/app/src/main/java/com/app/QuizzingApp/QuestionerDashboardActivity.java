@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,19 +32,24 @@ public class QuestionerDashboardActivity extends AppCompatActivity {
 
         firebaseHelper.readQuestions(uid, new FirebaseHelper.FirestoreQuestionCallback() {
             @Override
-            public void onCallbackQuestion(ArrayList<Question> questionList) {
+            public void onCallbackQuestions(ArrayList<Question> questionList) {
                 questionsList = questionList;
-                takeToViewQuestionActivity(questionsList);
+                displayQuestions(questionsList);
             }
         });
     }
 
-    public void takeToViewQuestionActivity(ArrayList<Question> questionsList) {
+    public void displayQuestions(ArrayList<Question> questionsList) {
+        // check if there are no questions
+        if (questionsList.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "No questions yet! Add some.", Toast.LENGTH_LONG).show();
+        }
+
         ArrayAdapter<Question> listAdapter = new ArrayAdapter<Question>(
                 getApplicationContext(), android.R.layout.simple_list_item_1, questionsList);
 
 
-        ListView listView = (ListView) findViewById(R.id.wrongQuestionsListView);
+        ListView listView = (ListView) findViewById(R.id.allQuestionsLV);
         listView.setAdapter(listAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -62,7 +68,7 @@ public class QuestionerDashboardActivity extends AppCompatActivity {
     }
 
     public void signOut(View v) {
-        new Navigation().signOut(getApplicationContext());
+        new Navigation().signOut(QuestionerDashboardActivity.this);
     }
 
     public void searchHelper(View v) {
@@ -71,7 +77,7 @@ public class QuestionerDashboardActivity extends AppCompatActivity {
         if (!key.isEmpty()) {
             search(key);
         } else {
-            takeToViewQuestionActivity(questionsList);
+            displayQuestions(questionsList);
         }
     }
 
@@ -85,7 +91,7 @@ public class QuestionerDashboardActivity extends AppCompatActivity {
             }
         }
 
-        takeToViewQuestionActivity(searched);
+        displayQuestions(searched);
     }
 }
 

@@ -1,6 +1,5 @@
 package com.app.QuizzingApp;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,12 +10,6 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.app.QuizzingApp.databinding.ActivityAnswererDashboardBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackListener;
 import com.yuyakaido.android.cardstackview.Direction;
@@ -27,7 +20,8 @@ import java.util.List;
 
 public class AnswererDashboardActivity extends AppCompatActivity implements CardStackListener {
 
-    public static FirebaseHelper firebaseHelper = new FirebaseHelper();
+    // global variables
+    FirebaseHelper firebaseHelper = new FirebaseHelper();
 
     CheckBox correct1CB, correct2CB, correct3CB, correct4CB;
 
@@ -65,138 +59,93 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
             public void onCallbackUser(User u) {
                 Answerer answerer = (Answerer) u;
                 questionerID = answerer.getQuestionerID();
-                firebaseHelper.getmdb().collection("Users").document(questionerID).collection("Questions")
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
+                firebaseHelper.readQuestions(questionerID, new FirebaseHelper.FirestoreQuestionCallback() {
+                    @Override
+                    public void onCallbackQuestions(ArrayList<Question> questionList) {
+                        cardList = questionList;
 
+                        // put the card list in the view
+                        QuestionCardAdapter adapter = new QuestionCardAdapter(cardList);
+                        binding.cardStack.setLayoutManager(manager);
+                        binding.cardStack.setAdapter(adapter);
+                    }
+                });
 
-                                    for (DocumentSnapshot doc : task.getResult()) {
-                                        Log.i("TAG", doc.getData().toString());
-                                        Question q = doc.toObject(Question.class);
-                                        Log.i("answerdashboard", q.printAnswers());
-                                        cardList.add(q);
-                                    }
-
-                                    Log.i("TAG", "success grabbing questions");
-                                    Log.i("TAG", Integer.toString(cardList.size()));
-
-                                    QuestionCardAdapter adapter = new QuestionCardAdapter(cardList);
-                                    binding.cardStack.setLayoutManager(manager);
-                                    binding.cardStack.setAdapter(adapter);
-                                }
-                            }
-                        });
             }
         });
     }
 
     public void signOut(View v) {
-        firebaseHelper.getmAuth().signOut();
-
-        Intent i = new Intent(getApplicationContext(), SignInActivity.class);
-        startActivity(i);
+         new Navigation().signOut(AnswererDashboardActivity.this);
     }
 
     @Override
     public void onCardDragging(Direction direction, float ratio) {
-
+        // unused
     }
 
     @Override
     public void onCardSwiped(Direction direction) {
-
+        // unused
     }
 
     @Override
     public void onCardRewound() {
-
+        // unused
     }
 
     @Override
     public void onCardCanceled() {
-
+        // unused
     }
 
     @Override
     public void onCardAppeared(View view, int position) {
-
+        // unused
     }
 
     @Override
     public void onCardDisappeared(View view, int position) {
-        correct1CB = view.findViewById(R.id.cor1);
-        correct2CB = view.findViewById(R.id.cor2);
-        correct3CB = view.findViewById(R.id.cor3);
-        correct4CB = view.findViewById(R.id.cor4);
+        // get references to UI elements
+        correct1CB = view.findViewById(R.id.cor1CB);
+        correct2CB = view.findViewById(R.id.cor2CB);
+        correct3CB = view.findViewById(R.id.cor3CB);
+        correct4CB = view.findViewById(R.id.cor4CB);
+
         // user answers
-        Log.i("TAG", "dissappeared");
         List<Boolean> entered = new ArrayList<>();
         entered.add(correct1CB.isChecked());
         entered.add(correct2CB.isChecked());
         entered.add(correct3CB.isChecked());
         entered.add(correct4CB.isChecked());
 
-        // actual answers
+        // "correct" answers
         List<Answer> answerList = cardList.get(position).getAnswers();
+
+        // question doc ID
+        String questionDocID = Integer.toString(cardList.get(position).getQuestionID());
+
+        Boolean isCorrect = true;
 
         for (int i = 0; i < entered.size(); i++) {
             if (entered.get(i) != answerList.get(i).getCorrect()) {
-                Log.i("if", "in if");
-                firebaseHelper.getmdb().collection("Users").document(questionerID).collection("Questions")
-                        .document(Integer.toString(cardList.get(position).getQuestionID()))
-                        .update("correctlyAnsweredLastTime", false)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                Log.i("onSuccess", "Question was incorrect");
-                                wrong.add(cardList.get(position));
-                                if (position == cardList.size() - 1) {
-                                    Log.i("cards done", "Cards done");
-                                    showToast("You finished the quiz!");
-                                    Log.i("wrong questions", wrong.toString());
-                                    takeToViewQuestion(wrong);
-                                }
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.i("failed", "onfailure");
-                            }
-                        });
-                return;
-
+                isCorrect = false;
+                wrong.add(cardList.get(position));
+                Log.i("onCardDisappeared", "Question was incorrect!");
+                break;
             }
         }
 
-        firebaseHelper.getmdb().collection("Users").document(questionerID).collection("Questions")
-                .document(Integer.toString(cardList.get(position).getQuestionID()))
-                .update("correctlyAnsweredLastTime", true)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        if (position == cardList.size() - 1) {
-                            Log.i("cards done", "Cards done");
-                            showToast("You finished the quiz!");
-                            takeToViewQuestion(wrong);
-                        }
-
-                    }
-                });
-    }
-
-    void showToast(String text)
-    {
-        if(m_currentToast != null)
-        {
-            m_currentToast.cancel();
-        }
-        m_currentToast = Toast.makeText(this, text, Toast.LENGTH_LONG);
-        m_currentToast.show();
-
+        // update question status
+        firebaseHelper.updateQuestionField(questionerID, questionDocID, "correctlyAnsweredLastTime", isCorrect, new FirebaseHelper.FirestoreQuestionCallback() {
+            @Override
+            public void onCallbackQuestionUpdate() {
+                if (position == cardList.size() - 1) {
+                    Toast.makeText(getApplicationContext(), "You finished the quiz!", Toast.LENGTH_SHORT).show();
+                    takeToViewQuestion(wrong);
+                }
+            }
+        });
     }
 
     public void takeToViewQuestion(ArrayList<Question> wrongQuestions) {
@@ -204,17 +153,8 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("WRONGS", wrongQuestions);
         i.putExtra("INCORRECT_QUESTIONS", bundle);
-        Log.i("wrong questions", wrongQuestions.get(0).printAnswers());
         startActivity(i);
 
     }
 
-
-    // populate answerlistview
-    // TODO: Tinder-like swiping with Binding layout
-    // references:
-    // binding and cardstack tutorial: https://www.youtube.com/watch?v=3HvfQ_B7-RQ
-    // binding documentation: https://developer.android.com/topic/libraries/view-binding
-    // recycleView doc: https://developer.android.com/develop/ui/views/layout/recyclerview
-    // tinder swiping module (CardStackView): https://github.com/yuyakaido/CardStackView
 }

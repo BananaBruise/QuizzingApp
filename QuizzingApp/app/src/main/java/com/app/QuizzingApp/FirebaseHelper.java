@@ -1,9 +1,6 @@
 package com.app.QuizzingApp;
 
-import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
-
 
 import androidx.annotation.NonNull;
 
@@ -42,37 +39,6 @@ public class FirebaseHelper {
     }
 
     // utility methods
-
-    /**
-     * Adds a single user to Firestore
-     *
-     * @param firstName    user's first name
-     * @param lastName     user's last name
-     * @param uid          user's unique id
-     * @param email        user's email
-     * @param password     user's password
-     * @param isQuestioner whether this user is a teacher (true) or student (false)
-     */
-    public void addUserToFirestore(String firstName, String lastName, String uid, String email, String password, boolean isQuestioner) {
-        User toAdd = new User(firstName, lastName, uid, email, password, isQuestioner);
-
-        String TAG = "addUserToFirestore";
-        db.collection("Users").document(uid)
-                .set(toAdd)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Log.i(TAG, "account added");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG, "Error adding account", e);
-                    }
-                });
-    }
-
     /**
      * Generically adds a single user to Firestore. For example, you may pass a Questioner object into this method
      *
@@ -135,6 +101,11 @@ public class FirebaseHelper {
         });
     }
 
+    /**
+     * Reads a specific collection of questions (uses to uid parameter to lookup document)
+     * @param uid uid of user
+     * @param callback action taken upon returning a question set; calls FirestoreQuestionCallback.onCallbackQuestion method
+     */
     public void readQuestions(String uid, FirestoreQuestionCallback callback) {
         String TAG = "readQuestions";
         CollectionReference colRef = db.collection("Users").document(uid).collection("Questions");
@@ -150,12 +121,19 @@ public class FirebaseHelper {
                     Log.i(TAG, "success grabbing questions");
                     Log.i(TAG, questionsList.toString());
 
-                    callback.onCallbackQuestion(questionsList);
+                    callback.onCallbackQuestions(questionsList);
                 }
             }
         });
     }
 
+    /**
+     * Adds a specific question (uses to ID parameters to lookup documents)
+     * @param uid uid of user
+     * @param questionID ID of questioner so we can access their Questions collection
+     * @param question new Question we are upadting to
+     * @param callback action taken upon adding a question; calls FirestoreQuestionCallback.onCallbackQuestionWriter method
+     */
     public void writeQuestion(String uid, String questionID, Question question, FirestoreQuestionCallback callback) {
         DocumentReference docRef = db.collection("Users").document(uid).collection("Questions").document(questionID);
 
@@ -167,22 +145,119 @@ public class FirebaseHelper {
         });
     }
 
+    /**
+     * Updates a specific question's field with the provided value
+     * @param questionerID the ID of the user that has the question set
+     * @param questionDocID the specific ID of the question we are updating
+     * @param field the field we are updating
+     * @param value the value we are changing the field to
+     * @param callback action taken upon updating a Question; calls FirestoreQuestionCallback.onCallbackQuestionUpdate method
+     * @param <T> generic type of value
+     */
+    public <T> void updateQuestionField(String questionerID, String questionDocID, String field, T value, FirestoreQuestionCallback callback) {
+        DocumentReference docRef = db.collection("Users").document(questionerID).collection("Questions").document(questionDocID);
+
+        docRef.update(field, value).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                callback.onCallbackQuestionUpdate();
+            }
+        })
+        .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    /**
+     * Syncs two users (Answerer and Questioner)
+     * @param otherUid the ID of the questioner we are syncing with
+     * @param myUid my user's ID
+     * @param callback action taken upon syncing a user; calls FirestoreUserCallback.onCallbackUserSyncSuccess/Fail method
+     */
+    public void syncUsers(String otherUid, String myUid, FirestoreUserCallback callback) {
+        String TAG = "syncUsers";
+
+        DocumentReference otherDocRef = db.collection("Users").document(otherUid);
+
+        otherDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot otherUserDoc) {
+                if (otherUserDoc.exists()) {
+                    // updating my user's isActive status
+                    DocumentReference myDocRef = db.collection("Users").document(myUid);
+                    myDocRef.update("isActive", true).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG, "Answerer's isActive successfully updated!");
+                        }
+                    });
+                    // updating my user's questionerID (used to lookup question set)
+                    myDocRef.update("questionerID",otherUid).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG, "questionID successfully updated!");
+                        }
+                    });
+                    // update other user's isActive
+                    otherDocRef.update("isActive", true).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG, "Questioner's isActive successfully updated!");
+                        }
+                    });
+
+                    callback.onCallbackUserSyncSuccess(otherUserDoc.get("fName").toString());
+                } else {
+                    callback.onCallbackUserSyncFail();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "task not successful", e);
+            }
+        });
+    }
+
     // interfaces
 
     /**
      * Callback interface for FirebaseHelper utility methods. This is needed bc firebase tasks are async
      */
     public interface FirestoreUserCallback {
-        void onCallbackUser(User u);
+        default void onCallbackUser(User u) {
+        }
+
+        ;
+
+        default void onCallbackUserSyncSuccess(String otherUserFirstName) {
+        }
+
+        ;
+
+        default void onCallbackUserSyncFail() {
+        }
+
+        ;
+
+
     }
 
     public interface FirestoreQuestionCallback {
-        default void onCallbackQuestion(ArrayList<Question> questionList) {
+        default void onCallbackQuestions(ArrayList<Question> questionList) {
         }
 
         ;
 
         default void onCallbackQuestionWriter() {
+        }
+
+        ;
+
+        default void onCallbackQuestionUpdate() {
         }
 
         ;
