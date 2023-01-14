@@ -125,6 +125,7 @@ public class Question implements Parcelable, Comparable<Question> {
         // TODO
 //        1. if the missed it last time (false)
 //        2. higher difficulty
+        // 3. time spent answering
 
         return 0;
     }
