@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.QuizzingApp.databinding.ActivityAnswererDashboardBinding;
@@ -83,7 +84,7 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
                         cardList = questionList;
                         // put the card list in the view (supply current binding)
                         adapter = new QuestionCardAdapter(cardList, binding);
-                        cardBinding = CardBinding.inflate(adapter.getLi());
+//                        cardBinding = CardBinding.inflate(adapter.getLi());
                         binding.cardStack.setLayoutManager(manager);
                         binding.cardStack.setAdapter(adapter);
                     }
@@ -94,27 +95,30 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
 
 
 
+
+
+
         long totalSeconds = 300;
         long intervalSeconds = 1;
         SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("mm:ss");
-        cut = new CountDownTimer(totalSeconds * 1000, intervalSeconds * 1000) {
-
-            public void onTick(long millisUntilFinished) {
-                cardBinding.timerTV.setText(mSimpleDateFormat.format(millisUntilFinished));
-
-                millisElapsedForQuestion = (totalSeconds * 1000) - millisUntilFinished;
-            }
-
-            public void onFinish() {
-                cardBinding.timerTV.setText(mSimpleDateFormat.format(0));
-                binding.cardStack.swipe();
-                Toast.makeText(getApplicationContext(), "You took the full time!", Toast.LENGTH_SHORT).show();
-            }
-
-        };
+//        cut = new CountDownTimer(totalSeconds * 1000, intervalSeconds * 1000) {
+//
+//            public void onTick(long millisUntilFinished) {
+//                cardBinding.timerTV.setText(mSimpleDateFormat.format(millisUntilFinished));
+//
+//                millisElapsedForQuestion = (totalSeconds * 1000) - millisUntilFinished;
+//            }
+//
+//            public void onFinish() {
+//                cardBinding.timerTV.setText(mSimpleDateFormat.format(0));
+//                binding.cardStack.swipe();
+//                Toast.makeText(getApplicationContext(), "You took the full time!", Toast.LENGTH_SHORT).show();
+//            }
+//
+//        };
 
         Log.i("oncreate", Integer.toString(binding.cardStack.getChildCount()));
-        cut.start();
+//        cut.start();
     }
 
 
@@ -144,7 +148,30 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
 
     @Override
     public void onCardAppeared(View view, int position) {
-        cut.start();
+        if (position>0) {
+            TextView tv = binding.cardStack.findViewHolderForAdapterPosition(position).itemView.findViewById(R.id.timerTV);
+//            tv.setText("test");
+
+            long totalSeconds = 300;
+            long intervalSeconds = 1;
+            SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("mm:ss");
+            cut = new CountDownTimer(totalSeconds * 1000, intervalSeconds * 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                tv.setText(mSimpleDateFormat.format(millisUntilFinished));
+
+                millisElapsedForQuestion = (totalSeconds * 1000) - millisUntilFinished;
+            }
+
+            public void onFinish() {
+                tv.setText(mSimpleDateFormat.format(0));
+                binding.cardStack.swipe();
+                Toast.makeText(getApplicationContext(), "You took the full time!", Toast.LENGTH_SHORT).show();
+            }
+        };
+            cut.start();
+        }
+        //        cut.start();
     }
 
     @Override
@@ -199,7 +226,7 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
             }
         });
 
-        cut.cancel();
+//        cut.cancel();
 
     }
 

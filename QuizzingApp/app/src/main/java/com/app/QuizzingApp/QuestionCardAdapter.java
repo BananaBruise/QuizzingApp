@@ -85,6 +85,9 @@ public class QuestionCardAdapter extends RecyclerView.Adapter<QuestionCardAdapte
         holder.binding.answer3ET.setText(cardItem.getAnswers().get(2).getPrompt());
         holder.binding.answer4ET.setText(cardItem.getAnswers().get(3).getPrompt());
 
+
+        // timer
+
     }
 
     @Override
