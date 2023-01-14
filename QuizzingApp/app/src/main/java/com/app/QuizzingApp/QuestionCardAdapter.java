@@ -59,4 +59,76 @@ public class QuestionCardAdapter extends RecyclerView.Adapter<QuestionCardAdapte
             this.binding = binding;
         }
     }
+
+    // HEAP CODE (dequeue() and percolateDown())
+//    @Override
+//    public Course dequeue() throws NoSuchElementException {
+//        // if the queue is empty, throw a NoSuchElementException
+//        if (this.size == 0) {
+//            throw new NoSuchElementException("This CourseQueue is empty");
+//        }
+//
+//        Course toRemove = this.queue[0]; // instantiate the course to be removed as the first element in
+//        // our array
+//
+//        // if there is only one element in the queue, just remove it, no need to percolateDown()
+//        if (this.size == 1) {
+//            this.queue[0] = null; // remove first element by setting first index to 0
+//            this.size--; // decrement size
+//        } else {
+//            // put last node at root
+//            this.queue[0] = this.queue[size - 1];
+//            // delete the last node (it's now at root)
+//            this.queue[size - 1] = null;
+//            // decrement size
+//            this.size--;
+//            // percolate root node down
+//            this.percolateDown(0);
+//        }
+//        return toRemove; // return the Course that was dequeued
+//    }
+//    protected void percolateDown(int index) throws IndexOutOfBoundsException {
+//        if (index < 0 || index > size - 1) {
+//            throw new IndexOutOfBoundsException("index is out of bounds");
+//        } else {
+//            // first, we want a reference to the node we are percolating down
+//            Course percolatingDown = this.queue[index];
+//            // we want to know where the left child is (if there is one) for the node at the given index
+//            int indexLeftChild = 2 * index + 1; // this will be at 2n + 1
+//
+//            // we want to make sure that there is a left child (i.e. it is within the bounds of our array)
+//            while (indexLeftChild < this.size) {
+//                // now, we need to find the max value between the current node and its children
+//                // we can start by assuming current node is the max value
+//                Course max = percolatingDown;
+//                // we also want to maintain the index of the max, which we'll start off at -1
+//                int maxIndex = -1;
+//                // loop through the current node's children, reassigning max if we find a greater value
+//                for (int i = 0; i < 2 && indexLeftChild + i < this.size; i++) {
+//                    // if the element at the current index is larger priority than our max, reset max
+//                    if (this.queue[indexLeftChild + i].compareTo(max) > 0) {
+//                        max = this.queue[indexLeftChild + i];
+//                        maxIndex = indexLeftChild + i; // keep track of where current max is
+//                    }
+//                }
+//                // if we WANT to percolate further down, then max must have been reset above (meaning
+//                // original max was in the wrong spot). if this is not the case, we want to stop
+//                if (max == percolatingDown) {
+//                    return; // stop, since the node we were percolating down is larger than the children
+//                    // don't swap duplicates
+//                } else {
+//                    // if max was reset, then max should go "above" the node we are percolating down
+//                    // i.e. percolatingDown and max should switch places
+//                    Course temp = this.queue[index];
+//                    this.queue[index] = this.queue[maxIndex];
+//                    this.queue[maxIndex] = temp;
+//
+//                    // now, the index of the node we are percolating is where maxIndex was
+//                    index = maxIndex;
+//                    indexLeftChild = 2 * index + 1; // now, determine the index of the left child of our
+//                    // ONCE percolated node
+//                }
+//            }
+//        }
+//    }
 }
