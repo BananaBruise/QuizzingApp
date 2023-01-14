@@ -117,6 +117,7 @@ public class FirebaseHelper {
                     for (DocumentSnapshot doc : task.getResult()) {
                         Log.i(TAG, doc.getData().toString());
                         questionsList.add(doc.toObject(Question.class));
+                        Log.i(TAG, doc.toObject(Question.class).toString());
                     }
                     Log.i(TAG, "success grabbing questions");
                     Log.i(TAG, questionsList.toString());

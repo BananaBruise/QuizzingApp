@@ -17,6 +17,7 @@ public class Question implements Parcelable, Comparable<Question> {
     private List<Answer> answers;
     private boolean isCorrectlyAnsweredLastTime;
     private int questionID;
+    private int millisElapsedToAnswer;
 
     // constructor
     public Question() {
@@ -41,6 +42,9 @@ public class Question implements Parcelable, Comparable<Question> {
         return name;
     }
 
+    public int getMillisElapsedToAnswer() {
+        return millisElapsedToAnswer;
+    }
 
     public int getDiff() {
         return diff;
@@ -122,10 +126,28 @@ public class Question implements Parcelable, Comparable<Question> {
     // Comparable
     @Override
     public int compareTo(Question question) {
-        // TODO
-//        1. if the missed it last time (false)
-//        2. higher difficulty
-        // 3. time spent answering
+        // 1. if the missed it last time (false)
+        // 2. time spent answering
+        // 3. difficulty
+
+        // scenario 1: compare 1
+        if (this.isCorrectlyAnsweredLastTime != question.isCorrectlyAnsweredLastTime) {
+            if (this.isCorrectlyAnsweredLastTime && !question.isCorrectlyAnsweredLastTime) {
+                return 1;
+            } else if (question.isCorrectlyAnsweredLastTime && !this.isCorrectlyAnsweredLastTime) {
+                return -1;
+            }
+        }
+
+        // scenario 2: compare 2
+        if (Math.abs(this.millisElapsedToAnswer - question.millisElapsedToAnswer) > 5000) {
+            return ((Integer) this.millisElapsedToAnswer).compareTo(question.millisElapsedToAnswer);
+        }
+
+        // scenario 3: compare 3
+        if (this.diff != question.diff) {
+            return ((Integer) this.diff).compareTo(question.diff);
+        }
 
         return 0;
     }
