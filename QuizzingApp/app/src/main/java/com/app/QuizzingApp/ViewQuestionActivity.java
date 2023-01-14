@@ -4,12 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.media.Rating;
 import android.os.Bundle;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 public class ViewQuestionActivity extends AppCompatActivity {
 
-    TextView questionNameTV, difficultyTV, answersTV;
+    TextView questionNameTV, answersTV;
+    RatingBar difficultyRB;
 
     Question clickedQuestion;
     String answers;
@@ -25,11 +28,11 @@ public class ViewQuestionActivity extends AppCompatActivity {
         clickedQuestion = (Question) intent.getParcelableExtra("ITEM");
 
         questionNameTV = findViewById(R.id.questionNameTV);
-        difficultyTV = findViewById(R.id.difficultyTV);
+        difficultyRB = findViewById(R.id.difficultyRB);
         answersTV = findViewById(R.id.answersTV);
 
         questionNameTV.setText(clickedQuestion.getName());
-        difficultyTV.setText("difficulty: " + clickedQuestion.getDiff());
+        difficultyRB.setRating(clickedQuestion.getDiff());
         answersTV.setText(clickedQuestion.printAnswers());
 
     }
