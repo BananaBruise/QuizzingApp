@@ -150,7 +150,7 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
 
             public void onFinish() {
                 cardTimerTV.setText(mSimpleDateFormat.format(0));
-                // binding.cardStack.swipe();
+                binding.cardStack.swipe();
                 Toast.makeText(getApplicationContext(), "You took the full time!", Toast.LENGTH_SHORT).show();
             }
         };
