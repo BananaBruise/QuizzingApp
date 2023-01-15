@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -127,11 +129,17 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
         // get reference to timerTV
         cardTimerTV = view.findViewById(R.id.timerTV);
 
+        Animation a = AnimationUtils.loadAnimation(this, R.anim.zoom_out);
+//        a.reset();
+
+        cardTimerTV.startAnimation(a);
+
         cdt = new CountDownTimer(totalSeconds * 1000, intervalSeconds * 1000) {
 
             public void onTick(long millisUntilFinished) {
                 if (millisUntilFinished <= ((totalSeconds / 30) * 1000)) {
                     cardTimerTV.setTextColor(Color.RED);
+                    cardTimerTV.startAnimation(a);
                 } else {
                     cardTimerTV.setTextColor(getColor(R.color.green));
                 }
