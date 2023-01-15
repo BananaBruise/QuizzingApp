@@ -53,7 +53,8 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
     long millisElapsedForQuestion;
 
     // timer variables
-    long totalSeconds = 10;
+    long totalSeconds = 180;
+    long warningSeconds = 10;
     long intervalSeconds = 1;
 
     // formatting tools
@@ -135,7 +136,7 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
         cdt = new CountDownTimer(totalSeconds * 1000, intervalSeconds * 1000) {
 
             public void onTick(long millisUntilFinished) {
-                if (millisUntilFinished <= ((5 + 1) * 1000)) {
+                if (millisUntilFinished <= ((warningSeconds + 1) * 1000)) {
                     cardTimerTV.setTextColor(Color.RED);
                     cardTimerTV.startAnimation(a);
                 } else {

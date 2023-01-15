@@ -140,7 +140,7 @@ public class Question implements Parcelable, Comparable<Question> {
         }
 
         // scenario 2: compare 2
-        if (Math.abs(this.millisElapsedToAnswer - question.millisElapsedToAnswer) > 5000) {
+        if (Math.abs(this.millisElapsedToAnswer - question.millisElapsedToAnswer) > 10) { //TODO 10000 set back
             return ((Integer) this.millisElapsedToAnswer).compareTo(question.millisElapsedToAnswer);
         }
 
