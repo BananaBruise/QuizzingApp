@@ -53,7 +53,7 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
     long millisElapsedForQuestion;
 
     // timer variables
-    long totalSeconds = 300;
+    long totalSeconds = 10;
     long intervalSeconds = 1;
 
     // formatting tools
@@ -130,14 +130,12 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
         cardTimerTV = view.findViewById(R.id.timerTV);
 
         Animation a = AnimationUtils.loadAnimation(this, R.anim.zoom_out);
-//        a.reset();
 
-        cardTimerTV.startAnimation(a);
 
         cdt = new CountDownTimer(totalSeconds * 1000, intervalSeconds * 1000) {
 
             public void onTick(long millisUntilFinished) {
-                if (millisUntilFinished <= ((totalSeconds / 30) * 1000)) {
+                if (millisUntilFinished <= ((5 + 1) * 1000)) {
                     cardTimerTV.setTextColor(Color.RED);
                     cardTimerTV.startAnimation(a);
                 } else {
