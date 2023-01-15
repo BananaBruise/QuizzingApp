@@ -28,9 +28,9 @@ public class AnswererSyncActivity extends AppCompatActivity {
 
         firebaseHelper.syncUsers(otherUid, firebaseHelper.getmAuth().getCurrentUser().getUid(), new FirebaseHelper.FirestoreUserCallback() {
             @Override
-            public void onCallbackUserSyncSuccess(String otherUserFirstName) {
+            public void onCallbackUserSyncNamePair(String otherUserFirstName, String myUserFirstName) {
                 Toast.makeText(getApplicationContext(), "You are synced to " + otherUserFirstName, Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(), AnswererDashboardActivity.class));
+                new Navigation().displayAlertDialog(AnswererSyncActivity.this, myUserFirstName, otherUserFirstName);
             }
 
             @Override

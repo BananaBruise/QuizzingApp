@@ -44,7 +44,8 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     public void takeToPostSignIn(String uid) {
-        firebaseHelper.readUser(firebaseHelper.getmAuth().getCurrentUser().getUid(), new FirebaseHelper.FirestoreUserCallback() {
+
+        firebaseHelper.readUser(uid, new FirebaseHelper.FirestoreUserCallback() {
             @Override
             public void onCallbackUser(User u) {
                 if (u.getisActive()==false && u.isQuestioner() == false) {
@@ -55,7 +56,14 @@ public class SignInActivity extends AppCompatActivity {
                 } else if (u.getisActive() == true && u.isQuestioner()){
                     startActivity(new Intent(getApplicationContext(), QuestionerDashboardActivity.class));
                 } else if (u.getisActive() == true && u.isQuestioner() == false) {
-                    startActivity(new Intent(getApplicationContext(), AnswererDashboardActivity.class));
+                    String questionerUID = ((Answerer) u).getQuestionerID();
+                    firebaseHelper.readSyncedPair(questionerUID, u.getUID(), new FirebaseHelper.FirestoreUserCallback() {
+                        @Override
+                        public void onCallbackUserSyncNamePair(String otherUserFirstName, String myUserFirstName) {
+                            new Navigation().displayAlertDialog(SignInActivity.this, otherUserFirstName, myUserFirstName);
+                        }
+                    });
+
                 }
             }
         });

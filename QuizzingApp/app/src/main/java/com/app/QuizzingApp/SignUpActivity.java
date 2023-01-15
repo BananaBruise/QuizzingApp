@@ -80,7 +80,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public void takeToPostSignUp(String uid) {
-        firebaseHelper.readUser(firebaseHelper.getmAuth().getCurrentUser().getUid(), new FirebaseHelper.FirestoreUserCallback() {
+        firebaseHelper.readUser(uid, new FirebaseHelper.FirestoreUserCallback() {
             @Override
             public void onCallbackUser(User u) {
                 if (u.isQuestioner() == false) {

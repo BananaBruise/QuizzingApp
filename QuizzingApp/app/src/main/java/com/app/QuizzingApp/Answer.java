@@ -1,5 +1,6 @@
 package com.app.QuizzingApp;
 
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -20,7 +21,9 @@ public class Answer implements Parcelable {
 
     public Answer(Parcel parcel) {
         prompt = parcel.readString();
-        isCorrect = parcel.readBoolean();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            isCorrect = parcel.readBoolean();
+        }
     }
 
     // getters
@@ -33,7 +36,7 @@ public class Answer implements Parcelable {
     }
 
     public String toString() {
-        return this.prompt + ", " + (isCorrect ? "correct!" : "incorrect!");
+        return this.prompt + ", " + (isCorrect ? "correct!" : "INCORRECT!");
     }
 
     // setters
@@ -67,6 +70,8 @@ public class Answer implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(prompt);
-        parcel.writeBoolean(isCorrect);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            parcel.writeBoolean(isCorrect);
+        }
     }
 }

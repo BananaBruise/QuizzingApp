@@ -1,24 +1,21 @@
 package com.app.QuizzingApp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.QuizzingApp.databinding.ActivityAnswererDashboardBinding;
-import com.app.QuizzingApp.databinding.CardBinding;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackListener;
-import com.yuyakaido.android.cardstackview.CardStackView;
 import com.yuyakaido.android.cardstackview.Direction;
 import com.yuyakaido.android.cardstackview.StackFrom;
 
@@ -42,19 +39,24 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
 
     CardStackLayoutManager manager;
 
-    Toast m_currentToast = null;
-
     ArrayList<Question> wrong = new ArrayList<>();
 
     QuestionCardAdapter adapter;
 
-    CardBinding cardBinding;
+    CountDownTimer cdt;
 
-    CountDownTimer cut;
+    // timer TV on each card that we'll be updating
+    TextView cardTimerTV;
 
     long millisElapsedForQuestion;
 
-    LayoutInflater cardBindingLI;
+    // timer variables
+    long totalSeconds = 300;
+    long intervalSeconds = 1;
+
+    // formatting tools
+    SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("mm:ss");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +69,7 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
         // create manager object for cardstack (first arg = context, second arg = listener interface)
         manager = new CardStackLayoutManager(this, this);
         manager.setStackFrom(StackFrom.Top);
-        manager.setVisibleCount(5);
+        manager.setVisibleCount(3);
         manager.setDirections(Direction.HORIZONTAL);
         manager.setCanScrollVertical(false);
 
@@ -81,10 +83,15 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
                 firebaseHelper.readQuestions(questionerID, new FirebaseHelper.FirestoreQuestionCallback() {
                     @Override
                     public void onCallbackQuestions(ArrayList<Question> questionList) {
-                        cardList = questionList;
+                        cardList = heapSort(questionList);
+
                         // put the card list in the view (supply current binding)
+<<<<<<< Updated upstream
                         adapter = new QuestionCardAdapter(cardList, binding);
 //                        cardBinding = CardBinding.inflate(adapter.getLi());
+=======
+                        adapter = new QuestionCardAdapter(cardList);
+>>>>>>> Stashed changes
                         binding.cardStack.setLayoutManager(manager);
                         binding.cardStack.setAdapter(adapter);
                     }
@@ -93,6 +100,7 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
             }
         });
 
+<<<<<<< Updated upstream
 
 
 
@@ -119,6 +127,8 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
 
         Log.i("oncreate", Integer.toString(binding.cardStack.getChildCount()));
 //        cut.start();
+=======
+>>>>>>> Stashed changes
     }
 
 
@@ -148,6 +158,7 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
 
     @Override
     public void onCardAppeared(View view, int position) {
+<<<<<<< Updated upstream
         if (position>0) {
             TextView tv = binding.cardStack.findViewHolderForAdapterPosition(position).itemView.findViewById(R.id.timerTV);
 //            tv.setText("test");
@@ -159,11 +170,27 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
 
             public void onTick(long millisUntilFinished) {
                 tv.setText(mSimpleDateFormat.format(millisUntilFinished));
+=======
+        // get reference to timerTV
+        cardTimerTV = view.findViewById(R.id.timerTV);
+
+        cdt = new CountDownTimer(totalSeconds * 1000, intervalSeconds * 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                if (millisUntilFinished <= ((totalSeconds / 30) * 1000)) {
+                    cardTimerTV.setTextColor(Color.RED);
+                } else {
+                    cardTimerTV.setTextColor(getColor(R.color.green));
+                }
+
+                cardTimerTV.setText(mSimpleDateFormat.format(millisUntilFinished));
+>>>>>>> Stashed changes
 
                 millisElapsedForQuestion = (totalSeconds * 1000) - millisUntilFinished;
             }
 
             public void onFinish() {
+<<<<<<< Updated upstream
                 tv.setText(mSimpleDateFormat.format(0));
                 binding.cardStack.swipe();
                 Toast.makeText(getApplicationContext(), "You took the full time!", Toast.LENGTH_SHORT).show();
@@ -172,6 +199,16 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
             cut.start();
         }
         //        cut.start();
+=======
+                cardTimerTV.setText(mSimpleDateFormat.format(0));
+                binding.cardStack.swipe();
+                Toast.makeText(getApplicationContext(), "You took the full time!", Toast.LENGTH_SHORT).show();
+            }
+
+        };
+
+        cdt.start();
+>>>>>>> Stashed changes
     }
 
     @Override
@@ -226,7 +263,11 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
             }
         });
 
+<<<<<<< Updated upstream
 //        cut.cancel();
+=======
+        cdt.cancel();
+>>>>>>> Stashed changes
 
     }
 

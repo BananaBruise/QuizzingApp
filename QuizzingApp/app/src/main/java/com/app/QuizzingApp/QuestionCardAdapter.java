@@ -28,47 +28,18 @@ import java.util.NoSuchElementException;
  * you can use the binding that was created to directly reference the xml elements.
  */
 public class QuestionCardAdapter extends RecyclerView.Adapter<QuestionCardAdapter.myViewHolder> {
-    LayoutInflater li; // for card binding
-
     List<Question> cardList;
 
-    // binding of the activity we are displaying this on
-    ActivityAnswererDashboardBinding bindingAnswerer;
 
-    // tracks how much time was taken for a question
-    long millisElapsedForQuestion;
-
-    // timer
-    long totalSeconds = 300;
-    long intervalSeconds = 1;
-    SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("mm:ss");
-    CountDownTimer cut;
-
-    // timer controls
-    public void startTimer() {
-        cut.start();
-    }
-
-    // getter for time elapsed
-    public long getMillisElapsedForQuestion() {
-        return millisElapsedForQuestion;
-    }
-
-
-    public LayoutInflater getLi() {
-        return li;
-    }
-
-    public QuestionCardAdapter(List<Question> cardList, ActivityAnswererDashboardBinding bindingAnswerer) {
+    public QuestionCardAdapter(List<Question> cardList) {
         this.cardList = cardList; // assign to cardList
-        this.bindingAnswerer = bindingAnswerer;
 
     }
 
     @NonNull
     @Override
     public QuestionCardAdapter.myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        li = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater li = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         CardBinding binding = CardBinding.inflate(li);  // inflate viewbinding on the parent (dashboard)
         return new myViewHolder(binding);
     }

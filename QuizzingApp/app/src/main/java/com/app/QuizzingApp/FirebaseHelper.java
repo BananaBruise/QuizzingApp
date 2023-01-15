@@ -3,6 +3,7 @@ package com.app.QuizzingApp;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -11,8 +12,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -64,7 +67,8 @@ public class FirebaseHelper {
     }
 
     /**
-     * Reads a single user object from Firestore
+     * Reads a single user object from Firestore. Used when its not clear what type of User
+     * (Answerer or Questioner) we are reading.
      *
      * @param uid      user's unique id
      * @param callback action taken upon returning a user; calls FirestoreUserCallback.onCallbackUser method
@@ -74,15 +78,19 @@ public class FirebaseHelper {
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                currUser = documentSnapshot.toObject(User.class);
-                //Log.d("FBH", currUser.getName());
+                if ((Boolean) documentSnapshot.get("questioner")) {
+                    currUser = documentSnapshot.toObject(Questioner.class);
+                } else {
+                    currUser = documentSnapshot.toObject(Answerer.class);
+                }
                 callback.onCallbackUser(currUser);
             }
         });
     }
 
     /**
-     * Generically reads a single user object from Firestore
+     * Generically reads a single user object from Firestore. Used when we know what type of User
+     * (Answerer or Questioner) we are reading.
      *
      * @param uid       user's unique id
      * @param userClass user type to be retrieved from Firestore that extends User class e.g. Questioner or Answerer
@@ -209,8 +217,13 @@ public class FirebaseHelper {
                             Log.d(TAG, "Questioner's isActive successfully updated!");
                         }
                     });
-
-                    callback.onCallbackUserSyncSuccess(otherUserDoc.get("fName").toString());
+                    // get my name from doc snapshot of doc ref
+                    myDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                            callback.onCallbackUserSyncNamePair(otherUserDoc.get("fName").toString(), value.get("fName").toString());
+                        }
+                    });
                 } else {
                     callback.onCallbackUserSyncFail();
                 }
@@ -219,6 +232,25 @@ public class FirebaseHelper {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d(TAG, "task not successful", e);
+            }
+        });
+
+    }
+
+    public void readSyncedPair(String questionerUid, String answererUid, FirestoreUserCallback callback) {
+        DocumentReference answererDocRef = db.collection("Users").document(answererUid);
+
+        answererDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                DocumentReference questionerDocRef = db.collection("Users").document(questionerUid);
+
+                questionerDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                        callback.onCallbackUserSyncNamePair(value.get("fName").toString(), documentSnapshot.get("fName").toString());
+                    }
+                });
             }
         });
     }
@@ -234,7 +266,7 @@ public class FirebaseHelper {
 
         ;
 
-        default void onCallbackUserSyncSuccess(String otherUserFirstName) {
+        default void onCallbackUserSyncNamePair(String otherUserFirstName, String myUserFirstName) {
         }
 
         ;
@@ -243,6 +275,7 @@ public class FirebaseHelper {
         }
 
         ;
+
 
 
     }
