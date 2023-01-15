@@ -86,12 +86,7 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
                         cardList = heapSort(questionList);
 
                         // put the card list in the view (supply current binding)
-<<<<<<< Updated upstream
-                        adapter = new QuestionCardAdapter(cardList, binding);
-//                        cardBinding = CardBinding.inflate(adapter.getLi());
-=======
                         adapter = new QuestionCardAdapter(cardList);
->>>>>>> Stashed changes
                         binding.cardStack.setLayoutManager(manager);
                         binding.cardStack.setAdapter(adapter);
                     }
@@ -100,35 +95,6 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
             }
         });
 
-<<<<<<< Updated upstream
-
-
-
-
-
-        long totalSeconds = 300;
-        long intervalSeconds = 1;
-        SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("mm:ss");
-//        cut = new CountDownTimer(totalSeconds * 1000, intervalSeconds * 1000) {
-//
-//            public void onTick(long millisUntilFinished) {
-//                cardBinding.timerTV.setText(mSimpleDateFormat.format(millisUntilFinished));
-//
-//                millisElapsedForQuestion = (totalSeconds * 1000) - millisUntilFinished;
-//            }
-//
-//            public void onFinish() {
-//                cardBinding.timerTV.setText(mSimpleDateFormat.format(0));
-//                binding.cardStack.swipe();
-//                Toast.makeText(getApplicationContext(), "You took the full time!", Toast.LENGTH_SHORT).show();
-//            }
-//
-//        };
-
-        Log.i("oncreate", Integer.toString(binding.cardStack.getChildCount()));
-//        cut.start();
-=======
->>>>>>> Stashed changes
     }
 
 
@@ -158,19 +124,6 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
 
     @Override
     public void onCardAppeared(View view, int position) {
-<<<<<<< Updated upstream
-        if (position>0) {
-            TextView tv = binding.cardStack.findViewHolderForAdapterPosition(position).itemView.findViewById(R.id.timerTV);
-//            tv.setText("test");
-
-            long totalSeconds = 300;
-            long intervalSeconds = 1;
-            SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("mm:ss");
-            cut = new CountDownTimer(totalSeconds * 1000, intervalSeconds * 1000) {
-
-            public void onTick(long millisUntilFinished) {
-                tv.setText(mSimpleDateFormat.format(millisUntilFinished));
-=======
         // get reference to timerTV
         cardTimerTV = view.findViewById(R.id.timerTV);
 
@@ -184,31 +137,20 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
                 }
 
                 cardTimerTV.setText(mSimpleDateFormat.format(millisUntilFinished));
->>>>>>> Stashed changes
+
 
                 millisElapsedForQuestion = (totalSeconds * 1000) - millisUntilFinished;
             }
 
             public void onFinish() {
-<<<<<<< Updated upstream
-                tv.setText(mSimpleDateFormat.format(0));
-                binding.cardStack.swipe();
-                Toast.makeText(getApplicationContext(), "You took the full time!", Toast.LENGTH_SHORT).show();
-            }
-        };
-            cut.start();
-        }
-        //        cut.start();
-=======
                 cardTimerTV.setText(mSimpleDateFormat.format(0));
                 binding.cardStack.swipe();
                 Toast.makeText(getApplicationContext(), "You took the full time!", Toast.LENGTH_SHORT).show();
             }
-
         };
 
         cdt.start();
->>>>>>> Stashed changes
+
     }
 
     @Override
@@ -263,11 +205,7 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
             }
         });
 
-<<<<<<< Updated upstream
-//        cut.cancel();
-=======
         cdt.cancel();
->>>>>>> Stashed changes
 
     }
 
