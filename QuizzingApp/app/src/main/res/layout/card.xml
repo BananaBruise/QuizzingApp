@@ -23,7 +23,7 @@
             android:id="@+id/timerTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="00:10"
+            android:text="03:00"
             android:textAlignment="center"
             android:textColor="@color/green"
             android:textSize="30dp"
