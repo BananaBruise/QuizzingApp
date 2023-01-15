@@ -129,7 +129,7 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
         // get reference to timerTV
         cardTimerTV = view.findViewById(R.id.timerTV);
 
-        Animation a = AnimationUtils.loadAnimation(this, R.anim.zoom_out);
+        Animation a = AnimationUtils.loadAnimation(this, R.anim.blink);
 
 
         cdt = new CountDownTimer(totalSeconds * 1000, intervalSeconds * 1000) {
@@ -150,7 +150,7 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
 
             public void onFinish() {
                 cardTimerTV.setText(mSimpleDateFormat.format(0));
-                binding.cardStack.swipe();
+                // binding.cardStack.swipe();
                 Toast.makeText(getApplicationContext(), "You took the full time!", Toast.LENGTH_SHORT).show();
             }
         };
