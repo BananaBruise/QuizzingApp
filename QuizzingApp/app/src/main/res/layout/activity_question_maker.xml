@@ -14,7 +14,6 @@
         android:ems="10"
         android:hint="answer text"
         android:inputType="textPersonName"
-        android:maxLength="24"
         app:layout_constraintBottom_toTopOf="@+id/questionMakerAnswer3ET"
         app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswerLengthTV2"
         app:layout_constraintHorizontal_bias="0.5"
@@ -29,7 +28,6 @@
         android:ems="10"
         android:hint="answer text"
         android:inputType="textPersonName"
-        android:maxLength="24"
         app:layout_constraintBottom_toTopOf="@+id/submitButton"
         app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswerLengthTV4"
         app:layout_constraintHorizontal_bias="0.5"
@@ -56,7 +54,6 @@
         android:ems="10"
         android:hint="answer text"
         android:inputType="textPersonName"
-        android:maxLength="24"
         app:layout_constraintBottom_toTopOf="@+id/questionMakerAnswer4ET"
         app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswerLengthTV3"
         app:layout_constraintHorizontal_bias="0.5"
@@ -83,7 +80,6 @@
         android:ems="10"
         android:hint="answer text"
         android:inputType="textPersonName"
-        android:maxLength="24"
         app:layout_constraintBottom_toTopOf="@+id/questionMakerAnswer2ET"
         app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswerLengthTV1"
         app:layout_constraintHorizontal_bias="0.5"
@@ -110,7 +106,6 @@
         android:ems="10"
         android:hint="Question Name"
         android:inputType="textPersonName"
-        android:maxLength="50"
         app:layout_constraintBottom_toTopOf="@+id/difficultyBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -211,5 +206,15 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/questionMakerAnswer4ET"
         app:layout_constraintTop_toTopOf="@+id/questionMakerAnswer4ET" />
+
+    <TextView
+        android:id="@+id/questionMakerQuestionLengthTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/questionNameET"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/questionNameET"
+        app:layout_constraintTop_toTopOf="@+id/questionNameET" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

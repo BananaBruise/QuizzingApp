@@ -3,12 +3,17 @@ package com.app.QuizzingApp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,6 +33,10 @@ public class QuestionMakerActivity extends AppCompatActivity {
     EditText answerText3;
     CheckBox correct4;
     EditText answerText4;
+    TextView qLength, answerLength1, answerLength2, answerLength3, answerLength4;
+
+    final int MAX_ANSWER_TEXT_LENGTH = 5;
+    final int MAX_QUESTION_TEXT_LENGTH = 50;
 
     FirebaseHelper firebaseHelper = new FirebaseHelper();
 
@@ -37,15 +46,66 @@ public class QuestionMakerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_question_maker);
 
         qName = findViewById(R.id.questionNameET);
+        qLength = findViewById(R.id.questionMakerQuestionLengthTV);
         difficulty = findViewById(R.id.difficultyBar);
         correct1 = findViewById(R.id.questionMakerCorrect1CB);
         answerText1 = findViewById(R.id.questionMakerAnswer1ET);
+        answerLength1 = findViewById(R.id.questionMakerAnswerLengthTV1);
         correct2 = findViewById(R.id.questionMakerCorrect2CB);
         answerText2 = findViewById(R.id.questionMakerAnswer1ET);
+        answerLength2 = findViewById(R.id.questionMakerAnswerLengthTV2);
         correct3 = findViewById(R.id.questionMakerCorrect3CB);
         answerText3 = findViewById(R.id.questionMakerAnswer3ET);
+        answerLength3 = findViewById(R.id.questionMakerAnswerLengthTV3);
         correct4 = findViewById(R.id.questionMakerCorrect4CB);
         answerText4 = findViewById(R.id.questionMakerAnswer4ET);
+        answerLength4 = findViewById(R.id.questionMakerAnswerLengthTV4);
+
+        // set max lengths
+        setMaxLength(qName, MAX_QUESTION_TEXT_LENGTH);
+        setMaxLength(answerText1, MAX_ANSWER_TEXT_LENGTH);
+        setMaxLength(answerText2, MAX_ANSWER_TEXT_LENGTH);
+        setMaxLength(answerText3, MAX_ANSWER_TEXT_LENGTH);
+        setMaxLength(answerText4, MAX_ANSWER_TEXT_LENGTH);
+
+        // interactive length checker
+        qName.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                int length = s.length();
+                String text = length + "/" + MAX_QUESTION_TEXT_LENGTH;
+
+                if (length == 0) {
+                    qLength.setVisibility(View.INVISIBLE);
+                } else if (length == MAX_QUESTION_TEXT_LENGTH) {
+                    qLength.setTextColor(Color.RED);
+                    qLength.setText(text);
+                    qLength.setVisibility(View.VISIBLE);
+                }
+                // length somewhere between 0 and max
+                else {
+                    qLength.setTextColor(getColor(R.color.green));
+                    qLength.setText(text);
+                    qLength.setVisibility(View.VISIBLE);
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+                // unused
+            }
+
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                // unused
+            }
+        });
+
+
+    }
+
+    protected <T extends TextView> void setMaxLength(T tv, int textLength) {
+        tv.setFilters(new InputFilter[]{new InputFilter.LengthFilter(textLength)});
     }
 
     public void submitQuestion(View v) {
@@ -94,7 +154,6 @@ public class QuestionMakerActivity extends AppCompatActivity {
             });
         }
     }
-
 
 
 }
