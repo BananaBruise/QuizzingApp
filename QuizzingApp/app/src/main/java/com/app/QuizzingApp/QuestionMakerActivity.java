@@ -41,7 +41,7 @@ public class QuestionMakerActivity extends AppCompatActivity {
         correct1 = findViewById(R.id.questionMakerCorrect1CB);
         answerText1 = findViewById(R.id.questionMakerAnswer1ET);
         correct2 = findViewById(R.id.questionMakerCorrect2CB);
-        answerText2 = findViewById(R.id.questionMakerAnswer2ET);
+        answerText2 = findViewById(R.id.questionMakerAnswer1ET);
         correct3 = findViewById(R.id.questionMakerCorrect3CB);
         answerText3 = findViewById(R.id.questionMakerAnswer3ET);
         correct4 = findViewById(R.id.questionMakerCorrect4CB);

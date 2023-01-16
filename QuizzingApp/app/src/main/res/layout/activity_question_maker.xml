@@ -8,91 +8,93 @@
     tools:context=".QuestionMakerActivity">
 
     <EditText
-        android:id="@+id/questionMakerAnswer4ET"
+        android:id="@+id/questionMakerAnswer2ET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
         android:ems="10"
         android:hint="answer text"
         android:inputType="textPersonName"
         android:maxLength="24"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/questionMakerAnswer3ET"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.264"
-        app:layout_constraintStart_toEndOf="@+id/questionMakerCorrect1CB"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.824" />
+        app:layout_constraintStart_toEndOf="@+id/questionMakerCorrect2CB"
+        app:layout_constraintTop_toBottomOf="@+id/questionMakerAnswer1ET"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <EditText
+        android:id="@+id/questionMakerAnswer4ET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="answer text"
+        android:inputType="textPersonName"
+        android:maxLength="24"
+        app:layout_constraintBottom_toTopOf="@+id/submitButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/questionMakerCorrect4CB"
+        app:layout_constraintTop_toBottomOf="@+id/questionMakerAnswer3ET"
+        app:layout_constraintVertical_bias="0.5" />
 
     <CheckBox
         android:id="@+id/questionMakerCorrect4CB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
         android:text="Correct?"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswer1ET"
-        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintBottom_toTopOf="@+id/submitButton"
+        app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswer4ET"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.823" />
+        app:layout_constraintTop_toBottomOf="@+id/questionMakerCorrect3CB"
+        app:layout_constraintVertical_bias="0.5" />
 
     <EditText
         android:id="@+id/questionMakerAnswer3ET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
         android:ems="10"
         android:hint="answer text"
         android:inputType="textPersonName"
         android:maxLength="24"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/questionMakerAnswer4ET"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.264"
-        app:layout_constraintStart_toEndOf="@+id/questionMakerCorrect1CB"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.727" />
+        app:layout_constraintStart_toEndOf="@+id/questionMakerCorrect3CB"
+        app:layout_constraintTop_toBottomOf="@+id/questionMakerAnswer2ET"
+        app:layout_constraintVertical_bias="0.5" />
 
     <CheckBox
         android:id="@+id/questionMakerCorrect3CB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
         android:text="Correct?"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswer1ET"
-        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintBottom_toTopOf="@+id/questionMakerCorrect4CB"
+        app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswer3ET"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.726" />
+        app:layout_constraintTop_toBottomOf="@+id/questionMakerCorrect2CB"
+        app:layout_constraintVertical_bias="0.5" />
 
     <EditText
-        android:id="@+id/questionMakerAnswer2ET"
+        android:id="@+id/questionMakerAnswer1ET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
         android:ems="10"
         android:hint="answer text"
         android:inputType="textPersonName"
         android:maxLength="24"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/questionMakerAnswer2ET"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.264"
         app:layout_constraintStart_toEndOf="@+id/questionMakerCorrect1CB"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.634" />
+        app:layout_constraintTop_toBottomOf="@+id/difficultyDescriptionTV"
+        app:layout_constraintVertical_bias="0.5" />
 
     <CheckBox
         android:id="@+id/questionMakerCorrect2CB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
         android:text="Correct?"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswer1ET"
-        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintBottom_toTopOf="@+id/questionMakerCorrect3CB"
+        app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswer2ET"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.632" />
+        app:layout_constraintTop_toBottomOf="@+id/questionMakerCorrect1CB"
+        app:layout_constraintVertical_bias="0.5" />
 
     <EditText
         android:id="@+id/questionNameET"
@@ -102,62 +104,47 @@
         android:hint="Question Name"
         android:inputType="textPersonName"
         android:maxLength="50"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/difficultyBar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.13999999" />
+        app:layout_constraintVertical_bias="0.5" />
 
     <RatingBar
         android:id="@+id/difficultyBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="Difficulty (5 star = most difficult)"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/difficultyDescriptionTV"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/questionNameET"
-        app:layout_constraintVertical_bias="0.110000014" />
+        app:layout_constraintVertical_bias="0.5" />
 
     <TextView
         android:id="@+id/difficultyDescriptionTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Difficulty (5 star = hardest)"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/questionMakerAnswer1ET"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/difficultyBar"
-        app:layout_constraintVertical_bias="0.00999999" />
-
-    <EditText
-        android:id="@+id/questionMakerAnswer1ET"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:ems="10"
-        android:hint="answer text"
-        android:inputType="textPersonName"
-        android:maxLength="24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.26"
-        app:layout_constraintStart_toEndOf="@+id/questionMakerCorrect1CB"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.537" />
+        app:layout_constraintVertical_bias="0.5" />
 
     <CheckBox
         android:id="@+id/questionMakerCorrect1CB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
         android:text="Correct?"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/questionMakerCorrect2CB"
         app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswer1ET"
-        app:layout_constraintHorizontal_bias="0.46"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.536" />
+        app:layout_constraintTop_toBottomOf="@+id/difficultyDescriptionTV"
+        app:layout_constraintVertical_bias="0.5" />
 
     <Button
         android:id="@+id/submitButton"
@@ -168,8 +155,9 @@
         android:text="Submit Question"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.97" />
+        app:layout_constraintTop_toBottomOf="@+id/questionMakerAnswer4ET"
+        app:layout_constraintVertical_bias="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
