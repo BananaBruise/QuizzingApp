@@ -35,7 +35,7 @@ public class QuestionMakerActivity extends AppCompatActivity {
     EditText answerText4;
     TextView qLength, answerLength1, answerLength2, answerLength3, answerLength4;
 
-    final int MAX_ANSWER_TEXT_LENGTH = 5;
+    final int MAX_ANSWER_TEXT_LENGTH = 24;
     final int MAX_QUESTION_TEXT_LENGTH = 50;
 
     FirebaseHelper firebaseHelper = new FirebaseHelper();
@@ -52,7 +52,7 @@ public class QuestionMakerActivity extends AppCompatActivity {
         answerText1 = findViewById(R.id.questionMakerAnswer1ET);
         answerLength1 = findViewById(R.id.questionMakerAnswerLengthTV1);
         correct2 = findViewById(R.id.questionMakerCorrect2CB);
-        answerText2 = findViewById(R.id.questionMakerAnswer1ET);
+        answerText2 = findViewById(R.id.questionMakerAnswer2ET);
         answerLength2 = findViewById(R.id.questionMakerAnswerLengthTV2);
         correct3 = findViewById(R.id.questionMakerCorrect3CB);
         answerText3 = findViewById(R.id.questionMakerAnswer3ET);
@@ -84,9 +84,137 @@ public class QuestionMakerActivity extends AppCompatActivity {
                 }
                 // length somewhere between 0 and max
                 else {
-                    qLength.setTextColor(getColor(R.color.green));
+                    qLength.setTextColor(getColor(R.color.dkgreen));
                     qLength.setText(text);
                     qLength.setVisibility(View.VISIBLE);
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+                // unused
+            }
+
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                // unused
+            }
+        });
+
+        answerText1.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                int length = s.length();
+                String text = length + "/" + MAX_ANSWER_TEXT_LENGTH;
+
+                if (length == 0) {
+                    answerLength1.setVisibility(View.INVISIBLE);
+                } else if (length == MAX_ANSWER_TEXT_LENGTH) {
+                    answerLength1.setTextColor(Color.RED);
+                    answerLength1.setText(text);
+                    answerLength1.setVisibility(View.VISIBLE);
+                }
+                // length somewhere between 0 and max
+                else {
+                    answerLength1.setTextColor(getColor(R.color.dkgreen));
+                    answerLength1.setText(text);
+                    answerLength1.setVisibility(View.VISIBLE);
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+                // unused
+            }
+
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                // unused
+            }
+        });
+
+        answerText2.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                int length = s.length();
+                String text = length + "/" + MAX_ANSWER_TEXT_LENGTH;
+
+                if (length == 0) {
+                    answerLength2.setVisibility(View.INVISIBLE);
+                } else if (length == MAX_ANSWER_TEXT_LENGTH) {
+                    answerLength2.setTextColor(Color.RED);
+                    answerLength2.setText(text);
+                    answerLength2.setVisibility(View.VISIBLE);
+                }
+                // length somewhere between 0 and max
+                else {
+                    answerLength2.setTextColor(getColor(R.color.dkgreen));
+                    answerLength2.setText(text);
+                    answerLength2.setVisibility(View.VISIBLE);
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+                // unused
+            }
+
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                // unused
+            }
+        });
+
+        answerText3.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                int length = s.length();
+                String text = length + "/" + MAX_ANSWER_TEXT_LENGTH;
+
+                if (length == 0) {
+                    answerLength3.setVisibility(View.INVISIBLE);
+                } else if (length == MAX_ANSWER_TEXT_LENGTH) {
+                    answerLength3.setTextColor(Color.RED);
+                    answerLength3.setText(text);
+                    answerLength3.setVisibility(View.VISIBLE);
+                }
+                // length somewhere between 0 and max
+                else {
+                    answerLength3.setTextColor(getColor(R.color.dkgreen));
+                    answerLength3.setText(text);
+                    answerLength3.setVisibility(View.VISIBLE);
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+                // unused
+            }
+
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                // unused
+            }
+        });
+
+        answerText4.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                int length = s.length();
+                String text = length + "/" + MAX_ANSWER_TEXT_LENGTH;
+
+                if (length == 0) {
+                    answerLength4.setVisibility(View.INVISIBLE);
+                } else if (length == MAX_ANSWER_TEXT_LENGTH) {
+                    answerLength4.setTextColor(Color.RED);
+                    answerLength4.setText(text);
+                    answerLength4.setVisibility(View.VISIBLE);
+                }
+                // length somewhere between 0 and max
+                else {
+                    answerLength4.setTextColor(getColor(R.color.dkgreen));
+                    answerLength4.setText(text);
+                    answerLength4.setVisibility(View.VISIBLE);
                 }
             }
 

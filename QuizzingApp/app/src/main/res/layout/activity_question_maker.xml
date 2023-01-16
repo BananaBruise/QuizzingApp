@@ -15,36 +15,11 @@
         android:hint="answer text"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/questionMakerAnswer3ET"
-        app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswerLengthTV2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/questionMakerCorrect2CB"
-        app:layout_constraintTop_toBottomOf="@+id/questionMakerAnswer1ET"
-        app:layout_constraintVertical_bias="0.5" />
-
-    <EditText
-        android:id="@+id/questionMakerAnswer4ET"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="answer text"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/submitButton"
-        app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswerLengthTV4"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/questionMakerCorrect4CB"
-        app:layout_constraintTop_toBottomOf="@+id/questionMakerAnswer3ET"
-        app:layout_constraintVertical_bias="0.5" />
-
-    <CheckBox
-        android:id="@+id/questionMakerCorrect4CB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Correct?"
-        app:layout_constraintBottom_toBottomOf="@+id/questionMakerAnswer4ET"
-        app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswer4ET"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/questionMakerAnswer4ET"
+        app:layout_constraintTop_toBottomOf="@+id/questionMakerAnswer1ET"
         app:layout_constraintVertical_bias="0.5" />
 
     <EditText
@@ -55,23 +30,71 @@
         android:hint="answer text"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/questionMakerAnswer4ET"
-        app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswerLengthTV3"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/questionMakerCorrect3CB"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/questionMakerAnswer2ET"
         app:layout_constraintVertical_bias="0.5" />
+
+    <CheckBox
+        android:id="@+id/questionMakerCorrect1CB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/questionMakerAnswer1ET"
+        app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswer1ET"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/questionMakerAnswer1ET"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/questionMakerAnswer4ET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="answer text"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/submitButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/questionMakerCorrect4CB"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/questionMakerAnswer3ET"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <CheckBox
+        android:id="@+id/questionMakerCorrect2CB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/questionMakerAnswer2ET"
+        app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswer2ET"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/questionMakerAnswer2ET"
+        app:layout_constraintVertical_bias="1.0" />
 
     <CheckBox
         android:id="@+id/questionMakerCorrect3CB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Correct?"
         app:layout_constraintBottom_toBottomOf="@+id/questionMakerAnswer3ET"
         app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswer3ET"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/questionMakerAnswer3ET"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintVertical_bias="1.0" />
+
+    <CheckBox
+        android:id="@+id/questionMakerCorrect4CB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/questionMakerAnswer4ET"
+        app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswer4ET"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/questionMakerAnswer4ET"
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/questionMakerAnswer1ET"
@@ -81,22 +104,11 @@
         android:hint="answer text"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/questionMakerAnswer2ET"
-        app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswerLengthTV1"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/questionMakerCorrect1CB"
-        app:layout_constraintTop_toBottomOf="@+id/difficultyDescriptionTV"
-        app:layout_constraintVertical_bias="0.5" />
-
-    <CheckBox
-        android:id="@+id/questionMakerCorrect2CB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Correct?"
-        app:layout_constraintBottom_toBottomOf="@+id/questionMakerAnswer2ET"
-        app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswer2ET"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/questionMakerAnswer2ET"
+        app:layout_constraintTop_toBottomOf="@+id/difficultyDescriptionTV"
         app:layout_constraintVertical_bias="0.5" />
 
     <EditText
@@ -137,18 +149,6 @@
         app:layout_constraintTop_toBottomOf="@+id/difficultyBar"
         app:layout_constraintVertical_bias="0.5" />
 
-    <CheckBox
-        android:id="@+id/questionMakerCorrect1CB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Correct?"
-        app:layout_constraintBottom_toBottomOf="@+id/questionMakerAnswer1ET"
-        app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswer1ET"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/questionMakerAnswer1ET"
-        app:layout_constraintVertical_bias="0.5" />
-
     <Button
         android:id="@+id/submitButton"
         android:layout_width="wrap_content"
@@ -166,19 +166,21 @@
         android:id="@+id/questionMakerAnswerLengthTV1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="@+id/questionMakerAnswer1ET"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/questionMakerAnswer1ET"
-        app:layout_constraintTop_toTopOf="@+id/questionMakerAnswer1ET" />
+        app:layout_constraintTop_toTopOf="@+id/questionMakerAnswer1ET"
+        app:layout_constraintVertical_bias="0.523" />
 
     <TextView
         android:id="@+id/questionMakerAnswerLengthTV2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="@+id/questionMakerAnswer2ET"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -189,7 +191,8 @@
         android:id="@+id/questionMakerAnswerLengthTV3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="@+id/questionMakerAnswer3ET"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -200,7 +203,8 @@
         android:id="@+id/questionMakerAnswerLengthTV4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="@+id/questionMakerAnswer4ET"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -211,7 +215,8 @@
         android:id="@+id/questionMakerQuestionLengthTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="@+id/questionNameET"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/questionNameET"
