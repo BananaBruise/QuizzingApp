@@ -16,7 +16,8 @@
         android:inputType="textPersonName"
         android:maxLength="24"
         app:layout_constraintBottom_toTopOf="@+id/questionMakerAnswer3ET"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswerLengthTV2"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/questionMakerCorrect2CB"
         app:layout_constraintTop_toBottomOf="@+id/questionMakerAnswer1ET"
         app:layout_constraintVertical_bias="0.5" />
@@ -30,7 +31,8 @@
         android:inputType="textPersonName"
         android:maxLength="24"
         app:layout_constraintBottom_toTopOf="@+id/submitButton"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswerLengthTV4"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/questionMakerCorrect4CB"
         app:layout_constraintTop_toBottomOf="@+id/questionMakerAnswer3ET"
         app:layout_constraintVertical_bias="0.5" />
@@ -40,10 +42,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Correct?"
-        app:layout_constraintBottom_toTopOf="@+id/submitButton"
+        app:layout_constraintBottom_toBottomOf="@+id/questionMakerAnswer4ET"
         app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswer4ET"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionMakerCorrect3CB"
+        app:layout_constraintTop_toTopOf="@+id/questionMakerAnswer4ET"
         app:layout_constraintVertical_bias="0.5" />
 
     <EditText
@@ -55,7 +58,8 @@
         android:inputType="textPersonName"
         android:maxLength="24"
         app:layout_constraintBottom_toTopOf="@+id/questionMakerAnswer4ET"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswerLengthTV3"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/questionMakerCorrect3CB"
         app:layout_constraintTop_toBottomOf="@+id/questionMakerAnswer2ET"
         app:layout_constraintVertical_bias="0.5" />
@@ -65,10 +69,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Correct?"
-        app:layout_constraintBottom_toTopOf="@+id/questionMakerCorrect4CB"
+        app:layout_constraintBottom_toBottomOf="@+id/questionMakerAnswer3ET"
         app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswer3ET"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionMakerCorrect2CB"
+        app:layout_constraintTop_toTopOf="@+id/questionMakerAnswer3ET"
         app:layout_constraintVertical_bias="0.5" />
 
     <EditText
@@ -80,7 +85,8 @@
         android:inputType="textPersonName"
         android:maxLength="24"
         app:layout_constraintBottom_toTopOf="@+id/questionMakerAnswer2ET"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswerLengthTV1"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/questionMakerCorrect1CB"
         app:layout_constraintTop_toBottomOf="@+id/difficultyDescriptionTV"
         app:layout_constraintVertical_bias="0.5" />
@@ -90,10 +96,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Correct?"
-        app:layout_constraintBottom_toTopOf="@+id/questionMakerCorrect3CB"
+        app:layout_constraintBottom_toBottomOf="@+id/questionMakerAnswer2ET"
         app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswer2ET"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionMakerCorrect1CB"
+        app:layout_constraintTop_toTopOf="@+id/questionMakerAnswer2ET"
         app:layout_constraintVertical_bias="0.5" />
 
     <EditText
@@ -140,17 +147,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Correct?"
-        app:layout_constraintBottom_toTopOf="@+id/questionMakerCorrect2CB"
+        app:layout_constraintBottom_toBottomOf="@+id/questionMakerAnswer1ET"
         app:layout_constraintEnd_toStartOf="@+id/questionMakerAnswer1ET"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/difficultyDescriptionTV"
+        app:layout_constraintTop_toTopOf="@+id/questionMakerAnswer1ET"
         app:layout_constraintVertical_bias="0.5" />
 
     <Button
         android:id="@+id/submitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
         android:onClick="submitQuestion"
         android:text="Submit Question"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -159,5 +166,50 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/questionMakerAnswer4ET"
         app:layout_constraintVertical_bias="0.5" />
+
+    <TextView
+        android:id="@+id/questionMakerAnswerLengthTV1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/questionMakerAnswer1ET"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/questionMakerAnswer1ET"
+        app:layout_constraintTop_toTopOf="@+id/questionMakerAnswer1ET" />
+
+    <TextView
+        android:id="@+id/questionMakerAnswerLengthTV2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/questionMakerAnswer2ET"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/questionMakerAnswer2ET"
+        app:layout_constraintTop_toTopOf="@+id/questionMakerAnswer2ET" />
+
+    <TextView
+        android:id="@+id/questionMakerAnswerLengthTV3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/questionMakerAnswer3ET"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/questionMakerAnswer3ET"
+        app:layout_constraintTop_toTopOf="@+id/questionMakerAnswer3ET" />
+
+    <TextView
+        android:id="@+id/questionMakerAnswerLengthTV4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/questionMakerAnswer4ET"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/questionMakerAnswer4ET"
+        app:layout_constraintTop_toTopOf="@+id/questionMakerAnswer4ET" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
