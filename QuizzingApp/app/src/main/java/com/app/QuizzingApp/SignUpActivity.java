@@ -71,9 +71,9 @@ public class SignUpActivity extends AppCompatActivity {
                         FirebaseUser user = firebaseHelper.getmAuth().getCurrentUser();
 
                         if (isQuestioner){
-                            firebaseHelper.addGenericUserToFirestore(new Questioner(firstName, lastName, user.getUid(), email, password));
+                            firebaseHelper.addGenericUserToFirestore(new Questioner(firstName, lastName, FirebaseHelper.getShorterString(user.getUid()), email, password));
                         } else {
-                            firebaseHelper.addGenericUserToFirestore(new Answerer(firstName, lastName, user.getUid(), email, password));
+                            firebaseHelper.addGenericUserToFirestore(new Answerer(firstName, lastName, FirebaseHelper.getShorterString(user.getUid()), email, password));
                         }
 
                         Toast.makeText(getApplicationContext(), "Welcome, " + firstName + "!", Toast.LENGTH_SHORT).show();

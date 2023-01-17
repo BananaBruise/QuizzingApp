@@ -62,7 +62,7 @@ public class FirebaseHelper {
      */
     public <T extends User> void addGenericUserToFirestore(T toAdd) {
         String TAG = "addGenericUserToFirestore";
-        db.collection("Users").document(toAdd.getUID())
+        db.collection("Users").document(getShorterString(toAdd.getUID()))
                 .set(toAdd)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -86,7 +86,7 @@ public class FirebaseHelper {
      * @param callback action taken upon returning a user; calls FirestoreUserCallback.onCallbackUser method
      */
     public void readUser(String uid, FirestoreUserCallback callback) {
-        DocumentReference docRef = db.collection("Users").document(uid);
+        DocumentReference docRef = db.collection("Users").document(getShorterString(uid));
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -110,7 +110,7 @@ public class FirebaseHelper {
      * @param <T>       a user object extending User object e.g. Questioner or Answerer
      */
     public <T extends User> void readGenericUser(String uid, Class<T> userClass, FirestoreUserCallback callback) {
-        DocumentReference docRef = db.collection("Users").document(uid);
+        DocumentReference docRef = db.collection("Users").document(getShorterString(uid));
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -128,7 +128,7 @@ public class FirebaseHelper {
      */
     public void readQuestions(String uid, FirestoreQuestionCallback callback) {
         String TAG = "readQuestions";
-        CollectionReference colRef = db.collection("Users").document(uid).collection("Questions");
+        CollectionReference colRef = db.collection("Users").document(getShorterString(uid)).collection("Questions");
         colRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -156,7 +156,7 @@ public class FirebaseHelper {
      * @param callback action taken upon adding a question; calls FirestoreQuestionCallback.onCallbackQuestionWriter method
      */
     public void writeQuestion(String uid, String questionID, Question question, FirestoreQuestionCallback callback) {
-        DocumentReference docRef = db.collection("Users").document(uid).collection("Questions").document(questionID);
+        DocumentReference docRef = db.collection("Users").document(getShorterString(uid)).collection("Questions").document(questionID);
 
         docRef.set(question).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -176,7 +176,7 @@ public class FirebaseHelper {
      * @param <T> generic type of value
      */
     public <T> void updateQuestionField(String questionerID, String questionDocID, String field, T value, FirestoreQuestionCallback callback) {
-        DocumentReference docRef = db.collection("Users").document(questionerID).collection("Questions").document(questionDocID);
+        DocumentReference docRef = db.collection("Users").document(getShorterString(questionerID)).collection("Questions").document(questionDocID);
 
         docRef.update(field, value).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -202,14 +202,14 @@ public class FirebaseHelper {
     public void syncUsers(String otherUid, String myUid, FirestoreUserCallback callback) {
         String TAG = "syncUsers";
 
-        DocumentReference otherDocRef = db.collection("Users").document(otherUid);
+        DocumentReference otherDocRef = db.collection("Users").document(getShorterString(otherUid));
 
         otherDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot otherUserDoc) {
                 if (otherUserDoc.exists()) {
                     // updating my user's isActive status
-                    DocumentReference myDocRef = db.collection("Users").document(myUid);
+                    DocumentReference myDocRef = db.collection("Users").document(getShorterString(myUid));
                     myDocRef.update("isActive", true).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
@@ -217,7 +217,7 @@ public class FirebaseHelper {
                         }
                     });
                     // updating my user's questionerID (used to lookup question set)
-                    myDocRef.update("questionerID",otherUid).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    myDocRef.update("questionerID",getShorterString(otherUid)).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Log.d(TAG, "questionID successfully updated!");
@@ -258,12 +258,12 @@ public class FirebaseHelper {
      * @param callback action taken upon returning name pair; calls FirestoreUserCallback.onCallbackUserSyncNamePair method
      */
     public void readSyncedPair(String questionerUid, String answererUid, FirestoreUserCallback callback) {
-        DocumentReference answererDocRef = db.collection("Users").document(answererUid);
+        DocumentReference answererDocRef = db.collection("Users").document(getShorterString(answererUid));
 
         answererDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                DocumentReference questionerDocRef = db.collection("Users").document(questionerUid);
+                DocumentReference questionerDocRef = db.collection("Users").document(getShorterString(questionerUid));
 
                 questionerDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
@@ -273,6 +273,15 @@ public class FirebaseHelper {
                 });
             }
         });
+    }
+
+    /**
+     * Takes in a given String and shortens it to 10 characters
+     * @param s given string we are shortening
+     * @return a shortened version of the given String
+     */
+    public static String getShorterString(String s) {
+        return s.substring(0, 10);
     }
 
     // interfaces

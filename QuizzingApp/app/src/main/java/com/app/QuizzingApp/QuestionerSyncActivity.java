@@ -30,7 +30,7 @@ public class QuestionerSyncActivity extends AppCompatActivity {
 
         userUid = firebaseHelper.getmAuth().getCurrentUser().getUid();
 
-        codeTV.setText("CODE: " + userUid);
+        codeTV.setText("CODE: " + FirebaseHelper.getShorterString(userUid));
     }
 
     /**

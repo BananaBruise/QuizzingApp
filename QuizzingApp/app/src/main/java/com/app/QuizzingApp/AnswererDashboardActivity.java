@@ -96,10 +96,16 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
                     public void onCallbackQuestions(ArrayList<Question> questionList) {
                         cardList = heapSort(questionList);
 
-                        // put the card list in the view (supply current binding)
-                        adapter = new QuestionCardAdapter(cardList);
-                        binding.cardStack.setLayoutManager(manager);
-                        binding.cardStack.setAdapter(adapter);
+                        if (cardList.isEmpty()) {
+                           Toast.makeText(getApplicationContext(), "You don't have any questions yet!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // put the card list in the view (supply current binding)
+                            adapter = new QuestionCardAdapter(cardList);
+                            binding.cardStack.setLayoutManager(manager);
+                            binding.cardStack.setAdapter(adapter);
+                        }
+
+
                     }
                 });
 
