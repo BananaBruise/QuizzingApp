@@ -14,12 +14,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
+/**
+ * Manages the tasks of QuestionerDashboardActivity screen
+ */
 public class QuestionerDashboardActivity extends AppCompatActivity {
 
     FirebaseHelper firebaseHelper = new FirebaseHelper();
     EditText searchET;
     ArrayList<Question> questionsList = new ArrayList<>();
 
+    /**
+     * Reads all questions posted by current Questioner and displays them in a list view
+     * @param savedInstanceState
+     */
     @Override
     @SuppressLint({"MissingInflatedId", "WrongViewCast"})
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +46,10 @@ public class QuestionerDashboardActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Displays the given list of questions in a list view
+     * @param questionsList the list of questions we are displaying
+     */
     public void displayQuestions(ArrayList<Question> questionsList) {
         // check if there are no questions
         if (questionsList.isEmpty()) {
@@ -63,10 +74,18 @@ public class QuestionerDashboardActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Allows a user to create a question
+     * @param v the view object corresponding to the current screen
+     */
     public void takeToQuestionMaker(View v) {
         startActivity(new Intent(getApplicationContext(), QuestionMakerActivity.class));
     }
 
+    /**
+     * Signs out the current user
+     * @param v the view object corresponding to the current screen
+     */
     public void signOut(View v) {
         new Navigation().signOut(QuestionerDashboardActivity.this);
     }
@@ -81,6 +100,10 @@ public class QuestionerDashboardActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Allows the question list to be searched by a given questionName
+     * @param questionName the question name we are searching for
+     */
     public void search(String questionName) {
 
         ArrayList<Question> searched = new ArrayList<Question>();

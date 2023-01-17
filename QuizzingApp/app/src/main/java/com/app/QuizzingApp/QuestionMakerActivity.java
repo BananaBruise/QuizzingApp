@@ -21,6 +21,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Manages the creation of a Question object
+ */
 public class QuestionMakerActivity extends AppCompatActivity {
     // layout
     EditText qName;
@@ -40,6 +43,10 @@ public class QuestionMakerActivity extends AppCompatActivity {
 
     FirebaseHelper firebaseHelper = new FirebaseHelper();
 
+    /**
+     * Instantiates UI elements as well as dynamic character counter for each edit text
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -232,10 +239,21 @@ public class QuestionMakerActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Sets the max length attribute of the given TextView
+     * @param tv the given TextView we are setting the max length attribute of
+     * @param textLength the amx length
+     * @param <T> generic; must be a subclass of TextView
+     */
     protected <T extends TextView> void setMaxLength(T tv, int textLength) {
         tv.setFilters(new InputFilter[]{new InputFilter.LengthFilter(textLength)});
     }
 
+    /**
+     * Adds a Question object with specified parameters to our database (makes use of FirebaseHelper
+     * methods)
+     * @param v the view corresponding to the current screen
+     */
     public void submitQuestion(View v) {
         // question attributes
         String name = qName.getText().toString();

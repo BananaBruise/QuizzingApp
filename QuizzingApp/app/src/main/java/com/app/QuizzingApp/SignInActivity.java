@@ -17,12 +17,21 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 
+/**
+ * First screen the user sees; will take them to the appropriate screen if they're already signed in/
+ * if they're new/ if they're not active
+ */
 public class SignInActivity extends AppCompatActivity {
 
     private EditText emailET, passwordET;
 
     FirebaseHelper firebaseHelper;
 
+    /**
+     * Instantiates referneces to UI elements and also takes user to correct screen upon opening the
+     * app
+     * @param savedInstanceState
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
@@ -40,11 +49,20 @@ public class SignInActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Takes the user to the SignUpActivity
+     * @param v the view corresponding to the current scren
+     */
     public void takeToSignUp(View v) {
         Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Depending on the user's isActive status and isQuestioner status, this method will take a user
+     * to the correct activity
+     * @param uid uid of current user
+     */
     public void takeToPostSignIn(String uid) {
 
         firebaseHelper.readUser(uid, new FirebaseHelper.FirestoreUserCallback() {
@@ -70,8 +88,11 @@ public class SignInActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Signs in the current user
+     * @param v the view corresponding to the current screen
+     */
     public void signIn(View v) {
-
         // Get user data
         String email = emailET.getText().toString();
         String password = passwordET.getText().toString();

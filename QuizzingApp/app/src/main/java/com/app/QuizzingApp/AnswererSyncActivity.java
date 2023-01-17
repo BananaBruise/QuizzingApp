@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * Activity that manages the syncing of an Answerer to a Questioner
+ */
 public class AnswererSyncActivity extends AppCompatActivity {
 
     // global variables
@@ -15,6 +18,10 @@ public class AnswererSyncActivity extends AppCompatActivity {
 
     EditText codeET;
 
+    /**
+     * Instantiate references to views
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,9 +30,14 @@ public class AnswererSyncActivity extends AppCompatActivity {
         codeET = findViewById(R.id.syncCodeET);
     }
 
+    /**
+     * Syncs an Answerer to a Questioner
+     * @param v the view corresponding to the current screen
+     */
     public void syncAnswerer(View v) {
         String otherUid = codeET.getText().toString();
 
+        // callback used to sync two users
         firebaseHelper.syncUsers(otherUid, firebaseHelper.getmAuth().getCurrentUser().getUid(), new FirebaseHelper.FirestoreUserCallback() {
             @Override
             public void onCallbackUserSyncNamePair(String otherUserFirstName, String myUserFirstName) {
@@ -41,6 +53,10 @@ public class AnswererSyncActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Signs out a user
+     * @param v the view corresponding to the current screen
+     */
     public void signOut(View v) {
         firebaseHelper.getmAuth().signOut();
 

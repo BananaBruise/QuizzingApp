@@ -1,7 +1,6 @@
 package com.app.QuizzingApp;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -26,6 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+/**
+ * Encodes the information used to handle the AnswererDashboardActivity app screen
+ */
 public class AnswererDashboardActivity extends AppCompatActivity implements CardStackListener {
 
     // global variables
@@ -61,6 +63,12 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
     SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("mm:ss");
 
 
+    /**
+     * When the screen is loaded, the data that needs to be displayed will be put into an Adapter,
+     * which is then displayed on the screen as a card stack. The card stack is managed by
+     * CardStackLayoutManager
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,10 +109,17 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
     }
 
 
+    /**
+     * Signs a user out of the app
+     * @param v the view corresponding to the current screen
+     */
     public void signOut(View v) {
          new Navigation().signOut(AnswererDashboardActivity.this);
     }
 
+    /**
+     * The following methods are unused callbacks
+     */
     @Override
     public void onCardDragging(Direction direction, float ratio) {
         // unused
@@ -125,6 +140,11 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
         // unused
     }
 
+    /**
+     * When a card appears, we start a timer
+     * @param view view object corresponding to current card
+     * @param position where we are in the stack of cards (as an index)
+     */
     @Override
     public void onCardAppeared(View view, int position) {
         // get reference to timerTV
@@ -160,6 +180,11 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
 
     }
 
+    /**
+     * When a card disappears, we must update our Firestore database appropriately
+     * @param view view corresponding to current card
+     * @param position where we are in our card stack
+     */
     @Override
     public void onCardDisappeared(View view, int position) {
         // get references to UI elements
@@ -207,7 +232,7 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
             public void onCallbackQuestionUpdate() {
                 if (position == cardList.size() - 1) {
                     Toast.makeText(getApplicationContext(), "You finished the quiz!", Toast.LENGTH_SHORT).show();
-                    takeToViewQuestion(wrong);
+                    takeToPostQuizActivity(wrong);
                 }
             }
         });
@@ -216,7 +241,11 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
 
     }
 
-    public void takeToViewQuestion(ArrayList<Question> wrongQuestions) {
+    /**
+     * Takes us to PostQuizActivity
+     * @param wrongQuestions questions the Answerer got wrong on this page
+     */
+    public void takeToPostQuizActivity(ArrayList<Question> wrongQuestions) {
         Intent i = new Intent(getApplicationContext(), PostQuizActivity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("WRONGS", wrongQuestions);
@@ -225,6 +254,13 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
 
     }
 
+    /**
+     * Sorts a given array of questions by, in decreasing order of importance:
+     * (1. if the Answerer missed it last time (higher priority, 2. time spent answering
+     * (longer time = higher priority) and 3. question difficulty (higher difficulty = higher priority)
+     * @param questions Question ArrayList we are heap sorting
+     * @return a sorted version of questions, in order from highest priority to lowest priority (max-heap)
+     */
     // HEAP CODE (dequeue() and percolateDown())
     private ArrayList<Question> heapSort(List<Question> questions) {
         // heapify
@@ -246,6 +282,10 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
         return result;
     }
 
+    /**
+     * Heapifies a given question ArrayList so it can be heap sorted
+     * @param questions array we are heapifying
+     */
     public void heapify(List<Question> questions) {
         // empty or 1 item heap is already a heap
         if (questions.isEmpty() || questions.size() == 1)
@@ -255,6 +295,11 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
         this.heapifyHelper((questions.size() - 2) / 2, questions);
     }
 
+    /**
+     * Helper method to heapify a given array of questions
+     * @param index index we are going to start percolating down at
+     * @param questions array we are heapifying
+     */
     protected void heapifyHelper(int index, List<Question> questions) {
         // internal node index is valid all the way back to root
         if (index >= 0) {
@@ -267,7 +312,12 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
         }
     }
 
-
+    /**
+     * Removes and returns the next highest priority Question in the given array list
+     * @param questions the given array list we are checking for the highest priority element
+     * @return the next highest priority Question
+     * @throws NoSuchElementException if the list is empty
+     */
     public Question dequeue(List<Question> questions) throws NoSuchElementException {
         // if the queue is empty, throw a NoSuchElementException
         if (questions.size() == 0) {
@@ -291,6 +341,12 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
         return toRemove; // return the Course that was dequeued
     }
 
+    /**
+     * Percolates down a node starting at a given index
+     * @param index the node we are percolating down from
+     * @param questions the list we are percolating with respect to
+     * @throws IndexOutOfBoundsException if given index is OOB for list
+     */
     protected void percolateDown(int index, List<Question> questions) throws IndexOutOfBoundsException {
         if (index < 0 || index > questions.size() - 1) {
             throw new IndexOutOfBoundsException("index is out of bounds");

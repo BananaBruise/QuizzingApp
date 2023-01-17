@@ -31,11 +31,21 @@ public class QuestionCardAdapter extends RecyclerView.Adapter<QuestionCardAdapte
     List<Question> cardList;
 
 
+    /**
+     * Constructor for our adapter
+     * @param cardList the list of Questions we are displaying in our card stack
+     */
     public QuestionCardAdapter(List<Question> cardList) {
         this.cardList = cardList; // assign to cardList
 
     }
 
+    /**
+     * Creates a viewHolder object for each card
+     * @param parent parent view (AnswererDashboardActivity)
+     * @param viewType
+     * @return a viewHolder object for each card
+     */
     @NonNull
     @Override
     public QuestionCardAdapter.myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -44,6 +54,11 @@ public class QuestionCardAdapter extends RecyclerView.Adapter<QuestionCardAdapte
         return new myViewHolder(binding);
     }
 
+    /**
+     * Binds data to view
+     * @param holder viewHolder corresponding to each card
+     * @param position where we are in our list of cards
+     */
     @Override
     public void onBindViewHolder(@NonNull QuestionCardAdapter.myViewHolder holder, int position) {
         Question cardItem = cardList.get(position);
@@ -57,15 +72,21 @@ public class QuestionCardAdapter extends RecyclerView.Adapter<QuestionCardAdapte
         holder.binding.answer4ET.setText(cardItem.getAnswers().get(3).getPrompt());
 
 
-        // timer
-
     }
 
+    /**
+     * Returns the number of elements in our list
+     * @return the number of elements in our list
+     */
     @Override
     public int getItemCount() {
         return cardList.size();
     }
 
+    /**
+     * ViewHolder class, used to create a viewHolder for each card (incorporates binding
+     * so we can easily reference UI elements defined in xml)
+     */
     public static class myViewHolder extends RecyclerView.ViewHolder {
         CardBinding binding;
 

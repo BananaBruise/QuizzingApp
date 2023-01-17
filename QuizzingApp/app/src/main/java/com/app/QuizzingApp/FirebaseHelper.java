@@ -20,6 +20,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
+/**
+ * Manages all interaction with the Firestore database. All interaction with the databse will be
+ * explicitly defined within this class.
+ */
 public class FirebaseHelper {
     // instance var
     private FirebaseAuth mAuth;
@@ -33,10 +37,18 @@ public class FirebaseHelper {
     }
 
     // getter
+    /**
+     * Returns FirebaseAuth instance, allowing for authentication
+     * @return FirebaseAuth instance, allowing for authentication
+     */
     public FirebaseAuth getmAuth() {
         return mAuth;
     }
 
+    /**
+     * Returns a FirebaseFirestore instance, allowing for interaction with database
+     * @return FirebaseFirestore instance, allowing for interaction with database
+     */
     public FirebaseFirestore getmdb() {
         return db;
     }
@@ -184,7 +196,8 @@ public class FirebaseHelper {
      * Syncs two users (Answerer and Questioner)
      * @param otherUid the ID of the questioner we are syncing with
      * @param myUid my user's ID
-     * @param callback action taken upon syncing a user; calls FirestoreUserCallback.onCallbackUserSyncSuccess/Fail method
+     * @param callback action taken upon syncing a user; calls FirestoreUserCallback.onCallbackUserSyncNamePair/
+     *                 onCallbackUserSyncFail method
      */
     public void syncUsers(String otherUid, String myUid, FirestoreUserCallback callback) {
         String TAG = "syncUsers";
@@ -237,6 +250,13 @@ public class FirebaseHelper {
 
     }
 
+    /**
+     * Gives us the first name of the Answerer and Questioner corresponding to the given
+     * questionerUid and answererUid
+     * @param questionerUid uid of Questioner we are finding the name of
+     * @param answererUid uid of Answerer we are finding the name of
+     * @param callback action taken upon returning name pair; calls FirestoreUserCallback.onCallbackUserSyncNamePair method
+     */
     public void readSyncedPair(String questionerUid, String answererUid, FirestoreUserCallback callback) {
         DocumentReference answererDocRef = db.collection("Users").document(answererUid);
 

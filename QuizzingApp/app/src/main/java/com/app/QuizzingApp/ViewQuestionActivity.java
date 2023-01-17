@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+/**
+ * Allows a user to view a question they have clicked on (from a list view)
+ */
 public class ViewQuestionActivity extends AppCompatActivity {
 
     TextView questionNameTV, answersTV;
@@ -17,6 +20,11 @@ public class ViewQuestionActivity extends AppCompatActivity {
     Question clickedQuestion;
     String answers;
 
+    /**
+     * Instantiate UI references and populate them with the data given by the intent sent from
+     * previous activity
+     * @param savedInstanceState
+     */
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {

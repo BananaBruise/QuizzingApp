@@ -12,15 +12,29 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+/**
+ * Class containing some commonly used methods for navigation purposes (eg. signing out, displaying
+ * an alert popup)
+ */
 public class Navigation {
     FirebaseHelper firebaseHelper = new FirebaseHelper();
 
+    /**
+     * Signs a user out using firebaseHelper mAuth instance
+     * @param activity activity we are signing out user from
+     */
     public void signOut(Activity activity) {
         firebaseHelper.getmAuth().signOut();
         Intent i = new Intent(activity, SignInActivity.class);
         activity.startActivity(i);
     }
 
+    /**
+     * Displays an alert dialog on the given activity
+     * @param activity activity we are displaying the popup on
+     * @param teacherfName first name of teacher corresponding to current user
+     * @param studentfName first name of student corresponding to current user
+     */
     public void displayAlertDialog(Activity activity, String teacherfName, String studentfName) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 

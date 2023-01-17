@@ -17,6 +17,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * Used to sign a user up and add them to the database
+ */
 public class SignUpActivity extends AppCompatActivity {
 
     private EditText emailET, passwordET, firstNameET, lastNameET;
@@ -26,6 +29,11 @@ public class SignUpActivity extends AppCompatActivity {
 
     private final String TAG = "SignUpActivity";
 
+
+    /**
+     * Instantiate UI references
+     * @param savedInstanceState
+     */
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +49,10 @@ public class SignUpActivity extends AppCompatActivity {
         firebaseHelper = new FirebaseHelper();
     }
 
+    /**
+     * Signs up the current user and adds them to the Firestore database (using FirebaseHelper class)
+     * @param v view corresponding to current screen
+     */
     public void signUp(View v) {
         String email = emailET.getText().toString();
         String password = passwordET.getText().toString();
@@ -79,6 +91,10 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Takes user to appropriate screen after they have signed up
+     * @param uid uid of current user
+     */
     public void takeToPostSignUp(String uid) {
         firebaseHelper.readUser(uid, new FirebaseHelper.FirestoreUserCallback() {
             @Override

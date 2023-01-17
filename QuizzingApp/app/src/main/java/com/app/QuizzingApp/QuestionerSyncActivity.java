@@ -8,12 +8,19 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Manages our QuestionerSyncActivity screen
+ */
 public class QuestionerSyncActivity extends AppCompatActivity {
 
     TextView codeTV;
     FirebaseHelper firebaseHelper = new FirebaseHelper();
     String userUid;
 
+    /**
+     * Instantiates references to UI elements as well as the uid corresponding to the current user
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +33,10 @@ public class QuestionerSyncActivity extends AppCompatActivity {
         codeTV.setText("CODE: " + userUid);
     }
 
+    /**
+     * Syncs a Questioner with an Answerer (uses methods defined in FirebaseHelper class)
+     * @param v view object corresponding to current screen
+     */
     public void syncQuestioner(View v){
         // check if my isActive and other isActive is true
 
@@ -42,6 +53,10 @@ public class QuestionerSyncActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Signs out the current user
+     * @param v view object corresponding to the current screen
+     */
     public void signOut(View v) {
         new Navigation().signOut(QuestionerSyncActivity.this);
     }

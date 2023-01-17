@@ -16,9 +16,17 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+/**
+ * Handles what needs to be done after an Answerer completes a quiz
+ */
 public class PostQuizActivity extends AppCompatActivity {
 
     TextView postQuizInfoTV;
+
+    /**
+     * Instantiates a list view with the Questions the Answerer got wrong from the previous quiz
+     * @param savedInstanceState
+     */
     @Override
     @SuppressLint("MissingInflatedId")
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +65,18 @@ public class PostQuizActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Signs out the current user
+     * @param v view corresponding to the current screen
+     */
     public void signOut(View v) {
         new Navigation().signOut(PostQuizActivity.this);
     }
 
+    /**
+     * Allows a user to retake a quiz
+     * @param v view corresponding to the current screen
+     */
     public void retry(View v){
         Intent i = new Intent(getApplicationContext(), AnswererDashboardActivity.class);
         startActivity(i);
