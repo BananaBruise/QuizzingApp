@@ -42,7 +42,7 @@ public class AnswererSyncActivity extends AppCompatActivity {
             @Override
             public void onCallbackUserSyncNamePair(String otherUserFirstName, String myUserFirstName) {
                 Toast.makeText(getApplicationContext(), "You are synced to " + otherUserFirstName, Toast.LENGTH_SHORT).show();
-                new Navigation().displayAlertDialog(AnswererSyncActivity.this, myUserFirstName, otherUserFirstName);
+                new Navigation().displayAlertDialog(AnswererSyncActivity.this, otherUserFirstName, myUserFirstName);
             }
 
             @Override

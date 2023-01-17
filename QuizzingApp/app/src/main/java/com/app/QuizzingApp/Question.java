@@ -2,10 +2,8 @@ package com.app.QuizzingApp;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
-import org.checkerframework.checker.units.qual.A;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +16,7 @@ public class Question implements Parcelable, Comparable<Question> {
     private String name;
     private int diff;
     private List<Answer> answers;
-    private boolean isCorrectlyAnsweredLastTime;
+    private boolean correctlyAnsweredLastTime;
     private int questionID;
     private int millisElapsedToAnswer;
 
@@ -39,9 +37,11 @@ public class Question implements Parcelable, Comparable<Question> {
         this.name = name;
         this.diff = diff;
         this.answers = new ArrayList<Answer>(MAX_CHOICES);
-        this.isCorrectlyAnsweredLastTime = false;
+        this.correctlyAnsweredLastTime = false;
         this.questionID = questionID;
+
     }
+
 
     // getter
 
@@ -90,7 +90,7 @@ public class Question implements Parcelable, Comparable<Question> {
      * @return whether or not this Question was correctly answered last time by the user
      */
     public boolean isCorrectlyAnsweredLastTime() {
-        return isCorrectlyAnsweredLastTime;
+        return correctlyAnsweredLastTime;
     }
 
     /**
@@ -116,6 +116,14 @@ public class Question implements Parcelable, Comparable<Question> {
     }
 
     // setters
+
+    /**
+     * Setter for correctlyAnsweredLastTime
+     * @param correctlyAnsweredLastTime new value for this boolean
+     */
+    public void setCorrectlyAnsweredLastTime(boolean correctlyAnsweredLastTime) {
+        this.correctlyAnsweredLastTime = correctlyAnsweredLastTime;
+    }
 
     /**
      * Setter for questionID
@@ -233,16 +241,16 @@ public class Question implements Parcelable, Comparable<Question> {
         // 3. difficulty
 
         // scenario 1: compare 1
-        if (this.isCorrectlyAnsweredLastTime != question.isCorrectlyAnsweredLastTime) {
-            if (this.isCorrectlyAnsweredLastTime && !question.isCorrectlyAnsweredLastTime) {
+        if (this.correctlyAnsweredLastTime != question.correctlyAnsweredLastTime) {
+            if (!this.correctlyAnsweredLastTime && question.correctlyAnsweredLastTime) {
                 return 1;
-            } else if (question.isCorrectlyAnsweredLastTime && !this.isCorrectlyAnsweredLastTime) {
+            } else if (!question.correctlyAnsweredLastTime && this.correctlyAnsweredLastTime) {
                 return -1;
             }
         }
 
         // scenario 2: compare 2
-        if (Math.abs(this.millisElapsedToAnswer - question.millisElapsedToAnswer) > 10) { //TODO 10000 set back
+        if (Math.abs(this.millisElapsedToAnswer - question.millisElapsedToAnswer) > 10000) {
             return ((Integer) this.millisElapsedToAnswer).compareTo(question.millisElapsedToAnswer);
         }
 
