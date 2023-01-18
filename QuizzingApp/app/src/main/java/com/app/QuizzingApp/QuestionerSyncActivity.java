@@ -13,23 +13,25 @@ import android.widget.Toast;
  */
 public class QuestionerSyncActivity extends AppCompatActivity {
 
-    TextView codeTV;
-    FirebaseHelper firebaseHelper = new FirebaseHelper();
-    String userUid;
+    TextView codeTV;    // reference to TV displaying sync code
+    FirebaseHelper firebaseHelper = new FirebaseHelper();   // reference to helper class
+    String userUid; // uid of current user
 
     /**
      * Instantiates references to UI elements as well as the uid corresponding to the current user
-     * @param savedInstanceState
+     * @param savedInstanceState may be used to restore activity to a previous state
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questioner_sync);
 
-        codeTV = findViewById(R.id.questionerSyncCodeTV);
+        codeTV = findViewById(R.id.questionerSyncCodeTV);   // instantiate codeTV
 
+        // get uid of current user
         userUid = firebaseHelper.getmAuth().getCurrentUser().getUid();
 
+        // set codeTV appropriately
         codeTV.setText("CODE: " + FirebaseHelper.getShorterString(userUid));
     }
 
@@ -39,13 +41,14 @@ public class QuestionerSyncActivity extends AppCompatActivity {
      */
     public void syncQuestioner(View v){
         // check if my isActive and other isActive is true
-
         firebaseHelper.readUser(userUid, new FirebaseHelper.FirestoreUserCallback() {
             @Override
-            public void onCallbackUser(User u) {
+            public void onCallbackReadUser(User u) {
                 if (!u.getisActive()) {
+                    // if i am not active, sync failed
                     Toast.makeText(getApplicationContext(), "You were not connected successfully to the student", Toast.LENGTH_SHORT).show();
                 } else {
+                    // if i am active, sync succeeded
                     Toast.makeText(getApplicationContext(), "You were successfully synced to the student!", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getApplicationContext(), QuestionerDashboardActivity.class));
                 }

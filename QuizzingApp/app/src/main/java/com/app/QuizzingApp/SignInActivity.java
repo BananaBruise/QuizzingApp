@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -23,21 +21,18 @@ import com.google.firebase.auth.AuthResult;
  */
 public class SignInActivity extends AppCompatActivity {
 
-    private EditText emailET, passwordET;
+    EditText emailET, passwordET;   // references to ETs
 
-    FirebaseHelper firebaseHelper;
+    FirebaseHelper firebaseHelper = new FirebaseHelper();   // reference to helper class
 
     /**
-     * Instantiates referneces to UI elements and also takes user to correct screen upon opening the
+     * Instantiates references to UI elements and also takes user to correct screen upon opening the
      * app
-     * @param savedInstanceState
+     * @param savedInstanceState may be used to restore activity to a previous state
      */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-
-        // initialize helper class
-        firebaseHelper = new FirebaseHelper();
 
         // grab view elements
         emailET = findViewById(R.id.signInEmailET);
@@ -51,7 +46,7 @@ public class SignInActivity extends AppCompatActivity {
 
     /**
      * Takes the user to the SignUpActivity
-     * @param v the view corresponding to the current scren
+     * @param v the view corresponding to the current screen
      */
     public void takeToSignUp(View v) {
         Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
@@ -67,18 +62,24 @@ public class SignInActivity extends AppCompatActivity {
 
         firebaseHelper.readUser(uid, new FirebaseHelper.FirestoreUserCallback() {
             @Override
-            public void onCallbackUser(User u) {
+            public void onCallbackReadUser(User u) {
+                // if this user is inactive and an answerer, take to AnswererSyncActivity
                 if (u.getisActive() == false && u.isQuestioner() == false) {
                     startActivity(new Intent(getApplicationContext(), AnswererSyncActivity.class));
                 } else if (u.getisActive() == false && u.isQuestioner() == true) {
+                    // if this user is inactive and a questioner, take to QuestionerSyncActivity
                     startActivity(new Intent(getApplicationContext(), QuestionerSyncActivity.class));
                 } else if (u.getisActive() == true && u.isQuestioner()) {
+                    // if this user is active and a questioner, take to QuestionerDashboardActivity
                     startActivity(new Intent(getApplicationContext(), QuestionerDashboardActivity.class));
                 } else if (u.getisActive() == true && u.isQuestioner() == false) {
+                    // if this user is an answerer, get the uid of their questioner
                     String questionerUID = ((Answerer) u).getQuestionerID();
                     firebaseHelper.readSyncedPair(questionerUID, u.getUID(), new FirebaseHelper.FirestoreUserCallback() {
                         @Override
-                        public void onCallbackUserSyncNamePair(String otherUserFirstName, String myUserFirstName) {
+                        public void onCallbackUserSync(String otherUserFirstName, String myUserFirstName) {
+                            // on callback we want to take the user to the AnswererDashboardActivity
+                            // (with warning popup)
                             new Navigation().displayAlertDialog(SignInActivity.this, otherUserFirstName, myUserFirstName);
                         }
                     });
@@ -93,7 +94,7 @@ public class SignInActivity extends AppCompatActivity {
      * @param v the view corresponding to the current screen
      */
     public void signIn(View v) {
-        // Get user data
+        // get user data
         String email = emailET.getText().toString();
         String password = passwordET.getText().toString();
 
@@ -102,16 +103,17 @@ public class SignInActivity extends AppCompatActivity {
         if (email.length() == 0 || password.length() == 0) {
             Toast.makeText(getApplicationContext(), "Enter all fields", Toast.LENGTH_SHORT).show();
         } else {
-            // code to sign in user
+            // use mAuth reference to sign user in
             firebaseHelper.getmAuth().signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+                                // sign in successful
                                 Toast.makeText(getApplicationContext(), "Sign in successful", Toast.LENGTH_SHORT).show();
                                 takeToPostSignIn(firebaseHelper.getmAuth().getCurrentUser().getUid()); // direct authenticated user to next activity
                             } else {
-                                //sign in failed
+                                // sign in failed
                                 Log.d("SignInActivity", email + " failed to log in" + task.getException());
                                 Toast.makeText(getApplicationContext(), "Wrong email or password", Toast.LENGTH_SHORT).show();
                             }

@@ -1,7 +1,5 @@
 package com.app.QuizzingApp;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 
 /**
  * A subclass of User which encodes the information for an Answerer (person answering questions
@@ -9,12 +7,12 @@ import android.os.Parcelable;
  */
 public class Answerer extends User {
     // instance var
-    private String questionerID; // active user (isActive) would find question set via QuestionID
+    private String questionerID; // active user (isActive) would find question set via questionerID
 
+    // constructors
     /**
      * Default constructor for Answerer object
      */
-    // constructor
     public Answerer() {
     }
 
@@ -27,8 +25,9 @@ public class Answerer extends User {
      * @param password password of Answerer
      */
     public Answerer(String firstName, String lastName, String UID, String email, String password) {
+        // instantiate super class (this class inherits from User)
         super(firstName, lastName, UID, email, password, false);
-        this.questionerID = null;
+        this.questionerID = null;   // will be instantiated when Answerer is synced
     }
 
 

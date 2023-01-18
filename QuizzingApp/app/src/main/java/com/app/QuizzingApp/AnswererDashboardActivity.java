@@ -31,35 +31,35 @@ import java.util.NoSuchElementException;
 public class AnswererDashboardActivity extends AppCompatActivity implements CardStackListener {
 
     // global variables
-    FirebaseHelper firebaseHelper = new FirebaseHelper();
+    FirebaseHelper firebaseHelper = new FirebaseHelper();   // reference to FirebaseHelper helper class
 
-    CheckBox correct1CB, correct2CB, correct3CB, correct4CB;
 
-    String questionerID;
+    CheckBox correct1CB, correct2CB, correct3CB, correct4CB;    // checkbox references
 
-    List<Question> cardList = new ArrayList<>();
+    String questionerID;    // used to lookup the question set we are working with
 
-    ActivityAnswererDashboardBinding binding;
+    List<Question> cardList = new ArrayList<>();    // a List of the questions Answerer will be answering
 
-    CardStackLayoutManager manager;
+    ActivityAnswererDashboardBinding binding;   // allows us to easily reference this activity's UI components
 
-    ArrayList<Question> wrong = new ArrayList<>();
+    CardStackLayoutManager manager; // allows our cards to be displayed in the correct order/form
 
-    QuestionCardAdapter adapter;
+    ArrayList<Question> wrong = new ArrayList<>();  // questions the Answerer has answered incorrectly
 
-    CountDownTimer cdt;
+    QuestionCardAdapter adapter;    // allows us to bind our specific data to each card
 
-    // timer TV on each card that we'll be updating
-    TextView cardTimerTV;
+    CountDownTimer cdt; // each card will contain a CountDownTimer to show the Answerer their time taken
 
-    long millisElapsedForQuestion;
+    TextView cardTimerTV; // timer TV on each card that we'll be updating
+
+    long millisElapsedForQuestion;  // how much time the Answerer has taken for a single question
 
     // timer variables
-    long totalSeconds = 180;
-    long warningSeconds = 10;
-    long intervalSeconds = 1;
+    long totalSeconds = 180;    // 3 min timer
+    long warningSeconds = 10;   // after 10 seconds remaining timer will flash red
+    long intervalSeconds = 1;   // counts down every second
 
-    // formatting tools
+    // formatting tool
     SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("mm:ss");
 
 
@@ -67,7 +67,7 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
      * When the screen is loaded, the data that needs to be displayed will be put into an Adapter,
      * which is then displayed on the screen as a card stack. The card stack is managed by
      * CardStackLayoutManager
-     * @param savedInstanceState
+     * @param savedInstanceState may be used to restore activity to a previous state
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,27 +79,31 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
 
         // create manager object for cardstack (first arg = context, second arg = listener interface)
         manager = new CardStackLayoutManager(this, this);
-        manager.setStackFrom(StackFrom.Top);
-        manager.setVisibleCount(3);
-        manager.setDirections(Direction.HORIZONTAL);
-        manager.setCanScrollVertical(false);
+        manager.setStackFrom(StackFrom.Top);    // appearance of stack
+        manager.setVisibleCount(3); // 3 cards visible at a time
+        manager.setDirections(Direction.HORIZONTAL);    // can scroll horizontally
+        manager.setCanScrollVertical(false);  // cannot scroll vertically
 
         // populate stack of questions for answerer
         String uid = firebaseHelper.getmAuth().getCurrentUser().getUid();
         firebaseHelper.readGenericUser(uid, Answerer.class, new FirebaseHelper.FirestoreUserCallback() {
             @Override
-            public void onCallbackUser(User u) {
+            public void onCallbackReadUser(User u) {
                 Answerer answerer = (Answerer) u;
                 questionerID = answerer.getQuestionerID();
+                // here we are using questionerID field to lookup questions posted by this Answerer's Questioner
                 firebaseHelper.readQuestions(questionerID, new FirebaseHelper.FirestoreQuestionCallback() {
                     @Override
-                    public void onCallbackQuestions(ArrayList<Question> questionList) {
-                        cardList = heapSort(questionList);
+                    public void onCallbackReadQuestions(ArrayList<Question> questionList) {
+                        cardList = heapSort(questionList);  // heap sort each time we grab questions
+                                                            // as question parameters can change each
+                                                            // time Answerer takes quiz
 
+                        // no questions yet
                         if (cardList.isEmpty()) {
                            Toast.makeText(getApplicationContext(), "You don't have any questions yet!", Toast.LENGTH_SHORT).show();
                         } else {
-                            // put the card list in the view (supply current binding)
+                            // put the card list in the view
                             adapter = new QuestionCardAdapter(cardList);
                             binding.cardStack.setLayoutManager(manager);
                             binding.cardStack.setAdapter(adapter);
@@ -123,9 +127,7 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
          new Navigation().signOut(AnswererDashboardActivity.this);
     }
 
-    /**
-     * The following methods are unused callbacks
-     */
+    // THE FOLLOWING 4 METHODS ARE UNUSED CALLBACKS
     @Override
     public void onCardDragging(Direction direction, float ratio) {
         // unused
@@ -147,7 +149,8 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
     }
 
     /**
-     * When a card appears, we start a timer
+     * When a card appears, we start a timer. When that timer finishes, the card is automatically swiped
+     * off the screen
      * @param view view object corresponding to current card
      * @param position where we are in the stack of cards (as an index)
      */
@@ -156,33 +159,41 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
         // get reference to timerTV
         cardTimerTV = view.findViewById(R.id.timerTV);
 
+        // instantiate Animation object with "blink" animation (see blink.xml)
         Animation a = AnimationUtils.loadAnimation(this, R.anim.blink);
 
-
+        // instantiate CountDownTimer with time limit and counting interval (every second)
         cdt = new CountDownTimer(totalSeconds * 1000, intervalSeconds * 1000) {
 
+            // callback; called every time timer "ticks" (i.e. a second has passed)
             public void onTick(long millisUntilFinished) {
+                // if there are less than 10 seconds remaining, flash timer in red color
                 if (millisUntilFinished <= ((warningSeconds + 1) * 1000)) {
                     cardTimerTV.setTextColor(Color.RED);
                     cardTimerTV.startAnimation(a);
                 } else {
+                    // otherwise timer will stay green
                     cardTimerTV.setTextColor(getColor(R.color.green));
                 }
 
+                // update the timer appropriately each time it "ticks"
                 cardTimerTV.setText(mSimpleDateFormat.format(millisUntilFinished));
 
 
+                // also update our tracker of time taken for this question
                 millisElapsedForQuestion = (totalSeconds * 1000) - millisUntilFinished;
             }
 
+            // callback; called when timer ends
             public void onFinish() {
+                // update timer appropriately
                 cardTimerTV.setText(mSimpleDateFormat.format(0));
-                binding.cardStack.swipe();
-                Toast.makeText(getApplicationContext(), "You took the full time!", Toast.LENGTH_SHORT).show();
+                binding.cardStack.swipe();  // swipe automatically (Answerer ran out of time)
+                Toast.makeText(getApplicationContext(), "You ran out of time!", Toast.LENGTH_SHORT).show();
             }
         };
 
-        cdt.start();
+        cdt.start();    // start the timer when this card appears
 
     }
 
@@ -199,7 +210,7 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
         correct3CB = view.findViewById(R.id.cor3CB);
         correct4CB = view.findViewById(R.id.cor4CB);
 
-        // user answers
+        // user entered answers (true = checkbox checked; false = not checked)
         List<Boolean> entered = new ArrayList<>();
         entered.add(correct1CB.isChecked());
         entered.add(correct2CB.isChecked());
@@ -207,43 +218,46 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
         entered.add(correct4CB.isChecked());
 
         // "correct" answers
-        Log.i("card list size", Integer.toString(cardList.size()));
         List<Answer> answerList = cardList.get(position).getAnswers();
 
-        // question doc ID
+        // question doc ID (corresponding to the Question the user is currently on)
         String questionDocID = Integer.toString(cardList.get(position).getQuestionID());
 
-        Boolean isCorrect = true;
+        Boolean isCorrect = true;   // assume Question is correct unless we detect otherwise
 
+        // for each answer the user has selected
         for (int i = 0; i < entered.size(); i++) {
+            // if it doesn't match with what should be correct
             if (entered.get(i) != answerList.get(i).getCorrect()) {
-                isCorrect = false;
-                wrong.add(cardList.get(position));
+                isCorrect = false;  // this Question is wrong
+                wrong.add(cardList.get(position)); // keep track of this wrong Question
                 Log.i("onCardDisappeared", "Question was incorrect!");
-                break;
+                break;  // no need to check other answers if we reach one incorrect one
             }
         }
 
         // update time taken for card
         firebaseHelper.updateQuestionField(questionerID, questionDocID, "millisElapsedToAnswer", (Long) millisElapsedForQuestion, new FirebaseHelper.FirestoreQuestionCallback() {
             @Override
-            public void onCallbackQuestionUpdate() {
+            public void onCallbackUpdateQuestionField() {
                 Log.i("onCardDisappeared", "updated time stamp!");
             }
         });
 
-        // update question status
+        // update question status (if Question was correct or not)
         firebaseHelper.updateQuestionField(questionerID, questionDocID, "correctlyAnsweredLastTime", isCorrect, new FirebaseHelper.FirestoreQuestionCallback() {
             @Override
-            public void onCallbackQuestionUpdate() {
+            public void onCallbackUpdateQuestionField() {
+                // on callback, if we reach the end of our question cards
                 if (position == cardList.size() - 1) {
+                    // display appropriate toast and take user to PostQuizActivity (quiz results)
                     Toast.makeText(getApplicationContext(), "You finished the quiz!", Toast.LENGTH_SHORT).show();
                     takeToPostQuizActivity(wrong);
                 }
             }
         });
 
-        cdt.cancel();
+        cdt.cancel();   // stop timer for this card since user has finished it
 
     }
 
@@ -252,9 +266,14 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
      * @param wrongQuestions questions the Answerer got wrong on this page
      */
     public void takeToPostQuizActivity(ArrayList<Question> wrongQuestions) {
+        // we want to take the user to PostQuizActivity
         Intent i = new Intent(getApplicationContext(), PostQuizActivity.class);
+
+        // use a Bundle to send ArrayList of custom type to new screen
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("WRONGS", wrongQuestions);
+
+        // put Bundle in Intent and send info to PostQuizActivity
         i.putExtra("INCORRECT_QUESTIONS", bundle);
         startActivity(i);
 
@@ -262,30 +281,28 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
 
     /**
      * Sorts a given array of questions by, in decreasing order of importance:
-     * (1. if the Answerer missed it last time (higher priority, 2. time spent answering
-     * (longer time = higher priority) and 3. question difficulty (higher difficulty = higher priority)
+     * Order of ranking:
+     *      * 1. if the user missed the question last time (higher priority)
+     *      * 2. time the user spent answering the question (higher time = higher priority)
+     *      * 3. difficulty of question (higher difficulty = higher priority)
      * @param questions Question ArrayList we are heap sorting
      * @return a sorted version of questions, in order from highest priority to lowest priority (max-heap)
      */
-    // HEAP CODE (dequeue() and percolateDown())
     private ArrayList<Question> heapSort(List<Question> questions) {
-        // heapify
+        // heapify (so that when we dequeue we will always get the max priority element)
         heapify(questions);
-
-        Log.i("after heapify", questions.toString());
 
         // sort
         int arraySize = questions.size();
 
-        ArrayList<Question> result = new ArrayList<>(); // copy
+        ArrayList<Question> result = new ArrayList<>(); // we are sorting out-of-place
 
+        // since we've heapified, all we need to do is dequeue each element
         for (int i = 0; i < arraySize; i++) {
             result.add(dequeue(questions));
         }
 
-        Log.i("after sort", result.toString());
-
-        return result;
+        return result;  // sorted array
     }
 
     /**
@@ -302,8 +319,8 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
     }
 
     /**
-     * Helper method to heapify a given array of questions
-     * @param index index we are going to start percolating down at
+     * Recursive helper method to heapify a given array of questions
+     * @param index index we are going to start percolateDown() at
      * @param questions array we are heapifying
      */
     protected void heapifyHelper(int index, List<Question> questions) {
@@ -325,16 +342,16 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
      * @throws NoSuchElementException if the list is empty
      */
     public Question dequeue(List<Question> questions) throws NoSuchElementException {
-        // if the queue is empty, throw a NoSuchElementException
+        // if the list is empty, throw a NoSuchElementException
         if (questions.size() == 0) {
-            throw new NoSuchElementException("This Queue is empty");
+            throw new NoSuchElementException("This list is empty");
         }
 
-        Question toRemove = questions.get(0); // instantiate the course to be removed as the first element in out array
+        Question toRemove = questions.get(0); // instantiate the Question to be removed as the first element in our array
 
         // if there is only one element in the queue, just remove it, no need to percolateDown()
         if (questions.size() == 1) {
-            questions.remove(0); // remove first element by setting first index to
+            questions.remove(0); // remove first element
         } else {
             int lastNodeIdx = questions.size() - 1;
             // put last node at root
@@ -344,7 +361,7 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
             // percolate root node down
             this.percolateDown(0, questions);
         }
-        return toRemove; // return the Course that was dequeued
+        return toRemove; // return the Question that was dequeued
     }
 
     /**
@@ -392,7 +409,7 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
                     // now, the index of the node we are percolating is where maxIndex was
                     index = maxIndex;
                     indexLeftChild = 2 * index + 1; // now, determine the index of the left child of our
-                    // ONCE percolated node
+                                                    // ONCE percolated node
                 }
             }
         }

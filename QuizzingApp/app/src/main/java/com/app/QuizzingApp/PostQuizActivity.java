@@ -21,11 +21,11 @@ import java.util.ArrayList;
  */
 public class PostQuizActivity extends AppCompatActivity {
 
-    TextView postQuizInfoTV;
+    TextView postQuizInfoTV;    // reference to main TV on screen
 
     /**
      * Instantiates a list view with the Questions the Answerer got wrong from the previous quiz
-     * @param savedInstanceState
+     * @param savedInstanceState may be used to restore activity to a previous state
      */
     @Override
     @SuppressLint("MissingInflatedId")
@@ -33,8 +33,10 @@ public class PostQuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_quiz);
 
+        // initialize reference to main TV on screen
         postQuizInfoTV = findViewById(R.id.postQuizInfoTV);
 
+        // retrieve the AL we sent to this page of wrong questions
         Bundle extras = getIntent().getBundleExtra("INCORRECT_QUESTIONS");
         ArrayList<Question> wrongQuestions = extras.getParcelableArrayList("WRONGS");
 
@@ -44,6 +46,7 @@ public class PostQuizActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "You got a perfect score!", Toast.LENGTH_LONG).show();
         }
 
+        // display all wrong questions in a list view
         ArrayAdapter<Question> listAdapter = new ArrayAdapter<Question>(
                 getApplicationContext(), android.R.layout.simple_list_item_1, wrongQuestions);
 
@@ -52,11 +55,12 @@ public class PostQuizActivity extends AppCompatActivity {
         listView.setAdapter(listAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            // user can click on individual questions they got wrong
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(), ViewQuestionActivity.class);
 
-
+                // send over the question the user clicked to ViewQuestionActivity
                 intent.putExtra("ITEM", wrongQuestions.get(i));
                 startActivity(intent);
 

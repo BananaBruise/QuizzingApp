@@ -1,23 +1,20 @@
 package com.app.QuizzingApp;
 
-import java.util.ArrayList;
-import java.util.UUID;
 
 /**
  * Main User object; contains information for a generic User
  */
 public class User {
     // instance vars
-    private String UID;
-    private String fName;
-    private String lName;
-    private boolean isActive;
-    private String email;
-    private String password;
-    private boolean isQuestioner;
+    private String UID; // uid of User
+    private String fName;   // first name of User
+    private String lName;   // last name of User
+    private boolean isActive;   // isActive status of user
+    private String email;   // email of user
+    private String password;    // password of User
+    private boolean isQuestioner;   // whether the User is a Questioner or not
 
-    // constructor
-
+    // constructors
     /**
      * Default constructor for User object
      */
@@ -44,7 +41,6 @@ public class User {
     }
 
     // getters
-
     /**
      * Getter for email
      * @return email of User
@@ -110,7 +106,6 @@ public class User {
     }
 
     // setters
-
     /**
      * Setter for email
      * @param email new email

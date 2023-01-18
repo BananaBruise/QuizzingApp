@@ -11,11 +11,10 @@ import android.os.Parcelable;
  */
 public class Answer implements Parcelable {
     // instance vars
-    private String prompt;
-    private boolean isCorrect;
+    private String prompt;  // "content" of Answer
+    private boolean isCorrect;  // whether this Answer is correct or not
 
-    // constructor
-
+    // constructors
     /**
      * Default constructor for Answer object
      */
@@ -36,7 +35,6 @@ public class Answer implements Parcelable {
 
 
     // getters
-
     /**
      * Getter for correctness status
      * @return true if this Answer is correct and false if it isn't
@@ -98,9 +96,9 @@ public class Answer implements Parcelable {
         }
 
         /**
-         * Returns an array of the Parcelable class with every entry intitlaized to null
+         * Returns an array of the Parcelable class with every entry initialized to null
          * @param size size of the array
-         * @return an array of the Parcelable class with every entry intitlaized to null
+         * @return an array of the Parcelable class with every entry initialized to null
          */
         @Override
         public Answer[] newArray(int size) {
@@ -111,7 +109,7 @@ public class Answer implements Parcelable {
     /**
      * Describe the kinds of special objects contained in this Parcelable instance's marshaled
      * representation
-     * @return
+     * @return an int describing the kinds of objects in this Parcelable
      */
     @Override
     public int describeContents() {
@@ -120,11 +118,12 @@ public class Answer implements Parcelable {
 
     /**
      * Flattens this object into a parcel
-     * @param parcel the Parcel we are flattening this object into (unpack)
+     * @param parcel the Parcel we are flattening this object into (pack)
      * @param i
      */
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        // write the values we want to send into the Parcel
         parcel.writeString(prompt);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             parcel.writeBoolean(isCorrect);
@@ -136,6 +135,7 @@ public class Answer implements Parcelable {
      * @param parcel the parcel we are unpacking from
      */
     public Answer(Parcel parcel) {
+        // read the values we want to retrieve from the Parcel
         prompt = parcel.readString();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             isCorrect = parcel.readBoolean();

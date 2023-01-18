@@ -25,10 +25,10 @@ import java.util.ArrayList;
  * explicitly defined within this class.
  */
 public class FirebaseHelper {
-    // instance var
-    private FirebaseAuth mAuth;
-    private FirebaseFirestore db;
-    private User currUser; // represent the user navigating activities
+    // instance vars
+    private FirebaseAuth mAuth; // allows authentication integration
+    private FirebaseFirestore db;   // database reference
+    private User currUser; // represents the user navigating activities
 
     // constructor
     public FirebaseHelper() {
@@ -36,7 +36,7 @@ public class FirebaseHelper {
         db = FirebaseFirestore.getInstance();
     }
 
-    // getter
+    // getters
     /**
      * Returns FirebaseAuth instance, allowing for authentication
      * @return FirebaseAuth instance, allowing for authentication
@@ -62,8 +62,9 @@ public class FirebaseHelper {
      */
     public <T extends User> void addGenericUserToFirestore(T toAdd) {
         String TAG = "addGenericUserToFirestore";
+        // in the Users collection, create a new document with appropriate ID
         db.collection("Users").document(getShorterString(toAdd.getUID()))
-                .set(toAdd)
+                .set(toAdd) // sets fields for this document
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
@@ -83,11 +84,15 @@ public class FirebaseHelper {
      * (Answerer or Questioner) we are reading.
      *
      * @param uid      user's unique id
-     * @param callback action taken upon returning a user; calls FirestoreUserCallback.onCallbackUser method
+     * @param callback action taken upon returning a user; calls FirestoreUserCallback.onCallbackReadUser method
      */
     public void readUser(String uid, FirestoreUserCallback callback) {
+        // get docref to the User with given uid's document
         DocumentReference docRef = db.collection("Users").document(getShorterString(uid));
+
+        // we need to get() in order to convert to DocumentSnapshot
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            // callback; instantiates currUser to appropriate object based on whether they are Questioner or Answerer
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if ((Boolean) documentSnapshot.get("questioner")) {
@@ -95,7 +100,7 @@ public class FirebaseHelper {
                 } else {
                     currUser = documentSnapshot.toObject(Answerer.class);
                 }
-                callback.onCallbackUser(currUser);
+                callback.onCallbackReadUser(currUser);  // pass data back
             }
         });
     }
@@ -106,17 +111,20 @@ public class FirebaseHelper {
      *
      * @param uid       user's unique id
      * @param userClass user type to be retrieved from Firestore that extends User class e.g. Questioner or Answerer
-     * @param callback  action taken upon returning a user; calls FirestoreUserCallback.onCallbackUser method
+     * @param callback  action taken upon returning a user; calls FirestoreUserCallback.onCallbackReadUser method
      * @param <T>       a user object extending User object e.g. Questioner or Answerer
      */
     public <T extends User> void readGenericUser(String uid, Class<T> userClass, FirestoreUserCallback callback) {
+        // get docref to the User with given uid's document
         DocumentReference docRef = db.collection("Users").document(getShorterString(uid));
+
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            // callback; based on which class we are reading the object of, instantiate currUser
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 currUser = documentSnapshot.toObject(userClass);
                 //Log.d("FBH", currUser.getName());
-                callback.onCallbackUser(currUser);
+                callback.onCallbackReadUser(currUser);  // pass data back
             }
         });
     }
@@ -128,21 +136,22 @@ public class FirebaseHelper {
      */
     public void readQuestions(String uid, FirestoreQuestionCallback callback) {
         String TAG = "readQuestions";
+
+        // get the colref of the collection (of Questions) corresponding to the given user's uid's document
         CollectionReference colRef = db.collection("Users").document(getShorterString(uid)).collection("Questions");
         colRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     ArrayList<Question> questionsList = new ArrayList<>();
+                    // for each document in the collection, make it a Question object and add it
+                    // to our resulting AL
                     for (DocumentSnapshot doc : task.getResult()) {
-                        //Log.i(TAG, doc.getData().toString());
                         questionsList.add(doc.toObject(Question.class));
-                        //Log.i(TAG, doc.toObject(Question.class).toString());
                     }
-                    //Log.i(TAG, "success grabbing questions");
                     Log.i(TAG, questionsList.toString());
 
-                    callback.onCallbackQuestions(questionsList);
+                    callback.onCallbackReadQuestions(questionsList);    // pass data back
                 }
             }
         });
@@ -153,15 +162,16 @@ public class FirebaseHelper {
      * @param uid uid of user
      * @param questionID ID of questioner so we can access their Questions collection
      * @param question new Question we are upadting to
-     * @param callback action taken upon adding a question; calls FirestoreQuestionCallback.onCallbackQuestionWriter method
+     * @param callback action taken upon adding a question; calls FirestoreQuestionCallback.onCallbackWriteQuestion method
      */
     public void writeQuestion(String uid, String questionID, Question question, FirestoreQuestionCallback callback) {
         DocumentReference docRef = db.collection("Users").document(getShorterString(uid)).collection("Questions").document(questionID);
 
+        // we will use docRef from above to add the given question object to "Questions" collection
         docRef.set(question).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                callback.onCallbackQuestionWriter();
+                callback.onCallbackWriteQuestion();    // signal that we've successfully added question
             }
         });
     }
@@ -172,16 +182,18 @@ public class FirebaseHelper {
      * @param questionDocID the specific ID of the question we are updating
      * @param field the field we are updating
      * @param value the value we are changing the field to
-     * @param callback action taken upon updating a Question; calls FirestoreQuestionCallback.onCallbackQuestionUpdate method
+     * @param callback action taken upon updating a Question; calls FirestoreQuestionCallback.onCallbackUpdateQuestionField method
      * @param <T> generic type of value
      */
     public <T> void updateQuestionField(String questionerID, String questionDocID, String field, T value, FirestoreQuestionCallback callback) {
+        // get reference to the question doc we are updating
         DocumentReference docRef = db.collection("Users").document(getShorterString(questionerID)).collection("Questions").document(questionDocID);
 
+        // update this doc's given field to the given value
         docRef.update(field, value).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                callback.onCallbackQuestionUpdate();
+                callback.onCallbackUpdateQuestionField();    // signal that we've finished updating
             }
         })
         .addOnFailureListener(new OnFailureListener() {
@@ -196,17 +208,19 @@ public class FirebaseHelper {
      * Syncs two users (Answerer and Questioner)
      * @param otherUid the ID of the questioner we are syncing with
      * @param myUid my user's ID
-     * @param callback action taken upon syncing a user; calls FirestoreUserCallback.onCallbackUserSyncNamePair/
+     * @param callback action taken upon syncing a user; calls FirestoreUserCallback.onCallbackUserSync/
      *                 onCallbackUserSyncFail method
      */
     public void syncUsers(String otherUid, String myUid, FirestoreUserCallback callback) {
         String TAG = "syncUsers";
 
+        // docref to OTHER user (Questioner)
         DocumentReference otherDocRef = db.collection("Users").document(getShorterString(otherUid));
 
         otherDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot otherUserDoc) {
+                // if doc with otherUid exists
                 if (otherUserDoc.exists()) {
                     // updating my user's isActive status
                     DocumentReference myDocRef = db.collection("Users").document(getShorterString(myUid));
@@ -216,13 +230,15 @@ public class FirebaseHelper {
                             Log.d(TAG, "Answerer's isActive successfully updated!");
                         }
                     });
+
                     // updating my user's questionerID (used to lookup question set)
-                    myDocRef.update("questionerID",getShorterString(otherUid)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    myDocRef.update("questionerID", getShorterString(otherUid)).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Log.d(TAG, "questionID successfully updated!");
+                            Log.d(TAG, "questionerID successfully updated!");
                         }
                     });
+
                     // update other user's isActive
                     otherDocRef.update("isActive", true).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -230,14 +246,17 @@ public class FirebaseHelper {
                             Log.d(TAG, "Questioner's isActive successfully updated!");
                         }
                     });
+
                     // get my name from doc snapshot of doc ref
                     myDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
                         @Override
                         public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                            callback.onCallbackUserSyncNamePair(otherUserDoc.get("fName").toString(), value.get("fName").toString());
+                            // pass my user's and other user's first names back
+                            callback.onCallbackUserSync(otherUserDoc.get("fName").toString(), value.get("fName").toString());
                         }
                     });
-                } else {
+                } else {    // if doc didn't exist, UID was mistyped, so signal this by calling
+                            // this callback
                     callback.onCallbackUserSyncFail();
                 }
             }
@@ -255,20 +274,23 @@ public class FirebaseHelper {
      * questionerUid and answererUid
      * @param questionerUid uid of Questioner we are finding the name of
      * @param answererUid uid of Answerer we are finding the name of
-     * @param callback action taken upon returning name pair; calls FirestoreUserCallback.onCallbackUserSyncNamePair method
+     * @param callback action taken upon returning name pair; calls FirestoreUserCallback.onCallbackUserSync method
      */
     public void readSyncedPair(String questionerUid, String answererUid, FirestoreUserCallback callback) {
+        // get docref to the Answerer's doc
         DocumentReference answererDocRef = db.collection("Users").document(getShorterString(answererUid));
 
         answererDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
+                // get docref to Questioner's doc
                 DocumentReference questionerDocRef = db.collection("Users").document(getShorterString(questionerUid));
 
                 questionerDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                        callback.onCallbackUserSyncNamePair(value.get("fName").toString(), documentSnapshot.get("fName").toString());
+                        // get first name of Questioner and Answerer and pass it back
+                        callback.onCallbackUserSync(value.get("fName").toString(), documentSnapshot.get("fName").toString());
                     }
                 });
             }
@@ -281,21 +303,20 @@ public class FirebaseHelper {
      * @return a shortened version of the given String
      */
     public static String getShorterString(String s) {
-        return s.substring(0, 10);
+        return s.substring(0, 10);  // so we can have shorter UIDs
     }
 
     // interfaces
-
     /**
      * Callback interface for FirebaseHelper utility methods. This is needed bc firebase tasks are async
      */
     public interface FirestoreUserCallback {
-        default void onCallbackUser(User u) {
+        default void onCallbackReadUser(User u) {
         }
 
         ;
 
-        default void onCallbackUserSyncNamePair(String otherUserFirstName, String myUserFirstName) {
+        default void onCallbackUserSync(String otherUserFirstName, String myUserFirstName) {
         }
 
         ;
@@ -310,17 +331,17 @@ public class FirebaseHelper {
     }
 
     public interface FirestoreQuestionCallback {
-        default void onCallbackQuestions(ArrayList<Question> questionList) {
+        default void onCallbackReadQuestions(ArrayList<Question> questionList) {
         }
 
         ;
 
-        default void onCallbackQuestionWriter() {
+        default void onCallbackWriteQuestion() {
         }
 
         ;
 
-        default void onCallbackQuestionUpdate() {
+        default void onCallbackUpdateQuestionField() {
         }
 
         ;

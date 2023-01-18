@@ -25,33 +25,29 @@ import java.util.Arrays;
  * Manages the creation of a Question object
  */
 public class QuestionMakerActivity extends AppCompatActivity {
-    // layout
+    // references to UI elements
     EditText qName;
     RatingBar difficulty;
-    CheckBox correct1;
-    EditText answerText1;
-    CheckBox correct2;
-    EditText answerText2;
-    CheckBox correct3;
-    EditText answerText3;
-    CheckBox correct4;
-    EditText answerText4;
+    CheckBox correct1, correct2, correct3, correct4;
+    EditText answerText1, answerText2, answerText3, answerText4;
     TextView qLength, answerLength1, answerLength2, answerLength3, answerLength4;
 
+    // max lengths for answer prompts and question name (characters)
     final int MAX_ANSWER_TEXT_LENGTH = 24;
     final int MAX_QUESTION_TEXT_LENGTH = 50;
 
-    FirebaseHelper firebaseHelper = new FirebaseHelper();
+    FirebaseHelper firebaseHelper = new FirebaseHelper();   // reference to helper class
 
     /**
      * Instantiates UI elements as well as dynamic character counter for each edit text
-     * @param savedInstanceState
+     * @param savedInstanceState may be used to restore activity to a previous state
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_maker);
 
+        // instantiate all UI elements
         qName = findViewById(R.id.questionNameET);
         qLength = findViewById(R.id.questionMakerQuestionLengthTV);
         difficulty = findViewById(R.id.difficultyBar);
@@ -78,19 +74,23 @@ public class QuestionMakerActivity extends AppCompatActivity {
         // interactive length checker
         qName.addTextChangedListener(new TextWatcher() {
 
+            // callback; called when text in edit text has been altered
             public void afterTextChanged(Editable s) {
-                int length = s.length();
+                int length = s.length();    // length of new String
                 String text = length + "/" + MAX_QUESTION_TEXT_LENGTH;
 
+                // if Editable is blank, no character counter needed
                 if (length == 0) {
                     qLength.setVisibility(View.INVISIBLE);
                 } else if (length == MAX_QUESTION_TEXT_LENGTH) {
+                    // if Editable is full, display count in red
                     qLength.setTextColor(Color.RED);
                     qLength.setText(text);
                     qLength.setVisibility(View.VISIBLE);
                 }
                 // length somewhere between 0 and max
                 else {
+                    // otherwise, counter will be green
                     qLength.setTextColor(getColor(R.color.dkgreen));
                     qLength.setText(text);
                     qLength.setVisibility(View.VISIBLE);
@@ -242,7 +242,7 @@ public class QuestionMakerActivity extends AppCompatActivity {
     /**
      * Sets the max length attribute of the given TextView
      * @param tv the given TextView we are setting the max length attribute of
-     * @param textLength the amx length
+     * @param textLength the max length
      * @param <T> generic; must be a subclass of TextView
      */
     protected <T extends TextView> void setMaxLength(T tv, int textLength) {
@@ -273,7 +273,7 @@ public class QuestionMakerActivity extends AppCompatActivity {
         if (t1.isEmpty() || t2.isEmpty() || t3.isEmpty() || t4.isEmpty() || name.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Fill in all fields!", Toast.LENGTH_SHORT).show();
         } else {
-            int qid = (int) (Math.random() * 1000000);
+            int qid = (int) (Math.random() * 1000000);  // create random question ID for each question
             // create our answers and question
             // question
             Question q = new Question(name, diff, qid);
@@ -286,15 +286,14 @@ public class QuestionMakerActivity extends AppCompatActivity {
             q.addAnswers(new ArrayList<Answer>(Arrays.asList(a1, a2, a3, a4)));
 
             // submit as a collection to current ID document
-            FirebaseFirestore db = firebaseHelper.getmdb();
             String uid = firebaseHelper.getmAuth().getCurrentUser().getUid();
 
             firebaseHelper.writeQuestion(uid, Integer.toString(q.getQuestionID()), q, new FirebaseHelper.FirestoreQuestionCallback() {
                 @Override
-                public void onCallbackQuestionWriter() {
+                public void onCallbackWriteQuestion() {
                     Log.i("QuestionMakerActivity", "question added");
                     Toast.makeText(getApplicationContext(), "Question added successfully!", Toast.LENGTH_SHORT).show();
-                    // take back
+                    // take back to dashboard
                     startActivity(new Intent(getApplicationContext(), QuestionerDashboardActivity.class));
                 }
             });

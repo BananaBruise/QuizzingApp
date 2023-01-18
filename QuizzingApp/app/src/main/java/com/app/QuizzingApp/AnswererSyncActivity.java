@@ -2,7 +2,6 @@ package com.app.QuizzingApp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -12,22 +11,21 @@ import android.widget.Toast;
  * Activity that manages the syncing of an Answerer to a Questioner
  */
 public class AnswererSyncActivity extends AppCompatActivity {
-
     // global variables
-    FirebaseHelper firebaseHelper = new FirebaseHelper();
+    FirebaseHelper firebaseHelper = new FirebaseHelper();   // reference to our helper class
 
-    EditText codeET;
+    EditText codeET;    // EditText for code (will be updated later)
 
     /**
      * Instantiate references to views
-     * @param savedInstanceState
+     * @param savedInstanceState may be used to restore activity to a previous state
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answerer_sync);
 
-        codeET = findViewById(R.id.syncCodeET);
+        codeET = findViewById(R.id.syncCodeET); // instantiate reference to code ET
     }
 
     /**
@@ -35,16 +33,22 @@ public class AnswererSyncActivity extends AppCompatActivity {
      * @param v the view corresponding to the current screen
      */
     public void syncAnswerer(View v) {
+        // the questioner's UID (will be used for lookup later)
         String otherUid = codeET.getText().toString();
+        // my UID (used in Firebase method for syncing purposes)
+        String myUid = firebaseHelper.getmAuth().getCurrentUser().getUid();
 
         // callback used to sync two users
-        firebaseHelper.syncUsers(otherUid, firebaseHelper.getmAuth().getCurrentUser().getUid(), new FirebaseHelper.FirestoreUserCallback() {
+        firebaseHelper.syncUsers(otherUid, myUid, new FirebaseHelper.FirestoreUserCallback() {
+
+            // callback; if sync is successful, display message and alert informing Answerer of what's to come
             @Override
-            public void onCallbackUserSyncNamePair(String otherUserFirstName, String myUserFirstName) {
+            public void onCallbackUserSync(String otherUserFirstName, String myUserFirstName) {
                 Toast.makeText(getApplicationContext(), "You are synced to " + otherUserFirstName, Toast.LENGTH_SHORT).show();
                 new Navigation().displayAlertDialog(AnswererSyncActivity.this, otherUserFirstName, myUserFirstName);
             }
 
+            // callback; if sync does not work, alert that user entered an invalid code
             @Override
             public void onCallbackUserSyncFail() {
                 Toast.makeText(getApplicationContext(), "You entered an invalid code", Toast.LENGTH_SHORT).show();
@@ -58,9 +62,6 @@ public class AnswererSyncActivity extends AppCompatActivity {
      * @param v the view corresponding to the current screen
      */
     public void signOut(View v) {
-        firebaseHelper.getmAuth().signOut();
-
-        Intent i = new Intent(getApplicationContext(), SignInActivity.class);
-        startActivity(i);
+        new Navigation().signOut(AnswererSyncActivity.this);
     }
 }

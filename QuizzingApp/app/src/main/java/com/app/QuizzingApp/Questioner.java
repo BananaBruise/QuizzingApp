@@ -8,9 +8,9 @@ import java.util.List;
  */
 public class Questioner extends User {
     // instance var
-    private List<Question> questionList;
+    private List<Question> questionList;    // this Questioner's questions posted
 
-    // constructor
+    // constructors
     /**
      * Default constructor for Questioner
      */

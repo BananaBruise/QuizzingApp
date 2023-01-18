@@ -22,17 +22,18 @@ import com.google.firebase.auth.FirebaseUser;
  */
 public class SignUpActivity extends AppCompatActivity {
 
+    // references to UI elements
     private EditText emailET, passwordET, firstNameET, lastNameET;
     private Switch isStudentSwitch;
 
-    public static FirebaseHelper firebaseHelper;
+    FirebaseHelper firebaseHelper = new FirebaseHelper();   // reference to helper class
 
     private final String TAG = "SignUpActivity";
 
 
     /**
      * Instantiate UI references
-     * @param savedInstanceState
+     * @param savedInstanceState may be used to restore activity to a previous state
      */
     @SuppressLint("MissingInflatedId")
     @Override
@@ -40,13 +41,13 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        // instantiate UI references
         emailET = findViewById(R.id.emailET);
         passwordET = findViewById(R.id.passwordET);
         firstNameET = findViewById(R.id.firstNameET);
         lastNameET = findViewById(R.id.lastNameET);
         isStudentSwitch = findViewById(R.id.isStudentSW);
 
-        firebaseHelper = new FirebaseHelper();
     }
 
     /**
@@ -54,6 +55,7 @@ public class SignUpActivity extends AppCompatActivity {
      * @param v view corresponding to current screen
      */
     public void signUp(View v) {
+        // get fields
         String email = emailET.getText().toString();
         String password = passwordET.getText().toString();
         String firstName = firstNameET.getText().toString();
@@ -61,6 +63,7 @@ public class SignUpActivity extends AppCompatActivity {
         boolean isQuestioner = !isStudentSwitch.isChecked();
 
         try {
+            // use mAuth reference to create user (authenticate)
             firebaseHelper.getmAuth().createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -70,12 +73,14 @@ public class SignUpActivity extends AppCompatActivity {
 
                         FirebaseUser user = firebaseHelper.getmAuth().getCurrentUser();
 
+                        // based on if the user is a Questioner or Answerer, add them to Firestore
                         if (isQuestioner){
                             firebaseHelper.addGenericUserToFirestore(new Questioner(firstName, lastName, FirebaseHelper.getShorterString(user.getUid()), email, password));
                         } else {
                             firebaseHelper.addGenericUserToFirestore(new Answerer(firstName, lastName, FirebaseHelper.getShorterString(user.getUid()), email, password));
                         }
 
+                        // successful sign up
                         Toast.makeText(getApplicationContext(), "Welcome, " + firstName + "!", Toast.LENGTH_SHORT).show();
                         takeToPostSignUp(user.getUid());
                     } else {
@@ -86,6 +91,7 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             });
         } catch (Exception e) {
+            // exception thrown means an error occured
             Toast.makeText(getApplicationContext(), "An error occured", Toast.LENGTH_SHORT).show();
         }
 
@@ -98,10 +104,13 @@ public class SignUpActivity extends AppCompatActivity {
     public void takeToPostSignUp(String uid) {
         firebaseHelper.readUser(uid, new FirebaseHelper.FirestoreUserCallback() {
             @Override
-            public void onCallbackUser(User u) {
+            public void onCallbackReadUser(User u) {
+                // if the signed up user is an Answerer
                 if (u.isQuestioner() == false) {
+                    // take to AnswererSyncActivity
                     startActivity(new Intent(getApplicationContext(), AnswererSyncActivity.class));
                 } else if (u.isQuestioner() == true) {
+                    // otherwise take to QuestionerSyncActivity
                     startActivity(new Intent(getApplicationContext(), QuestionerSyncActivity.class));
                 }
             }

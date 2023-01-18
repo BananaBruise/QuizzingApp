@@ -12,18 +12,19 @@ import java.util.List;
  */
 public class Question implements Parcelable, Comparable<Question> {
     // instance vars
-    private final int MAX_CHOICES = 4;
-    private String name;
-    private int diff;
-    private List<Answer> answers;
-    private boolean correctlyAnsweredLastTime;
-    private int questionID;
-    private int millisElapsedToAnswer;
+    private final int MAX_CHOICES = 4;  // only 4 choices for answers to question
+    private String name;    // name of question
+    private int diff;   // difficulty of question
+    private List<Answer> answers;   // answers to this Question
+    private boolean correctlyAnsweredLastTime;  // whether or not this Question was correctly
+                                                // answered last time
+    private int questionID; // ID of this Question
+    private int millisElapsedToAnswer;  // how long this Question took to answer
 
+    // constructors
     /**
      * Default constructor for a Question object
      */
-    // constructor
     public Question() {
     }
 
@@ -43,8 +44,7 @@ public class Question implements Parcelable, Comparable<Question> {
     }
 
 
-    // getter
-
+    // getters
     /**
      * Getter for name of question
      * @return name of question
@@ -116,7 +116,6 @@ public class Question implements Parcelable, Comparable<Question> {
     }
 
     // setters
-
     /**
      * Setter for correctlyAnsweredLastTime
      * @param correctlyAnsweredLastTime new value for this boolean
@@ -182,9 +181,9 @@ public class Question implements Parcelable, Comparable<Question> {
         }
 
         /**
-         * Returns an array of the Parcelable class with every entry intitlaized to null
+         * Returns an array of the Parcelable class with every entry initialized to null
          * @param size size of the array
-         * @return an array of the Parcelable class with every entry intitlaized to null
+         * @return an array of the Parcelable class with every entry initialized to null
          */
         @Override
         public Question[] newArray(int size) {
@@ -205,7 +204,8 @@ public class Question implements Parcelable, Comparable<Question> {
     /**
      * Describe the kinds of special objects contained in this Parcelable instance's marshaled
      * representation
-     * @return
+     * @return an int representing kinds of special objects contained in this Parcelable instance's marshaled
+     * representation
      */
     @Override
     public int describeContents() {
@@ -214,7 +214,7 @@ public class Question implements Parcelable, Comparable<Question> {
 
     /**
      * Flattens this object into a parcel
-     * @param dest the Parcel we are flattening this object into (unpack)
+     * @param dest the Parcel we are flattening this object into (pack)
      * @param i
      */
     public void writeToParcel(Parcel dest, int i) {
@@ -224,7 +224,6 @@ public class Question implements Parcelable, Comparable<Question> {
     }
 
     // Comparable
-
     /**
      * Used to sort our Question objects by priority. Order of ranking:
      * 1. if the user missed the question last time (higher priority)
@@ -236,12 +235,10 @@ public class Question implements Parcelable, Comparable<Question> {
      */
     @Override
     public int compareTo(Question question) {
-        // 1. if they missed it last time (false)
-        // 2. time spent answering
-        // 3. difficulty
-
-        // scenario 1: compare 1
+        // scenario 1: compare 1.
+        // if this field is different, we can compare them
         if (this.correctlyAnsweredLastTime != question.correctlyAnsweredLastTime) {
+            // if this question was NOT correct and other was, THIS is higher priority
             if (!this.correctlyAnsweredLastTime && question.correctlyAnsweredLastTime) {
                 return 1;
             } else if (!question.correctlyAnsweredLastTime && this.correctlyAnsweredLastTime) {
@@ -249,16 +246,19 @@ public class Question implements Parcelable, Comparable<Question> {
             }
         }
 
-        // scenario 2: compare 2
+        // scenario 2: compare 2.
+        // we have a tolerance of 10 seconds
         if (Math.abs(this.millisElapsedToAnswer - question.millisElapsedToAnswer) > 10000) {
+            // we want the question with larger time elapsed to be higher priority
             return ((Integer) this.millisElapsedToAnswer).compareTo(question.millisElapsedToAnswer);
         }
 
-        // scenario 3: compare 3
+        // scenario 3: compare 3.
         if (this.diff != question.diff) {
+            // we want the question with higher difficulty to be higher priority
             return ((Integer) this.diff).compareTo(question.diff);
         }
 
-        return 0;
+        return 0;   // equal priority
     }
 }
