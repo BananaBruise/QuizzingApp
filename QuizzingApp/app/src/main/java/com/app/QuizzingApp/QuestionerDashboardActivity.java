@@ -55,7 +55,7 @@ public class QuestionerDashboardActivity extends AppCompatActivity {
     public void displayQuestions(ArrayList<Question> questionsList) {
         // check if there are no questions
         if (questionsList.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "No questions yet! Add some.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "No questions!", Toast.LENGTH_LONG).show();
         }
 
         // display questionsList in this list view
