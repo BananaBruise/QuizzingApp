@@ -288,7 +288,7 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
      * @param questions Question ArrayList we are heap sorting
      * @return a sorted version of questions, in order from highest priority to lowest priority (max-heap)
      */
-    private ArrayList<Question> heapSort(List<Question> questions) {
+    protected static ArrayList<Question> heapSort(List<Question> questions) {
         // heapify (so that when we dequeue we will always get the max priority element)
         heapify(questions);
 
@@ -309,13 +309,13 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
      * Heapifies a given question ArrayList so it can be heap sorted
      * @param questions array we are heapifying
      */
-    public void heapify(List<Question> questions) {
+    public static void heapify(List<Question> questions) {
         // empty or 1 item heap is already a heap
         if (questions.isEmpty() || questions.size() == 1)
             return;
 
         // heapify starting from last internal node
-        this.heapifyHelper((questions.size() - 2) / 2, questions);
+        heapifyHelper((questions.size() - 2) / 2, questions);
     }
 
     /**
@@ -323,7 +323,7 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
      * @param index index we are going to start percolateDown() at
      * @param questions array we are heapifying
      */
-    protected void heapifyHelper(int index, List<Question> questions) {
+    protected static void heapifyHelper(int index, List<Question> questions) {
         // internal node index is valid all the way back to root
         if (index >= 0) {
             // percolate down to make heap subtree valid
@@ -341,7 +341,7 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
      * @return the next highest priority Question
      * @throws NoSuchElementException if the list is empty
      */
-    public Question dequeue(List<Question> questions) throws NoSuchElementException {
+    public static Question dequeue(List<Question> questions) throws NoSuchElementException {
         // if the list is empty, throw a NoSuchElementException
         if (questions.size() == 0) {
             throw new NoSuchElementException("This list is empty");
@@ -359,7 +359,7 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
             // delete the last node (it's now at root)
             questions.remove(lastNodeIdx);
             // percolate root node down
-            this.percolateDown(0, questions);
+            percolateDown(0, questions);
         }
         return toRemove; // return the Question that was dequeued
     }
@@ -370,7 +370,7 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
      * @param questions the list we are percolating with respect to
      * @throws IndexOutOfBoundsException if given index is OOB for list
      */
-    protected void percolateDown(int index, List<Question> questions) throws IndexOutOfBoundsException {
+    protected static void percolateDown(int index, List<Question> questions) throws IndexOutOfBoundsException {
         if (index < 0 || index > questions.size() - 1) {
             throw new IndexOutOfBoundsException("index is out of bounds");
         } else {

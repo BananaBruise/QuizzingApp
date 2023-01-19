@@ -149,6 +149,14 @@ public class Question implements Parcelable, Comparable<Question> {
     }
 
     /**
+     * Setter for millisElapsedToAnswer
+     * @param s time in seconds
+     */
+    protected void setMillisElapsedToAnswer(int s){
+        this.millisElapsedToAnswer = s;
+    }
+
+    /**
      * Sets the answer list of this Question
      * @param answers new answer list
      */
