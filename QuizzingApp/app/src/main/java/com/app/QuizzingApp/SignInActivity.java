@@ -64,16 +64,16 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onCallbackReadUser(User u) {
                 // if this user is inactive and an answerer, take to AnswererSyncActivity
-                if (u.getisActive() == false && u.isQuestioner() == false) {
+                if (!u.getisActive() && !u.isQuestioner()) {
                     startActivity(new Intent(getApplicationContext(), AnswererSyncActivity.class));
-                } else if (u.getisActive() == false && u.isQuestioner() == true) {
+                } else if (!u.getisActive() && u.isQuestioner()) {
                     // if this user is inactive and a questioner, take to QuestionerSyncActivity
                     startActivity(new Intent(getApplicationContext(), QuestionerSyncActivity.class));
-                } else if (u.getisActive() == true && u.isQuestioner()) {
+                } else if (u.getisActive() && u.isQuestioner()) {
                     // if this user is active and a questioner, take to QuestionerDashboardActivity
                     startActivity(new Intent(getApplicationContext(), QuestionerDashboardActivity.class));
-                } else if (u.getisActive() == true && u.isQuestioner() == false) {
-                    // if this user is an answerer, get the uid of their questioner
+                } else if (u.getisActive() && !u.isQuestioner()) {
+                    // if this user is active and answerer, get the uid of their questioner
                     String questionerUID = ((Answerer) u).getQuestionerID();
                     firebaseHelper.readSyncedPair(questionerUID, u.getUID(), new FirebaseHelper.FirestoreUserCallback() {
                         @Override

@@ -5,6 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -23,11 +24,15 @@ public class ExampleUnitTest {
         String expectedfName = "Han";
         String expectedlName = "Tu";
         String expectedFullName = expectedfName + " " + expectedlName;
+        String expectedEmail = "htu@gmail.com";
+        String expectedUID = "124";
 
         assertEquals(u.getfName(),expectedfName);
         assertEquals(u.getlName(),expectedlName);
         assertEquals(u.getName(), expectedFullName);
-        assertNotNull(u.getUID());
+        assertEquals(u.getEmail(), expectedEmail);
+        assertEquals(u.getUID(), expectedUID);
+        assertTrue(u.isQuestioner());
         assertFalse(u.getisActive());
     }
 
@@ -43,7 +48,7 @@ public class ExampleUnitTest {
         assertEquals(a.getName(), expectedFullName);
         assertNotNull(a.getUID());
         assertFalse(a.getisActive());
-        assertNull(a.getQuestionerID());
+        assertNull(a.getQuestionerID()); // null by default
     }
 
     @Test
@@ -91,5 +96,89 @@ public class ExampleUnitTest {
         // after modify
         assertTrue(ansNoArg.getCorrect());
         assertEquals(ansNoArg.getPrompt(), "updated prompt");
+    }
+
+    @Test
+    public void question_getter_isCorrect() {
+        // create a question with 4 answers
+        Question q = new Question("test question", 5, 123);
+        Answer a1 = new Answer("a1", true);
+        Answer a2 = new Answer("a2", true);
+        Answer a3 = new Answer("a3", false);
+        Answer a4 = new Answer("a4", false);
+
+        ArrayList<Answer> ans = new ArrayList<>();
+        ans.add(a1);
+        ans.add(a2);
+        ans.add(a3);
+        ans.add(a4);
+        q.addAnswers(ans);
+
+        // expected results
+        String expectedQName = "test question";
+        int expectedDiff = 5;
+        int expectedID = 123;
+
+        // test question attributes
+        assertEquals(q.getName(), expectedQName);
+        assertEquals(q.getDiff(), expectedDiff);
+        assertEquals(q.getQuestionID(), expectedID);
+        assertFalse(q.isCorrectlyAnsweredLastTime());
+        assertEquals(q.getAnswers(), ans);
+    }
+
+    @Test
+    public void question_setter_isCorrect() {
+        // create a question with 4 answers
+        Question q = new Question("test question", 5, 123);
+        Answer a1 = new Answer("a1", true);
+        Answer a2 = new Answer("a2", true);
+        Answer a3 = new Answer("a3", false);
+        Answer a4 = new Answer("a4", false);
+
+        ArrayList<Answer> ans = new ArrayList<>();
+        ans.add(a1);
+        ans.add(a2);
+        ans.add(a3);
+        ans.add(a4);
+        q.addAnswers(ans);
+
+        // set/modify attributes
+        q.setQuestionID(234);
+        q.setDiff(1);
+        q.setName("modified name");
+        q.setCorrectlyAnsweredLastTime(true);
+        q.addAnswers(new ArrayList<Answer>());
+
+        // expected values
+        String expectedQName = "modified name";
+        int expectedDiff = 1;
+        int expectedID = 234;
+
+        // tests
+        assertEquals(q.getName(), expectedQName);
+        assertEquals(q.getDiff(), expectedDiff);
+        assertEquals(q.getQuestionID(), expectedID);
+        assertTrue(q.isCorrectlyAnsweredLastTime());
+        assertEquals(q.getAnswers().size(), 0);
+    }
+
+    @Test
+    public void question_heapsort_isCorrect() {
+        // scenario 1: different "correctlyAnsweredLastTime"
+        {
+
+        }
+
+        // scenario 2:
+        {
+
+        }
+
+        // scenario 3:
+        {
+
+        }
+
     }
 }
