@@ -162,4 +162,23 @@ public class ExampleUnitTest {
         assertTrue(q.isCorrectlyAnsweredLastTime());
         assertEquals(q.getAnswers().size(), 0);
     }
+
+    @Test
+    public void question_heapsort_isCorrect() {
+        // scenario 1: different "correctlyAnsweredLastTime"
+        {
+
+        }
+
+        // scenario 2:
+        {
+
+        }
+
+        // scenario 3:
+        {
+
+        }
+
+    }
 }
