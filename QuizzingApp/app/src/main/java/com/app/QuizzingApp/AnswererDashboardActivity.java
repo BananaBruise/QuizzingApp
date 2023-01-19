@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -20,6 +21,7 @@ import com.yuyakaido.android.cardstackview.CardStackListener;
 import com.yuyakaido.android.cardstackview.Direction;
 import com.yuyakaido.android.cardstackview.StackFrom;
 
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -169,6 +171,7 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
             public void onTick(long millisUntilFinished) {
                 // if there are less than 10 seconds remaining, flash timer in red color
                 if (millisUntilFinished <= ((warningSeconds + 1) * 1000)) {
+                    cardTimerTV.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD_ITALIC));
                     cardTimerTV.setTextColor(Color.RED);
                     cardTimerTV.startAnimation(a);
                 } else {

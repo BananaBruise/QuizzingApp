@@ -82,7 +82,7 @@
         android:id="@+id/questionerDashboardInfoTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Clear search bar to reset search"
+        android:text="Clear search bar to reset"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
