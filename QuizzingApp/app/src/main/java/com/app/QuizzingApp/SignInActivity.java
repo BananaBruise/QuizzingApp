@@ -75,12 +75,14 @@ public class SignInActivity extends AppCompatActivity {
                 } else if (u.getisActive() && !u.isQuestioner()) {
                     // if this user is active and answerer, get the uid of their questioner
                     String questionerUID = ((Answerer) u).getQuestionerID();
-                    firebaseHelper.readSyncedPair(questionerUID, u.getUID(), new FirebaseHelper.FirestoreUserCallback() {
+                    firebaseHelper.readSyncedPair(questionerUID, u.getUID(),
+                            new FirebaseHelper.FirestoreUserCallback() {
                         @Override
                         public void onCallbackUserSync(String otherUserFirstName, String myUserFirstName) {
                             // on callback we want to take the user to the AnswererDashboardActivity
                             // (with warning popup)
-                            new Navigation().displayAlertDialog(SignInActivity.this, otherUserFirstName, myUserFirstName);
+                            new Navigation().displayAlertDialog(SignInActivity.this, otherUserFirstName,
+                                    myUserFirstName);
                         }
                     });
 
@@ -110,12 +112,15 @@ public class SignInActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 // sign in successful
-                                Toast.makeText(getApplicationContext(), "Sign in successful", Toast.LENGTH_SHORT).show();
-                                takeToPostSignIn(firebaseHelper.getmAuth().getCurrentUser().getUid()); // direct authenticated user to next activity
+                                Toast.makeText(getApplicationContext(), "Sign in successful",
+                                        Toast.LENGTH_SHORT).show();
+                                // direct authenticated user to next activity
+                                takeToPostSignIn(firebaseHelper.getmAuth().getCurrentUser().getUid());
                             } else {
                                 // sign in failed
                                 Log.d("SignInActivity", email + " failed to log in" + task.getException());
-                                Toast.makeText(getApplicationContext(), "Wrong email or password", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Wrong email or password",
+                                        Toast.LENGTH_SHORT).show();
                             }
                         }
                     });

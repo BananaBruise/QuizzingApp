@@ -30,7 +30,8 @@ public class User {
      * @param password password of user
      * @param isQuestioner whether the User is a Questioner or not
      */
-    public User(String firstName, String lastName, String UID, String email, String password, boolean isQuestioner) {
+    public User(String firstName, String lastName, String UID, String email, String password,
+                boolean isQuestioner) {
         this.UID = UID;
         this.fName = firstName;
         this.lName = lastName;

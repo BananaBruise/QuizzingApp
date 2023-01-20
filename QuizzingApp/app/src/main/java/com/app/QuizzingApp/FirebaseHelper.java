@@ -138,7 +138,8 @@ public class FirebaseHelper {
         String TAG = "readQuestions";
 
         // get the colref of the collection (of Questions) corresponding to the given user's uid's document
-        CollectionReference colRef = db.collection("Users").document(getShorterString(uid)).collection("Questions");
+        CollectionReference colRef = db.collection("Users").document(getShorterString(uid))
+                .collection("Questions");
         colRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -165,7 +166,8 @@ public class FirebaseHelper {
      * @param callback action taken upon adding a question; calls FirestoreQuestionCallback.onCallbackWriteQuestion method
      */
     public void writeQuestion(String uid, String questionID, Question question, FirestoreQuestionCallback callback) {
-        DocumentReference docRef = db.collection("Users").document(getShorterString(uid)).collection("Questions").document(questionID);
+        DocumentReference docRef = db.collection("Users").document(getShorterString(uid))
+                .collection("Questions").document(questionID);
 
         // we will use docRef from above to add the given question object to "Questions" collection
         docRef.set(question).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -187,7 +189,8 @@ public class FirebaseHelper {
      */
     public <T> void updateQuestionField(String questionerID, String questionDocID, String field, T value, FirestoreQuestionCallback callback) {
         // get reference to the question doc we are updating
-        DocumentReference docRef = db.collection("Users").document(getShorterString(questionerID)).collection("Questions").document(questionDocID);
+        DocumentReference docRef = db.collection("Users").document(getShorterString(questionerID))
+                .collection("Questions").document(questionDocID);
 
         // update this doc's given field to the given value
         docRef.update(field, value).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -232,7 +235,8 @@ public class FirebaseHelper {
                     });
 
                     // updating my user's questionerID (used to lookup question set)
-                    myDocRef.update("questionerID", getShorterString(otherUid)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    myDocRef.update("questionerID", getShorterString(otherUid))
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Log.d(TAG, "questionerID successfully updated!");
@@ -240,7 +244,8 @@ public class FirebaseHelper {
                     });
 
                     // update other user's isActive
-                    otherDocRef.update("isActive", true).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    otherDocRef.update("isActive", true)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Log.d(TAG, "Questioner's isActive successfully updated!");
@@ -314,17 +319,11 @@ public class FirebaseHelper {
         default void onCallbackReadUser(User u) {
         }
 
-        ;
-
         default void onCallbackUserSync(String otherUserFirstName, String myUserFirstName) {
         }
 
-        ;
-
         default void onCallbackUserSyncFail() {
         }
-
-        ;
 
 
 
@@ -334,16 +333,10 @@ public class FirebaseHelper {
         default void onCallbackReadQuestions(ArrayList<Question> questionList) {
         }
 
-        ;
-
         default void onCallbackWriteQuestion() {
         }
 
-        ;
-
         default void onCallbackUpdateQuestionField() {
         }
-
-        ;
     }
 }
