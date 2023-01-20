@@ -92,17 +92,22 @@ public class FirebaseHelper {
             // callback; instantiates currUser to appropriate object based on whether they are Questioner or Answerer
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if ((Boolean) documentSnapshot.get("questioner")) {
-                    currUser = documentSnapshot.toObject(Questioner.class);
+                if (documentSnapshot.exists()) {
+                    if ((Boolean) documentSnapshot.get("questioner")) {
+                        currUser = documentSnapshot.toObject(Questioner.class);
+                    } else {
+                        currUser = documentSnapshot.toObject(Answerer.class);
+                    }
+                    callback.onCallbackReadUser(currUser);  // pass data back
                 } else {
-                    currUser = documentSnapshot.toObject(Answerer.class);
+                    callback.onCallbackReadUserFail();
                 }
-                callback.onCallbackReadUser(currUser);  // pass data back
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                callback.onCallbackReadUserFail();
+                e.printStackTrace();
             }
         });
     }
