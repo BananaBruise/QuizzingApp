@@ -35,7 +35,10 @@ public class Navigation {
 
         // set text for popup
         builder.setMessage("If your teacher (" + teacherfName + ") has posted questions, you'll " +
-                        "see a quiz on the next page! If you're not ready, close this pop-up and start later!")
+                        ("see them on the next page sorted by the following criteria, in decreasing order of importance:\n" +
+                                "\n(1) incorrect questions are displayed earlier than correct ones;" +
+                                "\n(2) questions that take you longer to answer are displayed earlier than questions answered quicker;" +
+                                "\n(3) questions with a higher difficulty rating hare displayed earlier than questions with lower difficulty ratings."))
                 .setTitle("Get ready, " + studentfName + "!");
 
         // add the buttons

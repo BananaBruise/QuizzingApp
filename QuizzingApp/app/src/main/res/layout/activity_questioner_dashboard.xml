@@ -55,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Search by question name"
+        android:hint="Clear bar to reset search"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -77,17 +77,5 @@
         app:layout_constraintStart_toEndOf="@+id/searchET"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.057" />
-
-    <TextView
-        android:id="@+id/questionerDashboardInfoTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Clear search bar to reset"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
