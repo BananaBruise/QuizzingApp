@@ -230,10 +230,10 @@ public class ExampleUnitTest {
     }
 
     /**
-     * tests heap-sorting Question objects, which also tests Question class's compareTo
+     * tests heap-sorting Question objects with QuestionPriorityQueue, which also tests Question class's compareTo
      */
     @Test
-    public void question_heapsort_isCorrect() {
+    public void questionPriorityQueue_heapsort_isCorrect() {
         // list of three questions
         ArrayList<Question> qList = new ArrayList<>();
         // q1
@@ -256,11 +256,12 @@ public class ExampleUnitTest {
         assertEquals(qList.get(1), q2);
         assertEquals(qList.get(2), q3);
 
-        // after heapsort should have reverse order: q3,q2,q1
-        qList = AnswererDashboardActivity.heapSort(qList);
+        // test heapsort with question ADT
+        QuestionPriorityQueue qpq = new QuestionPriorityQueue(qList);
 
-        assertEquals(qList.get(0), q3);
-        assertEquals(qList.get(1), q2);
-        assertEquals(qList.get(2), q1);
+        ArrayList<Question> sortedList = qpq.heapSort();
+        assertEquals(sortedList.get(0), q3);
+        assertEquals(sortedList.get(1), q2);
+        assertEquals(sortedList.get(2), q1);
     }
 }

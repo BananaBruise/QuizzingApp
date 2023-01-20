@@ -97,9 +97,11 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
                 firebaseHelper.readQuestions(questionerID, new FirebaseHelper.FirestoreQuestionCallback() {
                     @Override
                     public void onCallbackReadQuestions(ArrayList<Question> questionList) {
-                        cardList = heapSort(questionList);  // heap sort each time we grab questions
-                                                            // as question parameters can change each
-                                                            // time Answerer takes quiz
+//                        cardList = heapSort(questionList);  // heap sort each time we grab questions
+//                                                            // as question parameters can change each
+//                                                            // time Answerer takes quiz
+                        QuestionPriorityQueue qpq = new QuestionPriorityQueue(questionList);
+                        cardList = qpq.heapSort();
 
                         // no questions yet
                         if (cardList.isEmpty()) {
