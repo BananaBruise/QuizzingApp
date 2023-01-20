@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
  * First screen the user sees; will take them to the appropriate screen if they're already signed in/
@@ -38,11 +40,20 @@ public class SignInActivity extends AppCompatActivity {
         emailET = findViewById(R.id.signInEmailET);
         passwordET = findViewById(R.id.signInPasswordET);
 
-        // checking for already signed in user
-        if (firebaseHelper.getmAuth().getCurrentUser() != null) {
-            Log.i("signin", "in here");
-            takeToPostSignIn(firebaseHelper.getmAuth().getCurrentUser().getUid());
-        }
+        firebaseHelper.getmAuth().addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                // checking for already signed in user
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                Log.i("signin", "auth state change");
+                if (user != null) {
+                    Log.i("signin", "user exists");
+                    takeToPostSignIn(user.getUid());
+                }
+            }
+        });
+
+
     }
 
     /**
