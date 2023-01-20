@@ -6,6 +6,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.google.firebase.auth.FirebaseAuth;
+
 /**
  * Class containing some commonly used methods for navigation purposes (eg. signing out, displaying
  * an alert popup)
@@ -18,10 +22,19 @@ public class Navigation {
      * @param activity activity we are signing out user from
      */
     public void signOut(Activity activity) {
+        firebaseHelper.getmAuth().addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (firebaseAuth.getCurrentUser() == null) {
+                    // take back to home screen
+                    Intent i = new Intent(activity, SignInActivity.class);
+                    activity.startActivity(i);
+                }
+            }
+        });
+
         firebaseHelper.getmAuth().signOut();
-        // take back to home screen
-        Intent i = new Intent(activity, SignInActivity.class);
-        activity.startActivity(i);
+
     }
 
     /**

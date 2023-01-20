@@ -40,6 +40,7 @@ public class SignInActivity extends AppCompatActivity {
 
         // checking for already signed in user
         if (firebaseHelper.getmAuth().getCurrentUser() != null) {
+            Log.i("signin", "in here");
             takeToPostSignIn(firebaseHelper.getmAuth().getCurrentUser().getUid());
         }
     }
