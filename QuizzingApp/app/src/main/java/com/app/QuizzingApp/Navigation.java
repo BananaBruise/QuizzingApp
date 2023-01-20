@@ -27,9 +27,19 @@ public class Navigation {
      * @param activity activity we are signing out user from
      */
     public void signOut(Activity activity) {
-        firebaseHelper.getmAuth().signOut();
-        Intent i = new Intent(activity, SignInActivity.class);
-        activity.startActivity(i);
+        firebaseHelper.getmAuth().addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                // if new state is null, user is signed out, so take them back to SignInActivity
+                if (firebaseAuth.getCurrentUser() == null) {
+                    Intent i = new Intent(activity, SignInActivity.class);
+                    activity.startActivity(i);
+                }
+            }
+        });
+
+        firebaseHelper.getmAuth().signOut();    // sign out user
+
 
     }
 
@@ -58,6 +68,8 @@ public class Navigation {
                 activity.startActivity(i);
             }
         });
+
+        builder.setCancelable(false);
 
         // create & show dialog
         AlertDialog dialog = builder.create();

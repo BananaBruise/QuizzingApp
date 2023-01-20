@@ -46,23 +46,29 @@ public class AnswererSyncActivity extends AppCompatActivity {
             firebaseHelper.readUser(otherUid, new FirebaseHelper.FirestoreUserCallback() {
                 @Override
                 public void onCallbackReadUser(User u) {
-                    if (!u.getisActive()) {
-                        // callback used to sync two users
-                        firebaseHelper.syncUsers(otherUid, myUid, new FirebaseHelper.FirestoreUserCallback() {
+                    if (u.isQuestioner()) {
+                        if (!u.getisActive()) {
+                            // callback used to sync two users
+                            firebaseHelper.syncUsers(otherUid, myUid, new FirebaseHelper.FirestoreUserCallback() {
 
-                            // callback; if sync is successful, display message and alert informing Answerer of what's to come
-                            @Override
-                            public void onCallbackUserSync(String otherUserFirstName, String myUserFirstName) {
-                                Toast.makeText(getApplicationContext(), "You are synced to " +
-                                        otherUserFirstName, Toast.LENGTH_SHORT).show();
-                                new Navigation().displayStartQuizDialog(AnswererSyncActivity.this,
-                                        otherUserFirstName, myUserFirstName);
-                            }
+                                // callback; if sync is successful, display message and alert informing Answerer of what's to come
+                                @Override
+                                public void onCallbackUserSync(String otherUserFirstName, String myUserFirstName) {
+                                    Toast.makeText(getApplicationContext(), "You are synced to " +
+                                            otherUserFirstName, Toast.LENGTH_SHORT).show();
+                                    new Navigation().displayStartQuizDialog(AnswererSyncActivity.this,
+                                            otherUserFirstName, myUserFirstName);
+                                }
 
-                        });
+                            });
+                        } else {
+                            Toast.makeText(getApplicationContext(), "This teacher is already synced " +
+                                    "with another student.", Toast.LENGTH_SHORT).show();
+                        }
+
                     } else {
-                        Toast.makeText(getApplicationContext(), "This teacher is already synced " +
-                                "with another student.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "You can't sync with another " +
+                                "student.", Toast.LENGTH_SHORT).show();
                     }
                 }
 
