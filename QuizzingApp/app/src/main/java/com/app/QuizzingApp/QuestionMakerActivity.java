@@ -292,7 +292,8 @@ public class QuestionMakerActivity extends AppCompatActivity {
                 @Override
                 public void onCallbackWriteQuestion() {
                     Log.i("QuestionMakerActivity", "question added");
-                    Toast.makeText(getApplicationContext(), "Question added successfully!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Question added successfully!",
+                            Toast.LENGTH_SHORT).show();
                     // take back to dashboard
                     startActivity(new Intent(getApplicationContext(), QuestionerDashboardActivity.class));
                 }

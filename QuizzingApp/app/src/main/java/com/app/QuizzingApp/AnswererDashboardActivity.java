@@ -105,7 +105,8 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
 
                         // no questions yet
                         if (cardList.isEmpty()) {
-                           Toast.makeText(getApplicationContext(), "You don't have any questions yet!", Toast.LENGTH_SHORT).show();
+                           Toast.makeText(getApplicationContext(), "You don't have any questions yet!",
+                                   Toast.LENGTH_SHORT).show();
                         } else {
                             // put the card list in the view
                             adapter = new QuestionCardAdapter(cardList);
@@ -242,7 +243,8 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
         }
 
         // update time taken for card
-        firebaseHelper.updateQuestionField(questionerID, questionDocID, "millisElapsedToAnswer", (Long) millisElapsedForQuestion, new FirebaseHelper.FirestoreQuestionCallback() {
+        firebaseHelper.updateQuestionField(questionerID, questionDocID, "millisElapsedToAnswer",
+                (Long) millisElapsedForQuestion, new FirebaseHelper.FirestoreQuestionCallback() {
             @Override
             public void onCallbackUpdateQuestionField() {
                 Log.i("onCardDisappeared", "updated time stamp!");
@@ -250,7 +252,8 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
         });
 
         // update question status (if Question was correct or not)
-        firebaseHelper.updateQuestionField(questionerID, questionDocID, "correctlyAnsweredLastTime", isCorrect, new FirebaseHelper.FirestoreQuestionCallback() {
+        firebaseHelper.updateQuestionField(questionerID, questionDocID, "correctlyAnsweredLastTime",
+                isCorrect, new FirebaseHelper.FirestoreQuestionCallback() {
             @Override
             public void onCallbackUpdateQuestionField() {
                 // on callback, if we reach the end of our question cards

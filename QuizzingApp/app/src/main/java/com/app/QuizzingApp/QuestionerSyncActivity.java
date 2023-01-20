@@ -46,10 +46,12 @@ public class QuestionerSyncActivity extends AppCompatActivity {
             public void onCallbackReadUser(User u) {
                 if (!u.getisActive()) {
                     // if i am not active, sync failed
-                    Toast.makeText(getApplicationContext(), "You were not connected successfully to the student", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "You were not connected successfully " +
+                            "to the student", Toast.LENGTH_SHORT).show();
                 } else {
                     // if i am active, sync succeeded
-                    Toast.makeText(getApplicationContext(), "You were successfully synced to the student!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "You were successfully synced to the student!",
+                            Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getApplicationContext(), QuestionerDashboardActivity.class));
                 }
             }

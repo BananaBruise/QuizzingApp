@@ -84,7 +84,8 @@ public class QuestionPriorityQueue {
             throw new NoSuchElementException("This list is empty");
         }
 
-        Question toRemove = questions.get(0); // instantiate the Question to be removed as the first element in our array
+        Question toRemove = questions.get(0); // instantiate the Question to be removed as the first
+                                                // element in our array
 
         // if there is only one element in the queue, just remove it, no need to percolateDown()
         if (questions.size() == 1) {

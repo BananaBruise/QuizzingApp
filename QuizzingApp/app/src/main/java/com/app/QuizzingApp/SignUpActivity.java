@@ -64,7 +64,8 @@ public class SignUpActivity extends AppCompatActivity {
 
         try {
             // use mAuth reference to create user (authenticate)
-            firebaseHelper.getmAuth().createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            firebaseHelper.getmAuth().createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
@@ -75,13 +76,16 @@ public class SignUpActivity extends AppCompatActivity {
 
                         // based on if the user is a Questioner or Answerer, add them to Firestore
                         if (isQuestioner){
-                            firebaseHelper.addGenericUserToFirestore(new Questioner(firstName, lastName, FirebaseHelper.getShorterString(user.getUid()), email, password));
+                            firebaseHelper.addGenericUserToFirestore(new Questioner(firstName, lastName,
+                                    FirebaseHelper.getShorterString(user.getUid()), email, password));
                         } else {
-                            firebaseHelper.addGenericUserToFirestore(new Answerer(firstName, lastName, FirebaseHelper.getShorterString(user.getUid()), email, password));
+                            firebaseHelper.addGenericUserToFirestore(new Answerer(firstName, lastName,
+                                    FirebaseHelper.getShorterString(user.getUid()), email, password));
                         }
 
                         // successful sign up
-                        Toast.makeText(getApplicationContext(), "Welcome, " + firstName + "!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Welcome, " + firstName + "!",
+                                Toast.LENGTH_SHORT).show();
                         takeToPostSignUp(user.getUid());
                     } else {
                         // user WASN'T created
