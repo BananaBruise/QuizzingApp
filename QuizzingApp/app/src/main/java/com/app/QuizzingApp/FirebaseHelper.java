@@ -3,19 +3,16 @@ package com.app.QuizzingApp;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -102,6 +99,11 @@ public class FirebaseHelper {
                 }
                 callback.onCallbackReadUser(currUser);  // pass data back
             }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                callback.onCallbackReadUserFail();
+            }
         });
     }
 
@@ -125,6 +127,11 @@ public class FirebaseHelper {
                 currUser = documentSnapshot.toObject(userClass);
                 //Log.d("FBH", currUser.getName());
                 callback.onCallbackReadUser(currUser);  // pass data back
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.i("readGenericUser", "Error reading user");
             }
         });
     }
@@ -153,6 +160,8 @@ public class FirebaseHelper {
                     Log.i(TAG, questionsList.toString());
 
                     callback.onCallbackReadQuestions(questionsList);    // pass data back
+                } else {
+                    Log.i(TAG, "Error reading questions");
                 }
             }
         });
@@ -162,7 +171,7 @@ public class FirebaseHelper {
      * Adds a specific question (uses to ID parameters to lookup documents)
      * @param uid uid of user
      * @param questionID ID of questioner so we can access their Questions collection
-     * @param question new Question we are upadting to
+     * @param question new Question we are updating to
      * @param callback action taken upon adding a question; calls FirestoreQuestionCallback.onCallbackWriteQuestion method
      */
     public void writeQuestion(String uid, String questionID, Question question, FirestoreQuestionCallback callback) {
@@ -174,6 +183,11 @@ public class FirebaseHelper {
             @Override
             public void onSuccess(Void unused) {
                 callback.onCallbackWriteQuestion();    // signal that we've successfully added question
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.i("writeQuestion", "Writing question not successful");
             }
         });
     }
@@ -233,6 +247,11 @@ public class FirebaseHelper {
                         public void onSuccess(Void aVoid) {
                             Log.d(TAG, "Answerer's isActive successfully updated!");
                         }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d(TAG, "Answerer's isActive NOT successfully updated");
+                        }
                     });
 
                     // updating my user's questionerID (used to lookup question set)
@@ -241,6 +260,11 @@ public class FirebaseHelper {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Log.d(TAG, "questionerID successfully updated!");
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d(TAG, "questionerID NOT successfully updated");
                         }
                     });
 
@@ -251,6 +275,11 @@ public class FirebaseHelper {
                         public void onSuccess(Void aVoid) {
                             Log.d(TAG, "Questioner's isActive successfully updated!");
                         }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d(TAG, "Questioner's isActive NOT successfully updated");
+                        }
                     });
 
                     // get my name from doc ref
@@ -258,7 +287,13 @@ public class FirebaseHelper {
                         @Override
                         public void onSuccess(DocumentSnapshot myDocSnapshot) {
                             // pass my user's and other user's first names back
-                            callback.onCallbackUserSync(otherUserDoc.get("fName").toString(), myDocSnapshot.get("fName").toString());
+                            callback.onCallbackUserSync(otherUserDoc.get("fName").toString(),
+                                    myDocSnapshot.get("fName").toString());
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d(TAG, "Sync not successful");
                         }
                     });
                 } else {    // if doc didn't exist, UID was mistyped, so signal this by calling
@@ -306,6 +341,11 @@ public class FirebaseHelper {
                 });
 
             }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.i("readSyncedPair", "readSyncedPair not successful");
+            }
         });
     }
 
@@ -324,6 +364,9 @@ public class FirebaseHelper {
      */
     public interface FirestoreUserCallback {
         default void onCallbackReadUser(User u) {
+        }
+
+        default void onCallbackReadUserFail() {
         }
 
         default void onCallbackUserSync(String otherUserFirstName, String myUserFirstName) {

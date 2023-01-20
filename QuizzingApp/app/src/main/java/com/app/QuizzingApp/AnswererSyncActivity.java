@@ -59,17 +59,17 @@ public class AnswererSyncActivity extends AppCompatActivity {
                                         otherUserFirstName, myUserFirstName);
                             }
 
-                            // callback; if sync does not work, alert that user entered an invalid code
-                            @Override
-                            public void onCallbackUserSyncFail() {
-                                Toast.makeText(getApplicationContext(), "You entered an invalid code",
-                                        Toast.LENGTH_SHORT).show();
-                            }
                         });
                     } else {
                         Toast.makeText(getApplicationContext(), "This teacher is already synced " +
                                 "with another student.", Toast.LENGTH_SHORT).show();
                     }
+                }
+
+                @Override
+                public void onCallbackReadUserFail() {
+                    Toast.makeText(getApplicationContext(), "You entered an invalid code",
+                            Toast.LENGTH_SHORT).show();
                 }
             });
 
