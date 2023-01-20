@@ -252,12 +252,12 @@ public class FirebaseHelper {
                         }
                     });
 
-                    // get my name from doc snapshot of doc ref
-                    myDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    // get my name from doc ref
+                    myDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
-                        public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                        public void onSuccess(DocumentSnapshot myDocSnapshot) {
                             // pass my user's and other user's first names back
-                            callback.onCallbackUserSync(otherUserDoc.get("fName").toString(), value.get("fName").toString());
+                            callback.onCallbackUserSync(otherUserDoc.get("fName").toString(), myDocSnapshot.get("fName").toString());
                         }
                     });
                 } else {    // if doc didn't exist, UID was mistyped, so signal this by calling
