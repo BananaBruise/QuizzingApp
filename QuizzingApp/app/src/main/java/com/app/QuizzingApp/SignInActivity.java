@@ -80,7 +80,7 @@ public class SignInActivity extends AppCompatActivity {
                         public void onCallbackUserSync(String otherUserFirstName, String myUserFirstName) {
                             // on callback we want to take the user to the AnswererDashboardActivity
                             // (with warning popup)
-                            new Navigation().displayAlertDialog(SignInActivity.this, otherUserFirstName, myUserFirstName);
+                            new Navigation().displayStartQuizDialog(SignInActivity.this, otherUserFirstName, myUserFirstName);
                         }
                     });
 

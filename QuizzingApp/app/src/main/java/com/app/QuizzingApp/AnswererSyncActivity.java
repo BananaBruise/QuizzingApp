@@ -45,7 +45,7 @@ public class AnswererSyncActivity extends AppCompatActivity {
             @Override
             public void onCallbackUserSync(String otherUserFirstName, String myUserFirstName) {
                 Toast.makeText(getApplicationContext(), "You are synced to " + otherUserFirstName, Toast.LENGTH_SHORT).show();
-                new Navigation().displayAlertDialog(AnswererSyncActivity.this, otherUserFirstName, myUserFirstName);
+                new Navigation().displayStartQuizDialog(AnswererSyncActivity.this, otherUserFirstName, myUserFirstName);
             }
 
             // callback; if sync does not work, alert that user entered an invalid code

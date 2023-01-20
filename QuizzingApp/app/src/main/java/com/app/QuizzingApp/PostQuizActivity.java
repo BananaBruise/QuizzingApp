@@ -10,6 +10,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +24,7 @@ import java.util.ArrayList;
 public class PostQuizActivity extends AppCompatActivity {
 
     TextView postQuizInfoTV;    // reference to main TV on screen
+    ImageButton postQuizRetryInfoBT; // describes how we sort questions
 
     /**
      * Instantiates a list view with the Questions the Answerer got wrong from the previous quiz
@@ -33,8 +36,17 @@ public class PostQuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_quiz);
 
-        // initialize reference to main TV on screen
+        // initialize references
         postQuizInfoTV = findViewById(R.id.postQuizInfoTV);
+        postQuizRetryInfoBT = findViewById(R.id.postQuizRetryInfoBT);
+
+        // set up button
+        postQuizRetryInfoBT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Navigation().displaySortingDialog(PostQuizActivity.this);
+            }
+        });
 
         // retrieve the AL we sent to this page of wrong questions
         Bundle extras = getIntent().getBundleExtra("INCORRECT_QUESTIONS");

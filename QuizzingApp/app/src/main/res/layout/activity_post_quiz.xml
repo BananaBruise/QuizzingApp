@@ -64,4 +64,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.043" />
+
+    <ImageButton
+        android:id="@+id/postQuizRetryInfoBT"
+        android:layout_width="74dp"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        app:layout_constraintBottom_toBottomOf="@+id/postQuizRetryBT"
+        app:layout_constraintStart_toEndOf="@+id/postQuizRetryBT"
+        app:layout_constraintTop_toTopOf="@+id/postQuizRetryBT"
+        app:srcCompat="@android:drawable/ic_dialog_info" />
 </androidx.constraintlayout.widget.ConstraintLayout>
