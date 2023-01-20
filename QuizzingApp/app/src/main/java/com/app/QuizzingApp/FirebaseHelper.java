@@ -287,17 +287,23 @@ public class FirebaseHelper {
 
         answererDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
+            public void onSuccess(DocumentSnapshot documentSnapshotAnswerer) {
                 // get docref to Questioner's doc
                 DocumentReference questionerDocRef = db.collection("Users").document(getShorterString(questionerUid));
 
-                questionerDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                questionerDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
-                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                        // get first name of Questioner and Answerer and pass it back
-                        callback.onCallbackUserSync(value.get("fName").toString(), documentSnapshot.get("fName").toString());
+                    public void onSuccess(DocumentSnapshot documentSnapshotQuestioner) {
+                        callback.onCallbackUserSync(documentSnapshotQuestioner.get("fName").toString(),
+                                documentSnapshotAnswerer.get("fName").toString());
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        e.printStackTrace();
                     }
                 });
+
             }
         });
     }

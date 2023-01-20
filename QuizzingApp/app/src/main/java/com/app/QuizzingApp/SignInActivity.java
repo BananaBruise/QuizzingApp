@@ -39,19 +39,10 @@ public class SignInActivity extends AppCompatActivity {
         // grab view elements
         emailET = findViewById(R.id.signInEmailET);
         passwordET = findViewById(R.id.signInPasswordET);
-
-        firebaseHelper.getmAuth().addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                // checking for already signed in user
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                Log.i("signin", "auth state change");
-                if (user != null) {
-                    Log.i("signin", "user exists");
-                    takeToPostSignIn(user.getUid());
-                }
-            }
-        });
+        
+        if (firebaseHelper.getmAuth().getCurrentUser() != null) {
+            takeToPostSignIn(firebaseHelper.getmAuth().getCurrentUser().getUid());
+        }
 
 
     }

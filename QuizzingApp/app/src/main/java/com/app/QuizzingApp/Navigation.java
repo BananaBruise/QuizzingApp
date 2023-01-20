@@ -27,18 +27,9 @@ public class Navigation {
      * @param activity activity we are signing out user from
      */
     public void signOut(Activity activity) {
-        firebaseHelper.getmAuth().addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if (firebaseAuth.getCurrentUser() == null) {
-                    // take back to home screen
-                    Intent i = new Intent(activity, SignInActivity.class);
-                    activity.startActivity(i);
-                }
-            }
-        });
-
         firebaseHelper.getmAuth().signOut();
+        Intent i = new Intent(activity, SignInActivity.class);
+        activity.startActivity(i);
 
     }
 
