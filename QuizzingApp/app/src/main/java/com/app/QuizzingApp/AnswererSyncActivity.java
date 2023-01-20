@@ -34,26 +34,47 @@ public class AnswererSyncActivity extends AppCompatActivity {
      */
     public void syncAnswerer(View v) {
         // the questioner's UID (will be used for lookup later)
-        String otherUid = codeET.getText().toString();
-        // my UID (used in Firebase method for syncing purposes)
-        String myUid = firebaseHelper.getmAuth().getCurrentUser().getUid();
+        String otherUid = codeET.getText().toString().trim();
 
-        // callback used to sync two users
-        firebaseHelper.syncUsers(otherUid, myUid, new FirebaseHelper.FirestoreUserCallback() {
+        if (otherUid.length() != 10) {
+            Toast.makeText(getApplicationContext(), "Code must be 10 characters long!", Toast.LENGTH_SHORT).show();
+        } else {
 
-            // callback; if sync is successful, display message and alert informing Answerer of what's to come
-            @Override
-            public void onCallbackUserSync(String otherUserFirstName, String myUserFirstName) {
-                Toast.makeText(getApplicationContext(), "You are synced to " + otherUserFirstName, Toast.LENGTH_SHORT).show();
-                new Navigation().displayStartQuizDialog(AnswererSyncActivity.this, otherUserFirstName, myUserFirstName);
-            }
+            // my UID (used in Firebase method for syncing purposes)
+            String myUid = firebaseHelper.getmAuth().getCurrentUser().getUid();
 
-            // callback; if sync does not work, alert that user entered an invalid code
-            @Override
-            public void onCallbackUserSyncFail() {
-                Toast.makeText(getApplicationContext(), "You entered an invalid code", Toast.LENGTH_SHORT).show();
-            }
-        });
+            firebaseHelper.readUser(otherUid, new FirebaseHelper.FirestoreUserCallback() {
+                @Override
+                public void onCallbackReadUser(User u) {
+                    if (!u.getisActive()) {
+                        // callback used to sync two users
+                        firebaseHelper.syncUsers(otherUid, myUid, new FirebaseHelper.FirestoreUserCallback() {
+
+                            // callback; if sync is successful, display message and alert informing Answerer of what's to come
+                            @Override
+                            public void onCallbackUserSync(String otherUserFirstName, String myUserFirstName) {
+                                Toast.makeText(getApplicationContext(), "You are synced to " +
+                                        otherUserFirstName, Toast.LENGTH_SHORT).show();
+                                new Navigation().displayStartQuizDialog(AnswererSyncActivity.this,
+                                        otherUserFirstName, myUserFirstName);
+                            }
+
+                            // callback; if sync does not work, alert that user entered an invalid code
+                            @Override
+                            public void onCallbackUserSyncFail() {
+                                Toast.makeText(getApplicationContext(), "You entered an invalid code",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    } else {
+                        Toast.makeText(getApplicationContext(), "This teacher is already synced " +
+                                "with another student.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+
+        }
 
     }
 

@@ -225,6 +225,7 @@ public class FirebaseHelper {
             public void onSuccess(DocumentSnapshot otherUserDoc) {
                 // if doc with otherUid exists
                 if (otherUserDoc.exists()) {
+
                     // updating my user's isActive status
                     DocumentReference myDocRef = db.collection("Users").document(getShorterString(myUid));
                     myDocRef.update("isActive", true).addOnSuccessListener(new OnSuccessListener<Void>() {
