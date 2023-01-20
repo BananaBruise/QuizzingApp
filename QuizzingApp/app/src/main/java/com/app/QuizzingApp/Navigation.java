@@ -17,8 +17,13 @@ import com.google.firebase.auth.FirebaseAuth;
 public class Navigation {
     FirebaseHelper firebaseHelper = new FirebaseHelper();   // reference to helper class so we can sign out
 
+    String sortPrompt = "\n(1) incorrect questions are displayed earlier than correct ones;" +
+            "\n(2) questions that take you longer to answer are displayed earlier than questions answered quicker;" +
+            "\n(3) questions with a higher difficulty rating are displayed earlier than questions with lower difficulty ratings.";
+
     /**
      * Signs a user out using firebaseHelper mAuth instance
+     *
      * @param activity activity we are signing out user from
      */
     public void signOut(Activity activity) {
@@ -39,22 +44,18 @@ public class Navigation {
 
     /**
      * Displays an alert dialog on the given activity
-     * @param activity activity we are displaying the popup on
+     *
+     * @param activity     activity we are displaying the popup on
      * @param teacherfName first name of teacher corresponding to current user
      * @param studentfName first name of student corresponding to current user
      */
-    public void displayAlertDialog(Activity activity, String teacherfName, String studentfName) {
+    public void displayStartQuizDialog(Activity activity, String teacherfName, String studentfName) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
         // set text for popup
         builder.setMessage("If your teacher (" + teacherfName + ") has posted questions, you'll " +
-                        ("see them on the next page sorted by the following criteria, in decreasing " +
-                                "order of importance:\n" +
-                                "\n(1) incorrect questions are displayed earlier than correct ones;" +
-                                "\n(2) questions that take you longer to answer are displayed earlier " +
-                                "than questions answered quicker;" +
-                                "\n(3) questions with a higher difficulty rating hare displayed earlier" +
-                                " than questions with lower difficulty ratings."))
+                        ("see them on the next page sorted by the following criteria, in decreasing order of importance:\n" +
+                                sortPrompt))
                 .setTitle("Get ready, " + studentfName + "!");
 
         // add the buttons
@@ -67,12 +68,24 @@ public class Navigation {
             }
         });
 
-        // user clicked off popup
-        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+        // create & show dialog
+        AlertDialog dialog = builder.create();
+
+        dialog.show();
+    }
+
+    public void displaySortingDialog(Activity activity) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+        // set text for popup
+        builder.setMessage("Upon retry, questions are sorted in decreasing order of importance:\n" +
+                sortPrompt);
+
+        // add the buttons
+        builder.setPositiveButton("Gotcha!", new DialogInterface.OnClickListener() {
             @Override
-            public void onCancel(DialogInterface dialogInterface) {
-                // prompt user w/ appropriate message
-                Toast.makeText(activity.getApplicationContext(), "Start when you're ready!", Toast.LENGTH_SHORT).show();
+            public void onClick(DialogInterface dialog, int id) {
+                // do nothing
             }
         });
 
