@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.app.QuizzingApp.databinding.ActivityAnswererDashboardBinding;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackListener;
+import com.yuyakaido.android.cardstackview.CardStackView;
 import com.yuyakaido.android.cardstackview.Direction;
 import com.yuyakaido.android.cardstackview.StackFrom;
 
@@ -69,6 +70,7 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
      * When the screen is loaded, the data that needs to be displayed will be put into an Adapter,
      * which is then displayed on the screen as a card stack. The card stack is managed by
      * CardStackLayoutManager
+     *
      * @param savedInstanceState may be used to restore activity to a previous state
      */
     @Override
@@ -97,39 +99,36 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
                 firebaseHelper.readQuestions(questionerID, new FirebaseHelper.FirestoreQuestionCallback() {
                     @Override
                     public void onCallbackReadQuestions(ArrayList<Question> questionList) {
-//                        cardList = heapSort(questionList);  // heap sort each time we grab questions
-//                                                            // as question parameters can change each
-//                                                            // time Answerer takes quiz
+                        // heap sort each time we grab questions as question parameters can change each time Answerer takes quiz
                         QuestionPriorityQueue qpq = new QuestionPriorityQueue(questionList);
                         cardList = qpq.heapSort();
-
                         // no questions yet
                         if (cardList.isEmpty()) {
-                           Toast.makeText(getApplicationContext(), "You don't have any questions yet!",
-                                   Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "You don't have any questions yet!",
+                                    Toast.LENGTH_SHORT).show();
                         } else {
                             // put the card list in the view
                             adapter = new QuestionCardAdapter(cardList);
                             binding.cardStack.setLayoutManager(manager);
+                            binding.cardStack.setHasFixedSize(true); // size of the card doesn't change; skips check i.e. efficiency
                             binding.cardStack.setAdapter(adapter);
                         }
-
 
                     }
                 });
 
             }
         });
-
     }
 
 
     /**
      * Signs a user out of the app
+     *
      * @param v the view corresponding to the current screen
      */
     public void signOut(View v) {
-         new Navigation().signOut(AnswererDashboardActivity.this);
+        new Navigation().signOut(AnswererDashboardActivity.this);
     }
 
     // THE FOLLOWING 4 METHODS ARE UNUSED CALLBACKS
@@ -156,7 +155,8 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
     /**
      * When a card appears, we start a timer. When that timer finishes, the card is automatically swiped
      * off the screen
-     * @param view view object corresponding to current card
+     *
+     * @param view     view object corresponding to current card
      * @param position where we are in the stack of cards (as an index)
      */
     @Override
@@ -205,7 +205,8 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
 
     /**
      * When a card disappears, we must update our Firestore database appropriately
-     * @param view view corresponding to current card
+     *
+     * @param view     view corresponding to current card
      * @param position where we are in our card stack
      */
     @Override
@@ -245,25 +246,25 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
         // update time taken for card
         firebaseHelper.updateQuestionField(questionerID, questionDocID, "millisElapsedToAnswer",
                 (Long) millisElapsedForQuestion, new FirebaseHelper.FirestoreQuestionCallback() {
-            @Override
-            public void onCallbackUpdateQuestionField() {
-                Log.i("onCardDisappeared", "updated time stamp!");
-            }
-        });
+                    @Override
+                    public void onCallbackUpdateQuestionField() {
+                        Log.i("onCardDisappeared", "updated time stamp!");
+                    }
+                });
 
         // update question status (if Question was correct or not)
         firebaseHelper.updateQuestionField(questionerID, questionDocID, "correctlyAnsweredLastTime",
                 isCorrect, new FirebaseHelper.FirestoreQuestionCallback() {
-            @Override
-            public void onCallbackUpdateQuestionField() {
-                // on callback, if we reach the end of our question cards
-                if (position == cardList.size() - 1) {
-                    // display appropriate toast and take user to PostQuizActivity (quiz results)
-                    Toast.makeText(getApplicationContext(), "You finished the quiz!", Toast.LENGTH_SHORT).show();
-                    takeToPostQuizActivity(wrong);
-                }
-            }
-        });
+                    @Override
+                    public void onCallbackUpdateQuestionField() {
+                        // on callback, if we reach the end of our question cards
+                        if (position == cardList.size() - 1) {
+                            // display appropriate toast and take user to PostQuizActivity (quiz results)
+                            Toast.makeText(getApplicationContext(), "You finished the quiz!", Toast.LENGTH_SHORT).show();
+                            takeToPostQuizActivity(wrong);
+                        }
+                    }
+                });
 
         cdt.cancel();   // stop timer for this card since user has finished it
 
@@ -271,6 +272,7 @@ public class AnswererDashboardActivity extends AppCompatActivity implements Card
 
     /**
      * Takes us to PostQuizActivity
+     *
      * @param wrongQuestions questions the Answerer got wrong on this page
      */
     public void takeToPostQuizActivity(ArrayList<Question> wrongQuestions) {
