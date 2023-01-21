@@ -255,8 +255,8 @@ public class Question implements Parcelable, Comparable<Question> {
         }
 
         // scenario 2: compare 2.
-        // we have a tolerance of 10 seconds
-        if (Math.abs(this.millisElapsedToAnswer - question.millisElapsedToAnswer) > 10000) {
+        // we have a tolerance of 5 seconds
+        if (Math.abs(this.millisElapsedToAnswer - question.millisElapsedToAnswer) > 5000) {
             // we want the question with larger time elapsed to be higher priority
             return ((Integer) this.millisElapsedToAnswer).compareTo(question.millisElapsedToAnswer);
         }
