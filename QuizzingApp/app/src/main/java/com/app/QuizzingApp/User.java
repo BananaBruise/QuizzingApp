@@ -51,14 +51,6 @@ public class User {
     }
 
     /**
-     * Getter for password
-     * @return password of User
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
      * Getter for isQuestioner
      * @return whether User is a Questioner or not
      */
