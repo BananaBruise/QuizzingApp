@@ -14,8 +14,6 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 /**
  * First screen the user sees; will take them to the appropriate screen if they're already signed in/
@@ -52,8 +50,7 @@ public class SignInActivity extends AppCompatActivity {
      * @param v the view corresponding to the current screen
      */
     public void takeToSignUp(View v) {
-        Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
-        startActivity(intent);
+        new Navigation().displayAboutAppDialog(SignInActivity.this);
     }
 
     /**

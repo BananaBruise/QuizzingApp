@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -89,6 +88,30 @@ public class Navigation {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 // do nothing
+            }
+        });
+
+        // create & show dialog
+        AlertDialog dialog = builder.create();
+
+        dialog.show();
+    }
+
+    public void displayAboutAppDialog(Activity activity) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+        // set text for popup
+        builder.setTitle("About the app");
+        builder.setMessage("This is an interactive quiz maker. A teacher makes questions for a student to answer.\n" +
+                "\nAfter sign up, student will be prompted for teacher's sign up code. This allows the student to pair with teacher.\n" +
+                "\nOnce paired with teacher, the student will interact with teacher's questions.");
+
+        // add the buttons
+        builder.setPositiveButton("Sign me up!", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                Intent intent = new Intent(activity, SignUpActivity.class);
+                activity.startActivity(intent);
             }
         });
 
