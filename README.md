@@ -41,9 +41,9 @@ After the student enters the teacher's code, they'll be notified that a quiz is 
 
 <img src="https://user-images.githubusercontent.com/84284109/214076993-75236317-c260-48ee-b57b-4251763bd341.png" width="200" />
 
-Upon successfully syncing, the student and teacher's workflow diverges. The teacher must make some questions (see Step 4) before students can answer them at their own pace (see Step 5).
+Upon successfully syncing, the student and teacher's workflow diverges. The teacher must make some questions (see [Part 4](#part-4-teacher)) before students can answer them at their own pace (see [Part 5](#part-5-student)).
 
-If teacher has not created a question, the student will see a blank screen with notification saying `You don't have any questions yet!`
+If teacher has not created any questions, the student will see a blank screen with notification saying `You don't have any questions yet!`
 
 ### Part 4: Teacher
 #### Making Questions
