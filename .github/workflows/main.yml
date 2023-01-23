@@ -1,0 +1,26 @@
+name: Push README to Public GitHub Pages
+
+on: 
+  push:
+    branches:
+      - 'main'
+    paths:
+      - 'README.md'
+
+jobs:
+  copy-file:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Pushes test file
+      uses: dmnemec/copy_file_to_another_repo_action@main
+      env:
+        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+      with:
+        source_file: 'README.md'
+        destination_repo: 'BananaBruise/QuizzingAppReadMe'
+        user_email: 'hantucaps@gmail.com'
+        user_name: 'BananaBruise'
+        commit_message: "Automated README update; commit SHA: ${GITHUB_SHA}"
