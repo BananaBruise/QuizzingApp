@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="0dp"
         android:paddingRight="0dp"
-        android:text="Please sync yourself with your teacher to see your questions!"
+        android:text="Please sync yourself with your teacher!"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="20sp"

@@ -80,7 +80,7 @@ public class Navigation {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
         // set text for popup
-        builder.setMessage("Upon retry, questions are sorted in decreasing order of importance:\n" +
+        builder.setMessage("Upon retry, questions are sorted, in decreasing order of importance,:\n" +
                 sortPrompt);
 
         // add the buttons
