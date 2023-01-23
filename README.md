@@ -60,7 +60,7 @@ In this sense, the quiz is "adaptive."<br/>
 Each time you take the quiz, your questions will be reordered such that questions you are less proficient at will appear earlier than questions you are more proficient at.<br/>
 So, after every iteration through the quiz, question order will be adjusted to help you improve on your weaknessess and maintain your strengths!
 
-### Citations:
-(Manager for card stack display/animation): https://github.com/yuyakaido/CardStackView
+## Citations:
+(Manager for card stack display/animation): https://github.com/yuyakaido/CardStackView<br/>
 (Scalable size text unit): https://github.com/intuit/ssp, 
                            https://github.com/intuit/sdp 
