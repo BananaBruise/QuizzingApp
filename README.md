@@ -51,7 +51,7 @@ After the student has finished their quiz, they will be able to see which questi
 <img src="https://user-images.githubusercontent.com/84284109/214083134-f0b5a609-4b67-47af-bf2c-a5db2f42dd01.png" width="200" /> <img src="https://user-images.githubusercontent.com/84284109/214083125-d960a47c-bc5f-4e8c-9509-606c7374ae39.png" width="200" />
 
 ## Part 7: Retry
-The student will have the option to retake their quiz. Upon retake, questions will be reordered based on the following criteria:<br/><br/>
+The student will have the option to retake their quiz. Upon retake, questions will be reordered based on the following criteria, in decreasing order of importance:<br/><br/>
 (1) incorrect questions are displayed earlier than correct ones, <br/>
 (2) questions that take you longer to answer are displayed earlier than questions answered quicker, <br/>
 (3) questions with a higher difficulty rating are displayed earlier than questions with lower difficulty ratings.<br/><br/>
