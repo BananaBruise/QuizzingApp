@@ -11,7 +11,7 @@ To link this project to a new/your own Firebase backend, please follow [this gui
 ## Testing the Project using Firebase
 We distribute app builds using the App Distribution service in Firebase. The basic steps are:
 
-1. Create a build (.apk) -> tutorial
+1. Create a build (.apk)
 2. Upload build to App Distribution
 3. Invite any groups/individual tester(s)
 4. Distribute app
