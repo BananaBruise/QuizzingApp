@@ -56,11 +56,17 @@ The student will have the option to retake their quiz. Upon retake, questions wi
 (2) questions that take you longer to answer are displayed earlier than questions answered quicker, <br/>
 (3) questions with a higher difficulty rating are displayed earlier than questions with lower difficulty ratings.<br/><br/>
 
-In this sense, the quiz is "adaptive."<br/>
-Each time you take the quiz, your questions will be reordered such that questions you are less proficient at will appear earlier than questions you are more proficient at.<br/>
+In this sense, the quiz is "adaptive."<br/><br/>
+Each time you take the quiz, your questions will be reordered such that questions you are less proficient at will appear earlier than questions you are more proficient at.<br/><br/>
 So, after every iteration through the quiz, question order will be adjusted to help you improve on your weaknessess and maintain your strengths!
 
+## Extra: How questions are reordered
+We reorder questions by mainting a max-Heap structure of Question objects, where Questions with highest "priority" are stored at the "top" of the Heap.<br/><br/>
+Every time new questions are posted or a student retakes a quiz, we heapify our list of Questions, and then heap sort our list such that highest priority questions (as determined by the criteria stated in Part 7) appear first in the student's quiz.<br/><br/>
+All the methods needed to heap sort are defined in our QuestionPriorityQueue class.
+  
 ## Citations:
 (Manager for card stack display/animation): https://github.com/yuyakaido/CardStackView<br/>
 (Scalable size text unit): https://github.com/intuit/ssp, 
                            https://github.com/intuit/sdp 
+ 
