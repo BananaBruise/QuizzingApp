@@ -23,4 +23,4 @@ jobs:
         destination_repo: 'BananaBruise/QuizzingAppReadMe'
         user_email: 'hantucaps@gmail.com'
         user_name: 'BananaBruise'
-        commit_message: "Automated README update from $GITHUB_REPOSITORY"
+        commit_message: "Automated README update"
