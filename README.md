@@ -91,4 +91,4 @@ All the methods needed to heap sort are defined in our QuestionPriorityQueue cla
 ## Citations:
 (Manager for card stack display/animation): https://github.com/yuyakaido/CardStackView<br/>
 (Scalable size text unit): https://github.com/intuit/ssp, 
-                           https://github.com/intuit/sdp 
+                           https://github.com/intuit/sdp
