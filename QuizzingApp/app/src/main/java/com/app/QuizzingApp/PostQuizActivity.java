@@ -59,8 +59,8 @@ public class PostQuizActivity extends AppCompatActivity {
         }
 
         // display all wrong questions in a list view
-        ArrayAdapter<Question> listAdapter = new ArrayAdapter<Question>(
-                getApplicationContext(), android.R.layout.simple_list_item_1, wrongQuestions);
+        ArrayAdapter<Question> listAdapter = new QuestionListAdapter(
+                getApplicationContext(), wrongQuestions);
 
 
         ListView listView = (ListView) findViewById(R.id.allQuestionsLV);

@@ -4,30 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e8b246"
+    android:background="#ffcc66"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
     tools:context=".QuestionerDashboardActivity">
 
     <ListView
         android:id="@+id/allQuestionsLV"
-        android:dividerHeight="3dp"
-        android:divider="@color/cardview_dark_background"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/questionerDashboardSignOutBT"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.592"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchET"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/searchET" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addQuestionBT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/teal_700"
         android:clickable="true"
         android:onClick="takeToQuestionMaker"
         app:backgroundTint="@color/teal_700"
@@ -39,18 +36,6 @@
         app:layout_constraintVertical_bias="0.952"
         app:rippleColor="@color/purple_200"
         app:srcCompat="@android:drawable/ic_menu_add" />
-
-    <Button
-        android:id="@+id/questionerDashboardSignOutBT"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="signOut"
-        android:text="SIGN OUT"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.95" />
 
     <EditText
         android:id="@+id/searchET"
