@@ -90,7 +90,7 @@ public class SignUpActivity extends AppCompatActivity {
                     } else {
                         // user WASN'T created
                         Log.d(TAG, email + " sign up failed");
-                        Toast.makeText(getApplicationContext(), "Sign up failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Sign up failed. Try a different email.", Toast.LENGTH_SHORT).show();
                     }
                 }
             });

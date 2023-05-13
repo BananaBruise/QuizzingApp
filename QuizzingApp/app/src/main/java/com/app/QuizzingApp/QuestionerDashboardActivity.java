@@ -3,6 +3,9 @@ package com.app.QuizzingApp;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,7 +15,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Manages the tasks of QuestionerDashboardActivity screen
@@ -46,6 +52,25 @@ public class QuestionerDashboardActivity extends AppCompatActivity {
                 displayQuestions(questionsList);    // display these questions in the LV
             }
         });
+
+        searchET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // do nothing
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length() == 0) {
+                    search(""); // reset search when it becomes empty
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // do nothing
+            }
+        });
     }
 
     /**
@@ -59,8 +84,8 @@ public class QuestionerDashboardActivity extends AppCompatActivity {
         }
 
         // display questionsList in this list view
-        ArrayAdapter<Question> listAdapter = new ArrayAdapter<Question>(
-                getApplicationContext(), android.R.layout.simple_list_item_1, questionsList);
+        ArrayAdapter<Question> listAdapter = new QuestionListAdapter(
+                getApplicationContext(), questionsList);
 
 
         ListView listView = (ListView) findViewById(R.id.allQuestionsLV);
@@ -116,7 +141,7 @@ public class QuestionerDashboardActivity extends AppCompatActivity {
 
         // find all Questions that match questionName query
         for (int i = 0; i < questionsList.size(); i++) {
-            if (questionsList.get(i).getName().equals(questionName)) {
+            if (questionsList.get(i).getName().toLowerCase().contains(questionName.trim().toLowerCase())) {
                 searched.add(questionsList.get(i));
             }
         }
