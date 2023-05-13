@@ -18,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Locale;
 
 /**
@@ -83,6 +85,19 @@ public class QuestionerDashboardActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "No questions!", Toast.LENGTH_LONG).show();
         }
 
+        // sort questions in difficulty order
+        Collections.sort(questionsList, new Comparator<Question>() {
+            @Override
+            public int compare(Question question1, Question question2) {
+                if (question1.getDiff() < question2.getDiff()) {
+                    return -1;
+                } else if (question1.getDiff() > question2.getDiff()) {
+                    return +1;
+                } else {
+                    return 0;
+                }
+            }
+        });
         // display questionsList in this list view
         ArrayAdapter<Question> listAdapter = new QuestionListAdapter(
                 getApplicationContext(), questionsList);

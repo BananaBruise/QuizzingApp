@@ -17,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Handles what needs to be done after an Answerer completes a quiz
@@ -57,6 +59,20 @@ public class PostQuizActivity extends AppCompatActivity {
             postQuizInfoTV.setText("You got a perfect score!!");
             Toast.makeText(getApplicationContext(), "You got a perfect score!", Toast.LENGTH_LONG).show();
         }
+
+        // sort questions in difficulty order
+        Collections.sort(wrongQuestions, new Comparator<Question>() {
+            @Override
+            public int compare(Question question1, Question question2) {
+                if (question1.getDiff() < question2.getDiff()) {
+                    return -1;
+                } else if (question1.getDiff() > question2.getDiff()) {
+                    return +1;
+                } else {
+                    return 0;
+                }
+            }
+        });
 
         // display all wrong questions in a list view
         ArrayAdapter<Question> listAdapter = new QuestionListAdapter(
