@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +34,11 @@ public class QuestionerSyncActivity extends AppCompatActivity {
         userUid = firebaseHelper.getmAuth().getCurrentUser().getUid();
 
         // set codeTV appropriately
-        codeTV.setText("CODE: " + FirebaseHelper.getShorterString(userUid));
+        String codeText = "Give them this sync code: \n\n" + FirebaseHelper.getShorterString(userUid);
+        SpannableString content = new SpannableString(codeText);
+        content.setSpan(new UnderlineSpan(), 0, 25, 0);
+
+        codeTV.setText(content);
     }
 
     /**
