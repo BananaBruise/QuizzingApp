@@ -36,7 +36,7 @@ The teacher's code will be visible after the teacher has been registered to the 
 
 Teacher's view           |Student's view
 :-------------------------:|:-------------------------:
-<img src="https://github.com/BananaBruise/QuizzingApp/assets/84284109/c07d8969-6ce8-4a5c-8f3d-5598a07ff721.png" width="200" /> |  <img src="https://github.com/BananaBruise/QuizzingApp/assets/84284109/da17b8ee-dce5-4231-9119-14c6928a9637" width="200" />
+<img src="https://github.com/BananaBruise/QuizzingApp/assets/84284109/f21f0281-da35-4862-b21f-c22516c0e2b8" width="200" /> |  <img src="https://github.com/BananaBruise/QuizzingApp/assets/84284109/0cd2b41c-2800-4731-ba3f-2d351ed19fcc" width="200" />
 
 ### Part 3: Post-Sync
 After the student enters the teacher's code, they'll be notified that a quiz is about to begin.<br/><br/>
@@ -54,11 +54,11 @@ Before the student begins their quiz, the teacher should make sure that they hav
 
 Add question using plus (+) button |Create question
 :---------------------------------:|:----------------:
-<img src="https://github.com/BananaBruise/QuizzingApp/assets/84284109/48e68355-67d9-4493-b291-7833ee6f03ce" width="200" />|<img src="https://user-images.githubusercontent.com/84284109/214079817-a89df8eb-6f3c-4add-865b-769001d2e228.png" width="200" />
+<img src="https://github.com/BananaBruise/QuizzingApp/assets/84284109/013d15a3-8ebf-4f29-acaf-5ef2d00585e4" width="200" />|<img src="https://user-images.githubusercontent.com/84284109/214079817-a89df8eb-6f3c-4add-865b-769001d2e228.png" width="200" />
 
 <ins>Afterwards, teacher should see all the questions they've made:</ins>
 
-<img src="https://github.com/BananaBruise/QuizzingApp/assets/84284109/295c328f-c0c5-4d94-a747-ffddb34662b2" width="200" />
+<img src="https://github.com/BananaBruise/QuizzingApp/assets/84284109/9c62d353-fbba-4517-83e9-f72092fe92bc" width="200" />
 
 ### Part 5: Student
 #### Interacting with Questions
@@ -71,7 +71,7 @@ There is a 3 minute timer for each question and a progress bar at the top of eac
 #### Post Quiz
 After the student has finished their quiz, they will be able to see which questions they got wrong by clicking on them from the list.
 
-<img src="https://github.com/BananaBruise/QuizzingApp/assets/84284109/e914a114-db2d-4a2f-b49c-dd26379f2ea6" width="200" /> <img src="https://github.com/BananaBruise/QuizzingApp/assets/84284109/2ce71893-a81e-4a2d-a4a1-e193b67e2842" width="200" />
+<img src="https://github.com/BananaBruise/QuizzingApp/assets/84284109/916ef676-f8c6-4a6c-8013-b202ed578bc0" width="200" /> <img src="https://github.com/BananaBruise/QuizzingApp/assets/84284109/82898a44-4a13-443d-84f1-b5833969ff6a" width="200" />
 
 #### Retry
 The student will have the option to retake their quiz. Upon retake, questions will be reordered based on the following criteria, in decreasing order of importance:<br/><br/>
