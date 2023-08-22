@@ -36,7 +36,7 @@ The teacher's code will be visible after the teacher has been registered to the 
 
 Teacher's view           |Student's view
 :-------------------------:|:-------------------------:
-<img src="https://github.com/BananaBruise/QuizzingApp/assets/84284109/c07d8969-6ce8-4a5c-8f3d-5598a07ff721" width="200" /> |  <img src="https://github.com/BananaBruise/QuizzingApp/assets/84284109/da17b8ee-dce5-4231-9119-14c6928a9637" width="200" />
+<img src="https://github.com/BananaBruise/QuizzingApp/assets/84284109/c07d8969-6ce8-4a5c-8f3d-5598a07ff721.png" width="200" /> |  <img src="https://github.com/BananaBruise/QuizzingApp/assets/84284109/da17b8ee-dce5-4231-9119-14c6928a9637" width="200" />
 
 ### Part 3: Post-Sync
 After the student enters the teacher's code, they'll be notified that a quiz is about to begin.<br/><br/>
